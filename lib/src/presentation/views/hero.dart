@@ -14,7 +14,7 @@ class HeroWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Container(
-        child: Image.asset('images/Logo.png', width: 160),
+        child: Image.asset('assets/images/Logo.png', width: 160),
       ),
       Expanded(
           child: Container(
@@ -22,20 +22,20 @@ class HeroWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-            Text('Trænings',
-                style: GoogleFonts.spaceGrotesk(
-                  foreground: Paint()..shader = linearGradient,
-                  fontSize: 64,
-                  height: 0.8,
-                  fontWeight: FontWeight.w800,
-                )),
-            Text('App',
-                style: GoogleFonts.spaceGrotesk(
-                  fontSize: 54,
-                  height: 0.8,
-                  fontWeight: FontWeight.w600,
-                )),
-          ])))
+                Text('Trænings',
+                    style: GoogleFonts.spaceGrotesk(
+                      foreground: Paint()..shader = linearGradient,
+                      fontSize: 64,
+                      height: 0.8,
+                      fontWeight: FontWeight.w800,
+                    )),
+                Text('App',
+                    style: GoogleFonts.spaceGrotesk(
+                      fontSize: 54,
+                      height: 0.8,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ])))
     ]);
   }
 }
