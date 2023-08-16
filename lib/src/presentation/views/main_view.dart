@@ -3,8 +3,8 @@ import 'package:auth0_flutter/auth0_flutter_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:projekt_frontend/src/presentation/views/Component_widgets/hero.dart';
-import 'package:projekt_frontend/src/presentation/views/Component_widgets/user.dart';
+import 'package:projekt_frontend/src/presentation/views/hero.dart';
+import 'package:projekt_frontend/src/presentation/views/landing/landing_page.dart';
 
 import '../../utils/constants.dart';
 
@@ -78,29 +78,22 @@ class _MainViewState extends State<MainView> {
     return MaterialApp(
       home: Scaffold(
           body: Padding(
-        padding: const EdgeInsets.only(
-          top: padding,
-          bottom: padding,
-          left: padding / 2,
-          right: padding / 2,
-        ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Expanded(
-              child: Row(children: [
-            _user != null
-                ? Expanded(child: UserWidget(user: _user))
-                : const Expanded(child: HeroWidget())
-          ])),
-          _user != null
-              ? ElevatedButton(
-                  onPressed: logout,
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
-                  ),
-                  child: const Text('Logout'),
-                )
-              : ElevatedButton(
+          padding: const EdgeInsets.only(
+              top: padding,
+              bottom: padding,
+              left: padding / 2,
+              right: padding / 2,
+            ),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Row(children: [
+                    _user != null
+                      ? const Expanded(child: LandingPage())
+                      : const Expanded(child: HeroWidget())
+              ])),
+              _user != null
+              ? Container() : ElevatedButton(
                   onPressed: login,
                   style: ButtonStyle(
                     backgroundColor:
