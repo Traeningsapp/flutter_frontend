@@ -40,6 +40,9 @@ dependencies:
   google_fonts: ^5.1.0
   mockito: ^5.4.2
   rive: ^0.11.14
+  recase: ^4.1.0
+  http: ^1.1.0
+  animations: ^2.0.7
 
 dev_dependencies:
   flutter_test:

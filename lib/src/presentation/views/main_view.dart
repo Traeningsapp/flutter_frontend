@@ -56,23 +56,6 @@ class _MainViewState extends State<MainView> {
     }
   }
 
-  Future<void> logout() async {
-    try {
-      if (kIsWeb) {
-        await auth0Web.logout(returnToUrl: 'http://localhost:3000');
-      } else {
-        await auth0
-            .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
-            .logout();
-        setState(() {
-          _user = null;
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(final BuildContext context) {
     return MaterialApp(

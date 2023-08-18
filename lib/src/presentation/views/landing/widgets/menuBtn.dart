@@ -29,13 +29,3 @@ class MenuBtn extends StatelessWidget {
     );
   }
 }
-
-/*
-boxShadow: [
-                BoxShadow(
-                  color: Colors.black,
-                  offset: Offset(0,3),
-                  blurRadius: 8,
-                )
-              ]
- */

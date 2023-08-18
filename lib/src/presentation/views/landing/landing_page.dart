@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/menu_content.dart';
+import 'package:projekt_frontend/src/presentation/views/exercise/exercise_page.dart';
 import 'package:projekt_frontend/src/presentation/views/help/help_page.dart';
 import 'package:projekt_frontend/src/presentation/views/home/home_page.dart';
 import 'package:projekt_frontend/src/presentation/views/profile/profile_page.dart';
@@ -9,6 +10,7 @@ import 'package:projekt_frontend/src/presentation/views/landing/widgets/menubtn.
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/topSideMenuTile.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/bottomSideMenuTile.dart';
 import 'package:projekt_frontend/src/presentation/views/settings/settings_page.dart';
+import 'package:projekt_frontend/src/presentation/views/stats/stats_page.dart';
 import 'package:projekt_frontend/src/utils/rive_utils.dart';
 import 'package:rive/rive.dart';
 
@@ -26,7 +28,9 @@ class _LandingPageState extends State<LandingPage>
   int currentIndex = 0;
   final screens = [
     const HomePage(),
+    const ExercisePage(),
     const ProfilePage(),
+    const StatsPage()
   ];
 
   bool isSideDrawerOpen = false;
@@ -48,6 +52,7 @@ class _LandingPageState extends State<LandingPage>
           setState(() {});
         },
       );
+
     scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(CurvedAnimation(parent: _animationController, curve: Curves.fastOutSlowIn));
     animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.fastOutSlowIn));
     super.initState();
