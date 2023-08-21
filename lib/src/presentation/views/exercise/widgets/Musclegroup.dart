@@ -16,7 +16,7 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
   late Future<List<MuscleGroup>?> muscleGroupList;
 
   Future<void> _initRetrieval() async {
-    muscleGroupList = _dbService.getMuscleGroups();
+    //muscleGroupList = _dbService.getMuscleGroups();
   }
 
   @override
