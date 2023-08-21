@@ -1,28 +1,43 @@
-import 'package:projekt_frontend/src/models/musclegroup.dart';
+import 'dart:io';
 
+import 'package:projekt_frontend/src/models/musclegroup.dart';
 import 'package:http/http.dart' show Client;
+import 'package:projekt_frontend/src/models/muscle.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class DatabaseService {
-  final String baseUrl = "https://localhost:7130/api";
+  final String baseUrl = "https://10.0.2.2:7130/api";
   Client client = Client();
 
-  Future<List<MuscleGroup>?> getMusclegroups() async {
-    final response = await client.get("$baseUrl/Exercise/get/musclegroups" as Uri);
-    if (response.statusCode == 200) {
-      return muscleGroupFromJson(response.body);
-    } else {
-      return null;
-    }
-  }
 
-  Future<List<MuscleGroup>?> getMusclesubgroups() async {
+  Future<List<MuscleGroup>?> getMuscleGroups() async {
     final response = await client.get("$baseUrl/Exercise/get/muscle" as Uri);
     if (response.statusCode == 200) {
       return muscleGroupFromJson(response.body);
+    }
+    else {
+      return null;
+    }
+  }
+
+  Future<List<Muscle>?> getMuscles(int muscleSubId) async {
+    print('Dbservice start');
+    final String accessToken = Global_Access_token;
+    print(accessToken);
+    final response = await client.get(
+        Uri.parse("$baseUrl/Exercise/get/muscle/$muscleSubId"),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+    );
+    if (response.statusCode == 200) {
+      print('Dbservice 200');
+      return musclesFromJson(response.body);
     } else {
       return null;
     }
   }
+
 
   /*
   //-----------------------------------------------------------------------------------------------

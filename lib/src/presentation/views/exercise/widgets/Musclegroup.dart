@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/presentation/views/exercise/widgets/Musclesubgroup.dart';
+import 'package:projekt_frontend/src/models/musclegroup.dart';
+import 'package:projekt_frontend/src/presentation/views/exercise/widgets/Muscle.dart';
+import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:projekt_frontend/src/utils/constants.dart';
 
 class MuscleGroupPage extends StatefulWidget {
@@ -10,34 +12,36 @@ class MuscleGroupPage extends StatefulWidget {
 }
 
 class _MuscleGroupPageState extends State<MuscleGroupPage> {
+  final DatabaseService _dbService = DatabaseService();
+  late Future<List<MuscleGroup>?> muscleGroupList;
+
+  Future<void> _initRetrieval() async {
+    muscleGroupList = _dbService.getMuscleGroups();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: backgroundColorForSubpages,
       body: ListView(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.fromLTRB(5, 110, 5, 0),
           children: <Widget>[
-            buildCardWidget('Shoulders', 'Front-, middle- & back deltoids', fontsizeForTitles, 12, 'assets/images/musclegroups/shoulders.png', 'shoulders'),
-            buildCardWidget('Back', 'Traps, laterals, teres major and lower back', fontsizeForTitles, 12, 'assets/images/musclegroups/back.png', 'back'),
-            buildCardWidget('Chest', 'Inner-, middle-, lower- & upper chest', fontsizeForTitles, 12, 'assets/images/musclegroups/chest.png', 'chest'),
-            buildCardWidget('Triceps', 'Lateral-, long- & medial head', fontsizeForTitles, 12, 'assets/images/musclegroups/triceps.png', 'triceps'),
-            buildCardWidget('Biceps', 'Long- & short head', fontsizeForTitles, 12, 'assets/images/musclegroups/biceps.png', 'biceps'),
-            buildCardWidget('Forearms', 'Forearm flexor & extensor', fontsizeForTitles, 12, 'assets/images/musclegroups/forearms.png', 'forearms'),
-            buildCardWidget('Quads & Hamstrings', 'Front- & back thighs', fontsizeForTitles, 12, 'assets/images/musclegroups/quads.png', 'thighs'),
-            buildCardWidget('Glutes', 'Upper-, & lower butt', fontsizeForTitles, 12, 'assets/images/musclegroups/glutes.png', 'glutes'),
-            buildCardWidget('Calves', 'Lateral- & medial head', fontsizeForTitles, 12, 'assets/images/musclegroups/calves.png', 'calves'),
-            buildCardWidget('Abs', 'Internal- & external core', fontsizeForTitles, 12, 'assets/images/musclegroups/abs.png', 'abs'),
+            //BuildGroupCard(title: muscleGroupList., subtitle: subtitle, assetLocal: assetLocal, onTapRoute: onTapRoute)
+            buildCardWidget('Shoulders', 'Front-, middle- & back deltoids', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/shoulders.png', 2),
+            buildCardWidget('Back', 'Traps, laterals, teres major and lower back', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/back.png', 3),
+            buildCardWidget('Chest', 'Inner-, middle-, lower- & upper chest', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/chest.png', 1),
+            buildCardWidget('Arms', 'Biceps, triceps and forearm', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/triceps.png', 4),
+            buildCardWidget('Legs', 'Quads, glutes, hamstrings and calves', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/quads.png', 6),
+            buildCardWidget('Abs', 'Internal- & external core', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/abs.png', 5),
           ]
       ),
     );
   }
 
-
-  Widget buildCardWidget(String title, String subtitle, double titleFontsize, double subtitleFontsize, String assetLocation, String onTapRoute) {
+  Widget buildCardWidget(String title, String subtitle, double titleFontsize, double subtitleFontsize, String assetLocation, int onTapRoute) {
     return Card(
       elevation: 4,
       child: ListTile(
-        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MuscleSubGroupPage(musclegroup: onTapRoute))); },
+        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },
         tileColor: Colors.white,
         contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
         leading: ConstrainedBox(
@@ -60,4 +64,5 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
     );
   }
 }
+
 

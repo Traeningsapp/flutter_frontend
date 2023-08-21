@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:projekt_frontend/src/presentation/views/hero.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/landing_page.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 import '../../utils/constants.dart';
 
@@ -50,6 +51,11 @@ class _MainViewState extends State<MainView> {
 
       setState(() {
         _user = credentials.user;
+        Global_userid = credentials.user.sub;
+        Global_Access_token = credentials.accessToken;
+
+        //print(Global_userid);
+        //print(Global_Access_token);
       });
     } catch (e) {
       print(e);

@@ -1,21 +1,21 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/animation.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise_widget.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 
-class MuscleSubGroupExercisesWidget extends StatefulWidget {
-  final String muscleSubgroup;
-  const MuscleSubGroupExercisesWidget({required this.muscleSubgroup ,super.key});
+class MuscleExercisesWidget extends StatefulWidget {
+  final String muscle;
+  const MuscleExercisesWidget({required this.muscle ,super.key});
 
   @override
-  State<MuscleSubGroupExercisesWidget> createState() => _MuscleSubGroupExercisesWidgetState();
+  State<MuscleExercisesWidget> createState() => _MuscleExercisesWidgetState();
 }
 
-class _MuscleSubGroupExercisesWidgetState extends State<MuscleSubGroupExercisesWidget> {
+class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
   final DatabaseService _dbService = DatabaseService();
-  Future<List<Exercise>>? muscleSubgroupList;
+  Future<List<Exercise>>? muscleList;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _MuscleSubGroupExercisesWidgetState extends State<MuscleSubGroupExercisesW
     return Scaffold(
       appBar: const CustomAppBarWidget(title: 'Exercises', themecolor: Colors.green),
       body: FutureBuilder(
-        future: muscleSubgroupList,
+        future: muscleList,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('something went wrong! ${snapshot.error}');
@@ -40,7 +40,7 @@ class _MuscleSubGroupExercisesWidgetState extends State<MuscleSubGroupExercisesW
             final specificMuscleSubgroup = snapshot.data!;
             return ListView(
               padding: const EdgeInsets.all(5),
-              children: specificMuscleSubgroup.map(buildMuscleSubgroupExercise).toList(),
+              children: specificMuscleSubgroup.map(buildMuscleExercise).toList(),
             );
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -50,7 +50,7 @@ class _MuscleSubGroupExercisesWidgetState extends State<MuscleSubGroupExercisesW
     );
   }
 
-  Widget buildMuscleSubgroupExercise(Exercise specificMuscleSubgroup) => OpenContainer(
+  Widget buildMuscleExercise(Exercise specificMuscleSubgroup) => OpenContainer(
     // transitionDuration: const Duration(seconds: 2),
     closedColor: Colors.transparent,
     closedElevation: 0,
