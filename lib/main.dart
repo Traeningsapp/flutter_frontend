@@ -14,7 +14,6 @@ class MyHttpOverrides extends HttpOverrides{
 void main() async {
   await dotenv.load();
 
-
   HttpOverrides.global = MyHttpOverrides();
   runApp(const MainView());
 }
