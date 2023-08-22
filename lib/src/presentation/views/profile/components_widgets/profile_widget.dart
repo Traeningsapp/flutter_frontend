@@ -8,7 +8,7 @@ import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:auth0_flutter/auth0_flutter_web.dart';
 
 const List<String> profileList = ['Account','Saved workouts','Favorite Exercises'];
-const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.fastfood), Icon(Icons.fastfood)];
+const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.fitness_center), Icon(Icons.fitness_center)];
 
 class ProfileWidget extends StatefulWidget {
   final Auth0? auth0;

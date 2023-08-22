@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:projekt_frontend/src/presentation/views/hero.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/landing_page.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 import '../../utils/constants.dart';
 
@@ -46,28 +47,15 @@ class _MainViewState extends State<MainView> {
 
       var credentials = await auth0
           .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
-          .login();
+          .login(
+        audience: 'https://traenings-app-backend.com',
+      );
 
       setState(() {
         _user = credentials.user;
+        Global_userid = credentials.user.sub;
+        Global_Access_token = credentials.accessToken;
       });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> logout() async {
-    try {
-      if (kIsWeb) {
-        await auth0Web.logout(returnToUrl: 'http://localhost:3000');
-      } else {
-        await auth0
-            .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
-            .logout();
-        setState(() {
-          _user = null;
-        });
-      }
     } catch (e) {
       print(e);
     }
