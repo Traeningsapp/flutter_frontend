@@ -66,6 +66,7 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         extendBody: true,
         body: Stack(
@@ -143,7 +144,7 @@ class _LandingPageState extends State<LandingPage>
         width: 288,
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: Colors.lightBlueAccent,
+          color: Colors.lightBlue,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(30),
             bottomRight: Radius.circular(30)

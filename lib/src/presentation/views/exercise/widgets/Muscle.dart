@@ -31,7 +31,7 @@ class _MusclePageState extends State<MusclePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Subgroup', themecolor: Colors.green),
+      appBar: const CustomAppBarWidget(title: 'Muscles', themecolor: Colors.green),
       body: FutureBuilder(
         future: musclesList,
         builder: (context, snapshot) {
@@ -60,7 +60,7 @@ class _MusclePageState extends State<MusclePage> {
         tileColor: Colors.white,
         title: Text(muscle.name),
         trailing: const Icon(Icons.arrow_right,),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MuscleExercisesWidget(muscle: muscle.name)))
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MuscleExercisesWidget(muscle_id: muscle.id)))
     ),
   );
 }

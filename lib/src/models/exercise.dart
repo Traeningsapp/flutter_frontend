@@ -1,53 +1,64 @@
 import 'dart:convert';
 
-Exercise? exerciseFromMap(String str) => Exercise.fromMap(json.decode(str));
-String exerciseToMap(Exercise? data) => json.encode(data!.toMap());
-
 class Exercise {
+  final int id;
+  final String name;
+  final String description;
+  final String benefits;
+  final String? asset_location;
+  final List<String?>? muscleActivation;
+  final List<String?>? includedIn;
+  final bool? startingCompound;
+
   Exercise({
-    required this.asset_location,
     required this.id,
-    required this.benefits,
-    this.secondaryActivation,
-    required this.includedIn,
-    this.name,
+    required this.name,
     required this.description,
-    required this.primaryActivation,
+    required this.benefits,
+    this.asset_location,
+    this.muscleActivation,
+    this.includedIn,
     required this.startingCompound,
   });
 
-  String asset_location;
-  String? benefits;
-  List<String?>? secondaryActivation;
-  List<String?>? includedIn;
-  String? name;
-  String? description;
-  String? primaryActivation;
-  String? id;
-  bool? startingCompound;
+  factory Exercise.fromJson(Map<String, dynamic>map){
+    return Exercise(
+      id: map['id'],
+      name: map['name'],
+      description: map['description'],
+      benefits: map['benefits'],
+      asset_location: map['asset_location'],
+      muscleActivation: map["muscleActivation"] == null ? [] : List<String?>.from(map["muscleActivation"]!.map((x) => x)),
+      includedIn: map["included_in"] == null ? [] : List<String?>.from(map["included_in"]!.map((x) => x)),
+      startingCompound: map['starting_compound'],
+    );
+  }
 
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "description": description,
+      "benefits": benefits,
+      "asset_location": asset_location,
+      "muscleActivation": muscleActivation == null ? [] : List<dynamic>.from(muscleActivation!.map((x) => x)),
+      "included_in": includedIn == null ? [] : List<dynamic>.from(includedIn!.map((x) => x)),
+      "starting_compound": startingCompound
+    };
+  }
 
-  factory Exercise.fromMap(Map<String, dynamic> json) => Exercise(
-    asset_location: json['asset_location'],
-    benefits: json["benefits"],
-    secondaryActivation: json["secondary_activation"] == null ? [] : List<String?>.from(json["secondary_activation"]!.map((x) => x)),
-    includedIn: json["included_in"] == null ? [] : List<String?>.from(json["included_in"]!.map((x) => x)),
-    name: json["name"],
-    description: json["description"],
-    primaryActivation: json["primary_activation"],
-    id: json["id"],
-    startingCompound: json["starting_compound"],
-  );
+  @override
+  String toString() {
+    return 'MuscleExercises {id: $id, name: $name, description: $description, benefits: $benefits, asset_location: $asset_location, muscleActivation: $muscleActivation, included_in: $includedIn, starting_compound: $startingCompound}';
+  }
+}
 
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "asset_location": asset_location,
-    "benefits": benefits,
-    "secondary_activation": secondaryActivation == null ? [] : List<dynamic>.from(secondaryActivation!.map((x) => x)),
-    "included_in": primaryActivation == null ? [] : List<dynamic>.from(includedIn!.map((x) => x)),
-    "name": name,
-    "description": description,
-    "primary_activation": primaryActivation,
-    "starting_compound": startingCompound,
-  };
+List<Exercise> exercisesFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<Exercise>.from(data.map((item) => Exercise.fromJson(item)));
+}
+
+String exerciseToJson(Exercise data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
 }

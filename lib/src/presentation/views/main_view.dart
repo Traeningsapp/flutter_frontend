@@ -47,7 +47,9 @@ class _MainViewState extends State<MainView> {
 
       var credentials = await auth0
           .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
-          .login();
+          .login(
+        audience: 'https://traenings-app-backend.com',
+      );
 
       setState(() {
         _user = credentials.user;

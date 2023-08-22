@@ -6,8 +6,8 @@ import 'package:projekt_frontend/src/presentation/views/universal/customappbar_w
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 
 class MuscleExercisesWidget extends StatefulWidget {
-  final String muscle;
-  const MuscleExercisesWidget({required this.muscle ,super.key});
+  final int muscle_id;
+  const MuscleExercisesWidget({required this.muscle_id ,super.key});
 
   @override
   State<MuscleExercisesWidget> createState() => _MuscleExercisesWidgetState();
@@ -15,7 +15,7 @@ class MuscleExercisesWidget extends StatefulWidget {
 
 class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
   final DatabaseService _dbService = DatabaseService();
-  Future<List<Exercise>>? muscleList;
+  late Future<List<Exercise>?> muscleExerciseList;
 
   @override
   void initState() {
@@ -24,7 +24,8 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
   }
 
   Future<void> _initRetrieval() async {
-    //muscleSubgroupList = _dbService.getMuscleSubgroupExercises(widget.muscleSubgroup);
+    muscleExerciseList = _dbService.getMuscleExercises(widget.muscle_id);
+    print('after dbservice');
   }
 
   @override
@@ -32,15 +33,17 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
     return Scaffold(
       appBar: const CustomAppBarWidget(title: 'Exercises', themecolor: Colors.green),
       body: FutureBuilder(
-        future: muscleList,
+        future: muscleExerciseList,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('something went wrong! ${snapshot.error}');
           } else if (snapshot.hasData) {
-            final specificMuscleSubgroup = snapshot.data!;
-            return ListView(
-              padding: const EdgeInsets.all(5),
-              children: specificMuscleSubgroup.map(buildMuscleExercise).toList(),
+            final specificMuscleExercise = snapshot.data!;
+            return ListView.builder(
+                itemCount: specificMuscleExercise.length,
+                itemBuilder: (context, index) {
+                  return buildMuscleExercise(specificMuscleExercise[index]);
+                }
             );
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -50,8 +53,8 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
     );
   }
 
-  Widget buildMuscleExercise(Exercise specificMuscleSubgroup) => OpenContainer(
-    // transitionDuration: const Duration(seconds: 2),
+  Widget buildMuscleExercise(Exercise specificMuscleExercise) => OpenContainer(
+    transitionDuration: const Duration(seconds: 2),
     closedColor: Colors.transparent,
     closedElevation: 0,
     transitionType: ContainerTransitionType.fadeThrough,
@@ -61,14 +64,14 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
         child: ListTile(
             contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
             tileColor: Colors.white,
-            title: Text(specificMuscleSubgroup.name!),
-            trailing: const Icon(Icons.arrow_right,),
+            title: Text(specificMuscleExercise.name!),
+            trailing: const Icon(Icons.arrow_drop_down),
             onTap: openContainer
         ),
       );
     },
     openBuilder: (BuildContext _, VoidCallback __) {
-      return ExerciseWidget(exercise: specificMuscleSubgroup.id!);
+      return ExerciseWidget(exercise: specificMuscleExercise);
     },
   );
 
