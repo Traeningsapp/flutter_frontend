@@ -64,6 +64,10 @@ class _LandingPageState extends State<LandingPage>
     super.dispose();
   }
 
+  void closeDrawer() {
+    isSideDrawerOpen = !isSideDrawerOpen;
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Colors.white,
@@ -118,10 +122,10 @@ class _LandingPageState extends State<LandingPage>
                     _animationController.reverse();
                   }
 
-                  setState(
-                    () {
-                      isSideDrawerOpen = !isSideDrawerOpen;
-                    },
+                    setState(
+                      () {
+                        isSideDrawerOpen = !isSideDrawerOpen;
+                      },
                   );
                 },
                 riveOnInit: (artboard) {
@@ -178,10 +182,13 @@ class _LandingPageState extends State<LandingPage>
                       currentIndex = 0;
                     } else if (menu.title == 'Explore exercises') {
                       currentIndex = 1;
+
                     } else if (menu.title == 'Profile') {
                       currentIndex = 2;
+
                     } else if (menu.title == 'Stats') {
-                    currentIndex = 3;
+                      currentIndex = 3;
+
                     }
                   });
                 },
