@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise_widget.dart';
+import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 
@@ -54,7 +54,7 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
   }
 
   Widget buildMuscleExercise(Exercise specificMuscleExercise) => OpenContainer(
-    transitionDuration: const Duration(seconds: 2),
+    transitionDuration: const Duration(milliseconds: 700),
     closedColor: Colors.transparent,
     closedElevation: 0,
     transitionType: ContainerTransitionType.fadeThrough,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/muscle.dart';
-import 'package:projekt_frontend/src/presentation/views/exercise/widgets/musclesubgroup_exercise.dart';
+import 'package:projekt_frontend/src/presentation/views/exercise/widgets/muscle_exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 
