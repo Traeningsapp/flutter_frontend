@@ -24,8 +24,8 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
   late int workoutlength;               //amount of exercises in list
   int setnr = 3;
 
-  late ExerciseStats exerciseStat;
-  late List<ExerciseStats> exerciseStatsList;
+  List<ExerciseStats> exerciseStatsList = [];
+
 
   @override
   void initState() {
@@ -57,11 +57,11 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
 
     for(int i = 1; i <= setnr; i++ ) {
       _buildwidget = AddSetWidget(
-          rowcount: i,
-          exerciseId: exerciseId,
-          onSetDataChanged: (exerciseStat) {
-            recordExerciseStats(exerciseStat);
-          }
+        rowcount: i,
+        exerciseId: exerciseId,
+        onSetDataChanged: (exerciseStat) {
+          recordExerciseStats(exerciseStat);
+        }
       );
       exerciseStatsList.add(_buildwidget);
     }
@@ -79,12 +79,17 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     });
   }
 
-
   void recordExerciseStats(ExerciseStats stat) async {
-    if(exerciseStatsList.)
-      bool containsExercise = exercises.any((exercise) => exercise.id == targetId);
+    bool containsStat = exerciseStatsList.any((
+        exerciseStat) => exerciseStat.exerciseId == stat.exerciseId &&
+                         exerciseStat.setnr == stat.setnr);
 
-    exerciseStatsList.add(exerciseStat);
+    if(containsStat) {
+      exerciseStatsList.removeWhere((item) => item.exerciseId == stat.exerciseId && item.setnr == stat.setnr);
+      exerciseStatsList.add(stat);
+    } else {
+      exerciseStatsList.add(stat);
+    }
 
     print(exerciseStatsList);
    }
@@ -276,6 +281,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                       onPressed: () {
                         counter ++;
                         setState(() {
+
                         });
                       },
                       child: const Text('Next Exercise')),
