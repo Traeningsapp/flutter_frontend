@@ -1,17 +1,11 @@
 import 'dart:developer';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/models/musclegroup.dart';
+import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:http/http.dart' as http;
 import 'package:projekt_frontend/src/models/muscle.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
-
-//
-//
-// Skal dbservice splittes op i exercise_dbservice og workout_dbservice?
-// Naming er irrelevant, but u get my point ;)
-//
 
 class DatabaseService {
   final String baseUrl = "https://10.0.2.2:7130/api";
@@ -54,15 +48,17 @@ class DatabaseService {
     }
   }
 
-  Future<Workout?> getNewWorkout(int splitType) async {
+  Future<Workout?> getNewWorkout(int splitType, String userid) async {
     try{
-      final url = Uri.parse("$baseUrl/Workout/get/newworkout/$splitType");
+      final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid");
       final response = await http.get(
         url,
         headers: {
           'Authorization': 'Bearer $accessToken'
         }
       );
+      print(Global_userid);
+      print(response.statusCode);
       if(response.statusCode == 200) {
         return workoutFromJson(response.body);
       }
@@ -71,4 +67,60 @@ class DatabaseService {
       log(e.toString());
     }
   }
+
+  Future<String> postEndOfWorkoutStats(List<ExerciseStats> exerciseStats) async {
+    try{
+      final url = Uri.parse("$baseUrl/Workout/post/WorkoutStats/$exerciseStats");
+
+      final List<Map<String, dynamic>> exerciseStatsJson = exerciseStats.map((stats) => stats.toJson()).toList();
+      
+      final response = await http.post(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+        body: exerciseStatsJson
+      );
+
+      if (response.statusCode == 200) {
+        return "Success!";
+      } else {
+        return "Failed with status code: ${response.statusCode}";
+      }
+    }
+    catch(e) {
+      log(e.toString());
+      return "An error occurred";
+    }
+  }
+
+  /*
+  Future<String> postSavedWorkout(Workout savedWorkout) async {
+    try{
+      final url = Uri.parse("$baseUrl/Workout/post/WorkoutStats/$exerciseStats");
+
+      final List<Map<String, dynamic>> exerciseStatsJson = exerciseStats.map((stats) => stats.toJson()).toList();
+
+      final response = await http.post(
+          url,
+          headers: {
+            'Authorization': 'Bearer $accessToken'
+          },
+          body: exerciseStatsJson
+      );
+
+      if (response.statusCode == 200) {
+        return "Success!";
+      } else {
+        return "Failed with status code: ${response.statusCode}";
+      }
+    }
+    catch(e) {
+      log(e.toString());
+      return "An error occurred";
+    }
+  }
+  */
 }
+
+

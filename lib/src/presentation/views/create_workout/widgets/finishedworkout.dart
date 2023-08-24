@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
+import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 
 class FinishedWorkoutWidget extends StatefulWidget {
-  final List<String> sentExerciseIds;
+  //final List<ExerciseStats> sentExerciseStats;
   final List<Exercise>? generatedWorkout;
   final String workoutType;
-  const FinishedWorkoutWidget({Key? key, required this.generatedWorkout, required this.workoutType, required this.sentExerciseIds}) : super(key: key);
+  const FinishedWorkoutWidget({Key? key, required this.generatedWorkout, required this.workoutType /*,required this.sentExerciseStats*/}) : super(key: key);
 
   @override
   State<FinishedWorkoutWidget> createState() => _FinishedWorkoutWidgetState();
@@ -14,7 +15,7 @@ class FinishedWorkoutWidget extends StatefulWidget {
 
 class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
   final DatabaseService _dbService = DatabaseService();
-  late final List<String> exerciseIds;
+  late final List<ExerciseStats> exerciseStats;
 
   final TextEditingController _workoutNameController = TextEditingController();
 
@@ -27,8 +28,8 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
   }
 
   Future<void> setList() async {
-    exerciseIds = widget.sentExerciseIds;
-    debugPrint(exerciseIds.toString());
+    //exerciseStats = widget.sentExerciseStats;
+    print(exerciseStats);
   }
 
   /*

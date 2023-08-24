@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/models/workout.dart';
+import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedworkout.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class ActiveWorkoutWidget extends StatefulWidget {
   final List<Exercise>? activeWorkout;
@@ -16,12 +18,14 @@ class ActiveWorkoutWidget extends StatefulWidget {
 }
 
 class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
-  late List<Exercise>? currentWorkout;
-  late List<Widget> widgetExerciseList;
-  List<String> exerciseIds = <String>[];
+  late List<Exercise>? currentWorkout;  //List of exercises to be shown
+  late List<Widget> widgetExerciseList; //List of widgets which takes each of the exercises in the above list
+  int counter = 0;                      //counter when running through exercise widgets.
+  late int workoutlength;               //amount of exercises in list
+  int setnr = 3;
 
-  int counter = 0;
-  late int workoutlength;
+  late ExerciseStats exerciseStat;
+  late List<ExerciseStats> exerciseStatsList;
 
   @override
   void initState() {
@@ -32,15 +36,6 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     currentWorkout = widget.activeWorkout;
     return currentWorkout;
   }
-
-  /*
-  Future<void> setExerciseIds(List<Exercise> Workout) async {
-    for (var i = 0; i < Workout.length; i++) {
-      debugPrint('added ${Workout[i].id!}');
-      exerciseIds.add(Workout[i].id!);
-    }
-  }
-   */
 
   List<Widget> generateExerciseWidgets(List<Exercise> workout) {
     List<Widget> list = <Widget>[];
@@ -56,9 +51,49 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
   }
 
 
+  List<Widget> createSetList(int exerciseId) {
+    List<Widget> exerciseStatsList = <Widget>[];
+    Widget _buildwidget;
+
+    for(int i = 1; i <= setnr; i++ ) {
+      _buildwidget = AddSetWidget(
+          rowcount: i,
+          exerciseId: exerciseId,
+          onSetDataChanged: (exerciseStat) {
+            recordExerciseStats(exerciseStat);
+          }
+      );
+      exerciseStatsList.add(_buildwidget);
+    }
+    return exerciseStatsList;
+  }
+
+  void AddSetRow() {
+    setState(() {
+        setnr = setnr + 1;
+    });
+  }
+  void RemoveSetRow() {
+    setState(() {
+      setnr = setnr - 1;
+    });
+  }
+
+
+  void recordExerciseStats(ExerciseStats stat) async {
+    if(exerciseStatsList.)
+      bool containsExercise = exercises.any((exercise) => exercise.id == targetId);
+
+    exerciseStatsList.add(exerciseStat);
+
+    print(exerciseStatsList);
+   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const CustomAppBarWidget(title: 'Active Workout', themecolor: Colors.blue),
         body: FutureBuilder<List<Exercise>?>(
             future: setList(),
@@ -69,8 +104,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                 final specificWorkout = snapshot.data!;
                 widgetExerciseList = generateExerciseWidgets(specificWorkout);
                 if(counter >= workoutlength) {
-                  //setExerciseIds(specificWorkout);
-                  return FinishedWorkoutWidget(generatedWorkout : currentWorkout, workoutType: widget.workoutType, sentExerciseIds: exerciseIds);
+                  return FinishedWorkoutWidget(generatedWorkout : currentWorkout, workoutType: widget.workoutType /*, sentExerciseStats: exerciseStatsList */);
                 } else {
                   return widgetExerciseList[counter];
                 }
@@ -164,74 +198,76 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                 ),
             ),
             Text('${generatedWorkout.muscleActivation!}'),
-            Container(
-                alignment: Alignment.center, padding: const EdgeInsets.all(30)),
-            Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: 300,
+            SizedBox(
+                height: MediaQuery.of(context).size.height * 0.24,
+                width: MediaQuery.of(context).size.width * 0.6,
                 child: Column(
                   children: <Widget>[
                     Image.asset('assets/images/nocontent.gif')
                   ],
                 )
             ),
-            Container(
+            Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
               width: MediaQuery.of(context).size.width,
               child: Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.3, 0, MediaQuery.of(context).size.width * 0.05, 0),
+                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.25, 0, 0, 0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.05,
+                      height: MediaQuery.of(context).size.height * 0.025,
+                      child: RawMaterialButton(
+                          onPressed: () {
+                            AddSetRow();
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.grey,
+                          child: Icon(
+                            Icons.add,
+                            size: 10.0,
+                          ),
+                          shape: BeveledRectangleBorder()
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.01,0, 0, 0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.05,
+                      height: MediaQuery.of(context).size.height * 0.025,
+                      child: RawMaterialButton(
+                          onPressed: () {
+                            RemoveSetRow();
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.grey,
+                          child: Icon(
+                            Icons.remove,
+                            size: 10.0,
+                          ),
+                          shape: BeveledRectangleBorder()
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.15, 0, MediaQuery.of(context).size.width * 0.05, 0),
                     child: Text("Kilo"),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 0, MediaQuery.of(context).size.width * 0.05, 0),
                     child: Text("Reps"),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 0, MediaQuery.of(context).size.width * 0.1, 0),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.06,
-                      height: MediaQuery.of(context).size.height * 0.03,
-                      child: RawMaterialButton(
-                        onPressed: () {},
-                        elevation: 2.0,
-                        fillColor: Colors.grey,
-                        child: Icon(
-                          Icons.add,
-                          size: 20.0,
-                        ),
-                        shape: CircleBorder(),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
-            Row(
-              children: [
-                AddSetWidget(ctn: 1),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.04, 0, 0, 0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.08,
-                    height: MediaQuery.of(context).size.height * 0.02,
-
-
-                    child: RawMaterialButton(
-                      onPressed: () {},
-                      elevation: 2.0,
-                      fillColor: Colors.grey,
-                      child: Icon(
-                        Icons.remove,
-                        size: 10.0,
-                      ),
-                      shape: BeveledRectangleBorder()
-                    ),
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width,
+              child: ListView(
+                  children: createSetList(generatedWorkout.id)
+              ),
             ),
             Expanded(
                 child: Align(
@@ -251,3 +287,4 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     ],
   );
 }
+

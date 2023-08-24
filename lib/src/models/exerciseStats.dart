@@ -1,65 +1,63 @@
 import 'dart:convert';
 import 'dart:ui';
 
-class Exercise {
-  final int id;
-  final String name;
-  final String description;
-  final String benefits;
-  final Image? asset;
-  final List<String?>? muscleActivation;
-  final List<String?>? includedIn;
-  final bool? startingCompound;
+class ExerciseStats {
+  final int? workoutId;
+  final String? userId;
+  final int? exerciseId;
+  final DateTime createdDate;
+  final int setnr;
+  final int reps;
+  final int kilo;
 
-  Exercise({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.benefits,
-    this.asset,
-    this.muscleActivation,
-    this.includedIn,
-    required this.startingCompound,
+
+  ExerciseStats({
+    this.workoutId,
+    this.userId,
+    this.exerciseId,
+    required this.createdDate,
+    required this.setnr,
+    required this.reps,
+    required this.kilo,
   });
 
-  factory Exercise.fromJson(Map<String, dynamic>map){
-    return Exercise(
-      id: map['id'],
-      name: map['name'],
-      description: map['description'],
-      benefits: map['benefits'],
-      asset: map['asset'],
-      muscleActivation: map["muscleActivation"] == null ? [] : List<String?>.from(map["muscleActivation"]!.map((x) => x)),
-      includedIn: map["included_in"] == null ? [] : List<String?>.from(map["included_in"]!.map((x) => x)),
-      startingCompound: map['starting_compound'],
+  factory ExerciseStats.fromJson(Map<String, dynamic>map){
+    return ExerciseStats(
+      workoutId: map['workoutId'],
+      userId: map['userId'],
+      exerciseId: map['exerciseId'],
+      createdDate: map['createdDate'],
+      setnr: map['setnr'],
+      reps: map['reps'],
+      kilo: map['kilo'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
-      "name": name,
-      "description": description,
-      "benefits": benefits,
-      "asset": asset,
-      "muscleActivation": muscleActivation == null ? [] : List<dynamic>.from(muscleActivation!.map((x) => x)),
-      "included_in": includedIn == null ? [] : List<dynamic>.from(includedIn!.map((x) => x)),
-      "starting_compound": startingCompound
+      "workoutId": workoutId,
+      "userId": userId,
+      "exerciseId": exerciseId,
+      "timestamp": createdDate,
+      "setnr": setnr,
+      "reps": reps,
+      "kilo": kilo,
     };
   }
 
   @override
   String toString() {
-    return 'MuscleExercises {id: $id, name: $name, description: $description, benefits: $benefits, asset: $asset, muscleActivation: $muscleActivation, included_in: $includedIn, starting_compound: $startingCompound}';
+    return 'ExerciseStats {workoutId: $workoutId, userId: $userId, exerciseId: $exerciseId, createdDate: $createdDate, setnr: $setnr, reps: $reps, kilo: $kilo}';
   }
 }
 
-List<Exercise> exercisesFromJson(String jsonData) {
+List<ExerciseStats> exerciseStatsFromJson(String jsonData) {
   final data = json.decode(jsonData);
-  return List<Exercise>.from(data.map((item) => Exercise.fromJson(item)));
+  return List<ExerciseStats>.from(data.map((item) => ExerciseStats.fromJson(item)));
 }
 
-String exerciseToJson(Exercise data) {
+String exerciseStatsToJson(ExerciseStats data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }
+

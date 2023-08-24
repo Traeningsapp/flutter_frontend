@@ -3,6 +3,7 @@ import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/activeworkout.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 const List<String> splitList = <String>['Push', 'Pull', 'Legs'];
 const List<String> additionalFocusList = <String>['No', 'Chest', 'Shoulders', 'Triceps'];
@@ -26,8 +27,8 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
   late int split_id;
 
 
-  Future<Workout?> getWorkout(int split_id) async {
-    return _dbService.getNewWorkout(split_id);
+  Future<Workout?> getWorkout(int split_id, String userid) async {
+    return _dbService.getNewWorkout(split_id, userid);
   }
 
   Future<void> GenerateWorkout() async {
@@ -40,7 +41,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
     }
 
     List<Exercise>? exerciseList;
-    Workout? generatedWorkout = await getWorkout(split_id);
+    Workout? generatedWorkout = await getWorkout(split_id, Global_userid);
 
     if (generatedWorkout != null) {
       List<Exercise> queue = generatedWorkout.exercises;
