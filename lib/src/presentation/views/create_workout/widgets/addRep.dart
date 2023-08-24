@@ -1,74 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
+import 'package:projekt_frontend/src/presentation/views/create_workout/interfaces/AddSetWidgetInterface.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class AddSetWidget extends StatefulWidget {
-  final int rowcount;
-  final int exerciseId;
-  final ValueChanged<ExerciseStats> onChanged;
-  final void Function(ExerciseStats exerciseStat) onSetDataChanged;
+  final ExerciseStatKey customKey;
+  final int setnr;
+  // final ValueChanged<ExerciseStats> onChanged;
+  AddSetWidget({required this.customKey, required this.setnr}) : super(key: customKey.key);
 
-  const AddSetWidget({required this.rowcount, required this.exerciseId, required this.onSetDataChanged, required this.onChanged, super.key});
+  //const AddSetWidget({required this.rowcount, required this.exerciseId, required this.onSetDataChanged, required this.onChanged, super.key});
 
   @override
   State<AddSetWidget> createState() => _AddSetWidgetState();
 }
 
-class _AddSetWidgetState extends State<AddSetWidget> {
-  late int setnr;
-  late int? reps;
-  late int? kilo;
-
-  late ExerciseStats exerciseStat;
-
+class _AddSetWidgetState extends State<AddSetWidget> implements IAddSetWidget {
   final kiloController = TextEditingController();
   final repsController = TextEditingController();
+  late int setnr;
 
+  void resetFields() {
+    kiloController.clear();
+    repsController.clear();
+  }
 
   @override void initState() {
     super.initState();
-    setnr = widget.rowcount;
-
-    kiloController.addListener(_kiloControllerListener);
-    repsController.addListener(_repsControllerListener);
+    setnr = widget.setnr;
   }
 
-  @override void dispose() {
-    kiloController.removeListener(_kiloControllerListener);
-    repsController.removeListener(_repsControllerListener);
+  @override
+  void dispose() {
     kiloController.dispose();
     repsController.dispose();
-
     super.dispose();
-  }
-
-  void _kiloControllerListener() {
-    kilo = int.parse(kiloController.text);
-    if(reps != null)
-    {
-      createStatObject();
-    }
-  }
-
-  void _repsControllerListener() {
-    reps = int.parse(repsController.text);
-    if(kilo != null)
-    {
-      createStatObject();
-    }
-  }
-
-  void createStatObject() {
-    exerciseStat = ExerciseStats(
-        userId: Global_userid,
-        exerciseId: widget.exerciseId,
-        createdDate: DateTime.now(),
-        setnr: setnr,
-        reps: reps,
-        kilo: kilo);
-
-    widget.onSetDataChanged(exerciseStat);
   }
 
   @override
@@ -88,9 +56,11 @@ class _AddSetWidgetState extends State<AddSetWidget> {
               controller: kiloController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 FilteringTextInputFormatter.digitsOnly
               ],
+              onChanged: (value) {
+                widget.customKey.stats.kilo = int.tryParse(value) ?? 0;
+              },
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
@@ -106,9 +76,11 @@ class _AddSetWidgetState extends State<AddSetWidget> {
               controller: repsController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 FilteringTextInputFormatter.digitsOnly
               ],
+              onChanged: (value) {
+                widget.customKey.stats.reps = int.tryParse(value) ?? 0;
+              },
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),

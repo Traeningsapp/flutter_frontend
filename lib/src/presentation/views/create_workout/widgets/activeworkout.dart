@@ -1,9 +1,14 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
+import 'package:projekt_frontend/src/presentation/views/create_workout/interfaces/AddSetWidgetInterface.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedworkout.dart';
+import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
@@ -18,11 +23,16 @@ class ActiveWorkoutWidget extends StatefulWidget {
 }
 
 class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
+  final List<ExerciseStatKey> widgetKeys = [];
   late List<Exercise>? currentWorkout;  //List of exercises to be shown
   late List<Widget> widgetExerciseList; //List of widgets which takes each of the exercises in the above list
   int counter = 0;                      //counter when running through exercise widgets.
   late int workoutlength;               //amount of exercises in list
-  int setnr = 3;
+  int setantal = 3;
+  int setnr = 1;
+  late int exerciseId;
+
+  var statsList = [];
 
   late ExerciseStats exerciseStat;
   late List<ExerciseStats> exerciseStatsList;
@@ -41,6 +51,11 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     List<Widget> list = <Widget>[];
     Widget _buildwidget;
 
+    for(int i = 1; i <= setantal; i++){
+      widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, i));
+      setnr++;
+    }
+
     workoutlength = workout.length;
 
     for (var i = 0; i < workout.length; i++) {
@@ -50,45 +65,19 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     return list;
   }
 
+  void _handleNext() {
+    for (var key in widgetKeys) {
+      // Collect your ExerciseStats data here from the individual ExerciseStatWidgets.
+      statsList.add(key.stats);
 
-  List<Widget> createSetList(int exerciseId) {
-    List<Widget> exerciseStatsList = <Widget>[];
-    Widget _buildwidget;
-
-    for(int i = 1; i <= setnr; i++ ) {
-      _buildwidget = AddSetWidget(
-          rowcount: i,
-          exerciseId: exerciseId,
-          onSetDataChanged: (exerciseStat) {
-            recordExerciseStats(exerciseStat);
-          }
-      );
-      exerciseStatsList.add(_buildwidget);
+      // Optionally, if you wish to clear the stats, you can:
+      key.reset();
     }
-    return exerciseStatsList;
-  }
-
-  void AddSetRow() {
     setState(() {
-        setnr = setnr + 1;
+      widgetKeys.clear();
     });
+    print(statsList);
   }
-  void RemoveSetRow() {
-    setState(() {
-      setnr = setnr - 1;
-    });
-  }
-
-
-  void recordExerciseStats(ExerciseStats stat) async {
-    if(exerciseStatsList.)
-      bool containsExercise = exercises.any((exercise) => exercise.id == targetId);
-
-    exerciseStatsList.add(exerciseStat);
-
-    print(exerciseStatsList);
-   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +91,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                 return Text('something went wrong! ${snapshot.error}');
               } else if (snapshot.hasData) {
                 final specificWorkout = snapshot.data!;
+                exerciseId = specificWorkout[counter].id;
                 widgetExerciseList = generateExerciseWidgets(specificWorkout);
                 if(counter >= workoutlength) {
                   return FinishedWorkoutWidget(generatedWorkout : currentWorkout, workoutType: widget.workoutType /*, sentExerciseStats: exerciseStatsList */);
@@ -220,7 +210,10 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                       height: MediaQuery.of(context).size.height * 0.025,
                       child: RawMaterialButton(
                           onPressed: () {
-                            AddSetRow();
+                            setState(() {
+                              widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, setnr));
+                              print("added row");
+                            });
                           },
                           elevation: 2.0,
                           fillColor: Colors.grey,
@@ -239,7 +232,11 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                       height: MediaQuery.of(context).size.height * 0.025,
                       child: RawMaterialButton(
                           onPressed: () {
-                            RemoveSetRow();
+                            if (widgetKeys.isNotEmpty) {
+                              setState(() {
+                                widgetKeys.removeLast();
+                              });
+                            }
                           },
                           elevation: 2.0,
                           fillColor: Colors.grey,
@@ -266,7 +263,9 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
               height: MediaQuery.of(context).size.height * 0.2,
               width: MediaQuery.of(context).size.width,
               child: ListView(
-                  children: createSetList(generatedWorkout.id)
+                  children: [
+                    ...widgetKeys.map((key) => AddSetWidget(customKey: key, setnr: setnr)).toList(),
+                  ]
               ),
             ),
             Expanded(
@@ -275,8 +274,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                   child: ElevatedButton(
                       onPressed: () {
                         counter ++;
-                        setState(() {
-                        });
+                        _handleNext();
                       },
                       child: const Text('Next Exercise')),
                 )

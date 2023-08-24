@@ -5,20 +5,20 @@ class ExerciseStats {
   final int? workoutId;
   final String? userId;
   final int? exerciseId;
-  final DateTime createdDate;
-  final int setnr;
-  final int reps;
-  final int kilo;
+  DateTime? createdDate;
+  final int? setnr;
+  int? reps;
+  int? kilo;
 
 
   ExerciseStats({
     this.workoutId,
     this.userId,
     this.exerciseId,
-    required this.createdDate,
-    required this.setnr,
-    required this.reps,
-    required this.kilo,
+    this.createdDate,
+    this.setnr,
+    this.reps,
+    this.kilo,
   });
 
   factory ExerciseStats.fromJson(Map<String, dynamic>map){
