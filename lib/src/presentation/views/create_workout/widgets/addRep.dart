@@ -8,10 +8,7 @@ import 'package:projekt_frontend/src/utils/globalVariables.dart';
 class AddSetWidget extends StatefulWidget {
   final ExerciseStatKey customKey;
   final int setnr;
-  // final ValueChanged<ExerciseStats> onChanged;
   AddSetWidget({required this.customKey, required this.setnr}) : super(key: customKey.key);
-
-  //const AddSetWidget({required this.rowcount, required this.exerciseId, required this.onSetDataChanged, required this.onChanged, super.key});
 
   @override
   State<AddSetWidget> createState() => _AddSetWidgetState();

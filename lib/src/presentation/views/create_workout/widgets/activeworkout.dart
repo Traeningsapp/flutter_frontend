@@ -1,16 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
-import 'package:projekt_frontend/src/presentation/views/create_workout/interfaces/AddSetWidgetInterface.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedworkout.dart';
-import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
-import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class ActiveWorkoutWidget extends StatefulWidget {
   final List<Exercise>? activeWorkout;
@@ -31,6 +25,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
   int setantal = 3;
   int setnr = 1;
   late int exerciseId;
+  bool firstWidgetCall = true;
 
   var statsList = [];
 
@@ -51,9 +46,12 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     List<Widget> list = <Widget>[];
     Widget _buildwidget;
 
-    for(int i = 1; i <= setantal; i++){
-      widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, i));
-      setnr++;
+    if(firstWidgetCall) {
+      for(int i = 1; i <= setantal; i++){
+        widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, i));
+        setnr++;
+      }
+      firstWidgetCall = false;
     }
 
     workoutlength = workout.length;
@@ -67,14 +65,14 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
 
   void _handleNext() {
     for (var key in widgetKeys) {
-      // Collect your ExerciseStats data here from the individual ExerciseStatWidgets.
       statsList.add(key.stats);
 
-      // Optionally, if you wish to clear the stats, you can:
       key.reset();
     }
     setState(() {
       widgetKeys.clear();
+      firstWidgetCall = true;
+      setnr = 1;
     });
     print(statsList);
   }
@@ -101,7 +99,8 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
-            }));
+            })
+    );
   } // Scaffold
 
   Widget buildWorkoutWidget(Exercise generatedWorkout) => Column(
@@ -212,6 +211,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                           onPressed: () {
                             setState(() {
                               widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, setnr));
+                              setnr++;
                               print("added row");
                             });
                           },
@@ -235,6 +235,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                             if (widgetKeys.isNotEmpty) {
                               setState(() {
                                 widgetKeys.removeLast();
+                                setnr--;
                               });
                             }
                           },
@@ -264,7 +265,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
               width: MediaQuery.of(context).size.width,
               child: ListView(
                   children: [
-                    ...widgetKeys.map((key) => AddSetWidget(customKey: key, setnr: setnr)).toList(),
+                    ...widgetKeys.map((key) => AddSetWidget(customKey: key, setnr: key.stats.setnr!)).toList(),
                   ]
               ),
             ),
