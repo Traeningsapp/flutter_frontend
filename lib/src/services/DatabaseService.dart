@@ -130,7 +130,7 @@ class DatabaseService {
   }
   */
 
-  Future<List<Workout>?> getSavedWorkouts(int userId) async {
+  Future<List<Workout>?> getSavedWorkouts(String userId) async {
     try {
       final url = Uri.parse("$baseUrl/Workout/get/workoutfromhistory/user/$userId");
       final response = await http.get(
@@ -141,6 +141,24 @@ class DatabaseService {
       );
       if (response.statusCode == 200) {
         return workoutsFromJson(response.body);
+      }
+    }
+    catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<Workout?> getSpecificWorkout(int workoutId, String userId) async {
+    try {
+      final url = Uri.parse("$baseUrl/Workout/get/workoutfromhistory/user/$userId/workout/$workoutId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if (response.statusCode == 200) {
+        return workoutFromJson(response.body);
       }
     }
     catch (e) {
