@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/widgets/savedWorkouts.dart';
 
 class SavedWorkoutsPage extends StatefulWidget {
   const SavedWorkoutsPage({Key? key}) : super(key: key);
@@ -10,6 +11,6 @@ class SavedWorkoutsPage extends StatefulWidget {
 class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SavedWorkoutWidget();
   }
 }

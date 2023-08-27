@@ -25,7 +25,6 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
 
   Future<void> _initRetrieval() async {
     muscleExerciseList = _dbService.getMuscleExercises(widget.muscle_id);
-    print('after dbservice');
   }
 
   @override

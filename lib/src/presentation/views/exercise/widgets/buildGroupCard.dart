@@ -26,12 +26,12 @@ class BuildGroupCard extends StatelessWidget {
         ),
         trailing: const Icon(Icons.arrow_right,),
         title: Text(title,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: fontsizeForTitles
           ),
         ),
         subtitle: Text(subtitle,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: fontsizeForSubTitles
           ),
         ),
