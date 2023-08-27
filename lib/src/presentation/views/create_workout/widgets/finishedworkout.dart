@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
+import 'package:projekt_frontend/src/models/exerciseStats.dart';
+import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class FinishedWorkoutWidget extends StatefulWidget {
-  final List<String> sentExerciseIds;
+  final List sentExerciseStats;
   final List<Exercise>? generatedWorkout;
   final String workoutType;
-  const FinishedWorkoutWidget({Key? key, required this.generatedWorkout, required this.workoutType, required this.sentExerciseIds}) : super(key: key);
+  const FinishedWorkoutWidget({Key? key, required this.generatedWorkout, required this.workoutType,required this.sentExerciseStats}) : super(key: key);
 
   @override
   State<FinishedWorkoutWidget> createState() => _FinishedWorkoutWidgetState();
@@ -14,57 +17,62 @@ class FinishedWorkoutWidget extends StatefulWidget {
 
 class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
   final DatabaseService _dbService = DatabaseService();
-  late final List<String> exerciseIds;
-
   final TextEditingController _workoutNameController = TextEditingController();
 
-  late Future<String> confirmation;
+  var recievedExerciseStats;
+  late List<Exercise>? recievedGeneratedWorkout;
+  List<ExerciseStats> exerciseStatsList = [];
+
+  late Workout workout;
+  late bool visibleToUser = false;
+
+  late Future<String?> confirmation;
 
   @override
   void initState() {
     super.initState();
     setList();
+    setupWorkout();
   }
 
   Future<void> setList() async {
-    exerciseIds = widget.sentExerciseIds;
-    debugPrint(exerciseIds.toString());
+    recievedGeneratedWorkout = widget.generatedWorkout;
+    recievedExerciseStats = widget.sentExerciseStats;
+
+    for (dynamic item in recievedExerciseStats) {
+      if (item is ExerciseStats) {
+        exerciseStatsList.add(item);
+      }
+    }
   }
 
-  /*
-  Future<bool?> SaveWorkout() async {
-    confirmation = _dbService.SaveWorkout(exerciseIds, _workoutNameController.text, user.email!, widget.workoutType);
-    Navigator.of(context).pop();
+  void setupWorkout() {
+    workout = Workout(
+        userId: Global_userid,
+        createdDate: DateTime.now(),
+        exercises: recievedGeneratedWorkout,
+        visibleToUser: visibleToUser);
 
-    // evt. noget ala det her for confirmation.
-    // if(confirmation == 'Success')
-    //   {
-    //     showDialog(
-    //         context: context,
-    //         builder: (context) => AlertDialog(
-    //           title: const Text('Saved Workout'),
-    //           content: const Text('Your workout has been saved'),
-    //           actions: [
-    //             TextButton(onPressed: () => Navigator.pop(context),
-    //                 child: const Text('OK'))
-    //           ],
-    //         ));
-    //   } else if(confirmation == 'Error') {
-    //     showDialog(
-    //         context: context,
-    //         builder: (context) => AlertDialog(
-    //           title: const Text('Workout not saved'),
-    //           content: const Text('Something went wrong while trying to save workout'),
-    //           actions: [
-    //             TextButton(onPressed: () => Navigator.pop(context),
-    //                 child: const Text('OK'))
-    //           ],
-    //         ));
-    //   }
-    //
-    //
+    print(workout);
+
+    StoreWorkoutData();
   }
-  */
+
+  void SaveWorkout() {
+    workout.visibleToUser = true;
+    workout.name = _workoutNameController.text;
+  }
+
+  Future<String?> StoreWorkoutData() async {
+    confirmation = _dbService.postWorkout(workout, exerciseStatsList, Global_userid);
+
+    if(confirmation == "Success!");
+    {
+      //Får vi et korrekt svar tilbage?
+      print('Workout and Stats Saved.');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +88,7 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
                 fontSize: 16
               ),
                   textAlign: TextAlign.center,
-                  'You have finished your workout. GJ mate'),
+                  'You have finished your workout. Great job mate.'),
             ],
           ),
           Container(
@@ -94,7 +102,7 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
                     child: ElevatedButton(
                       child: const Text('Go to homepage'),
                       onPressed: () =>
-                          Navigator.popUntil(context, (route) => route.isFirst),
+                          Navigator.popUntil(context, (route) => route.isFirst)
                     ),
                   )
                 ],
@@ -120,7 +128,7 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
                       decoration: const InputDecoration(hintText: "Workout navn"),
                     ),
                     actions: [
-                      TextButton(onPressed: () => (),
+                      TextButton(onPressed: () => SaveWorkout(),
                           child: const Text('Gem Workout')
                       )
                     ],

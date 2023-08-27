@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedworkout.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
@@ -16,16 +16,22 @@ class ActiveWorkoutWidget extends StatefulWidget {
 }
 
 class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
-  late List<Exercise>? currentWorkout;
-  late List<Widget> widgetExerciseList;
-  List<String> exerciseIds = <String>[];
+  final List<ExerciseStatKey> widgetKeys = [];
+  late List<Exercise>? currentWorkout;  //List of exercises to be shown
+  late List<Widget> widgetExerciseList; //List of widgets which takes each of the exercises in the above list
+  int counter = 0;                      //counter when running through exercise widgets.
+  late int workoutlength;               //amount of exercises in list
+  int setantal = 3;
+  int setnr = 1;
+  late int exerciseId;
+  bool firstWidgetCall = true;
 
-  int counter = 0;
-  late int workoutlength;
+  var statsList = [];
 
   @override
   void initState() {
     super.initState();
+    workoutlength = widget.activeWorkout!.length;
   }
 
   Future<List<Exercise>?> setList() async {
@@ -33,20 +39,19 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     return currentWorkout;
   }
 
-  /*
-  Future<void> setExerciseIds(List<Exercise> Workout) async {
-    for (var i = 0; i < Workout.length; i++) {
-      debugPrint('added ${Workout[i].id!}');
-      exerciseIds.add(Workout[i].id!);
-    }
-  }
-   */
+
 
   List<Widget> generateExerciseWidgets(List<Exercise> workout) {
     List<Widget> list = <Widget>[];
     Widget _buildwidget;
 
-    workoutlength = workout.length;
+    if(firstWidgetCall) {
+      for(int i = 1; i <= setantal; i++){
+        widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, i));
+        setnr++;
+      }
+      firstWidgetCall = false;
+    }
 
     for (var i = 0; i < workout.length; i++) {
       _buildwidget = buildWorkoutWidget(workout[i]);
@@ -55,11 +60,25 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     return list;
   }
 
+  void _handleNext() {
+    for (var key in widgetKeys) {
+      statsList.add(key.stats);
+
+      key.reset();
+    }
+    setState(() {
+      widgetKeys.clear();
+      firstWidgetCall = true;
+      setnr = 1;
+    });
+    //print(statsList);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Active Workout', themecolor: Colors.blue),
+        resizeToAvoidBottomInset: false,
+        appBar: const CustomAppBarWidget(title: 'Active Workout', themecolor: Colors.blue),
         body: FutureBuilder<List<Exercise>?>(
             future: setList(),
             builder: (context, AsyncSnapshot<List<Exercise>?> snapshot) {
@@ -67,18 +86,20 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                 return Text('something went wrong! ${snapshot.error}');
               } else if (snapshot.hasData) {
                 final specificWorkout = snapshot.data!;
-                widgetExerciseList = generateExerciseWidgets(specificWorkout);
-                if(counter >= workoutlength) {
-                  //setExerciseIds(specificWorkout);
-                  return FinishedWorkoutWidget(generatedWorkout : currentWorkout, workoutType: widget.workoutType, sentExerciseIds: exerciseIds);
+                if (counter >= specificWorkout.length) {
+                  return FinishedWorkoutWidget(generatedWorkout: currentWorkout, workoutType: widget.workoutType, sentExerciseStats: statsList);
                 } else {
+                  exerciseId = specificWorkout[counter].id;
+                  widgetExerciseList = generateExerciseWidgets(specificWorkout);
                   return widgetExerciseList[counter];
                 }
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
-            }));
+            })
+    );
   } // Scaffold
+
 
   Widget buildWorkoutWidget(Exercise generatedWorkout) => Column(
     children: [
@@ -96,10 +117,10 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     ),
                     generatedWorkout.name),
                 IconButton(
-                    alignment: Alignment.centerRight,
-                    icon: const Icon(Icons.info_outline),
-                    onPressed: () => (),          // Åben info vindue.   {Navigator.push(context, MaterialPageRoute(builder: (context) => const ExerciseHowToWidget()));
-                  ),
+                  alignment: Alignment.centerRight,
+                  icon: const Icon(Icons.info_outline),
+                  onPressed: () => (),          // Åben info vindue.   {Navigator.push(context, MaterialPageRoute(builder: (context) => const ExerciseHowToWidget()));
+                ),
               ],
             ),
             Row(
@@ -109,13 +130,13 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                   width: 10,
                 ),
                 const SizedBox(
-                    width: 90,
-                    child: Text('Benefits :',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  width: 90,
+                  child: Text('Benefits :',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
                 ),
                 Expanded(
                   child: Text(generatedWorkout.benefits,
@@ -157,81 +178,94 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
             Container(
                 alignment: Alignment.center, padding: const EdgeInsets.all(20)),
             const Text('Primary Activation : ',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text('${generatedWorkout.muscleActivation!}'),
-            Container(
-                alignment: Alignment.center, padding: const EdgeInsets.all(30)),
-            Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: 300,
+            SizedBox(
+                height: MediaQuery.of(context).size.height * 0.24,
+                width: MediaQuery.of(context).size.width * 0.6,
                 child: Column(
                   children: <Widget>[
                     Image.asset('assets/images/nocontent.gif')
                   ],
                 )
             ),
-            Container(
+            Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
               width: MediaQuery.of(context).size.width,
               child: Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.3, 0, MediaQuery.of(context).size.width * 0.05, 0),
+                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.25, 0, 0, 0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.05,
+                      height: MediaQuery.of(context).size.height * 0.025,
+                      child: RawMaterialButton(
+                          onPressed: () {
+                            setState(() {
+                              widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, setnr));
+                              setnr++;
+                              print("added row");
+                            });
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.grey,
+                          child: Icon(
+                            Icons.add,
+                            size: 10.0,
+                          ),
+                          shape: BeveledRectangleBorder()
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.01,0, 0, 0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.05,
+                      height: MediaQuery.of(context).size.height * 0.025,
+                      child: RawMaterialButton(
+                          onPressed: () {
+                            if (widgetKeys.isNotEmpty) {
+                              setState(() {
+                                widgetKeys.removeLast();
+                                setnr--;
+                              });
+                            }
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.grey,
+                          child: Icon(
+                            Icons.remove,
+                            size: 10.0,
+                          ),
+                          shape: BeveledRectangleBorder()
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.15, 0, MediaQuery.of(context).size.width * 0.05, 0),
                     child: Text("Kilo"),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 0, MediaQuery.of(context).size.width * 0.05, 0),
                     child: Text("Reps"),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 0, MediaQuery.of(context).size.width * 0.1, 0),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.06,
-                      height: MediaQuery.of(context).size.height * 0.03,
-                      child: RawMaterialButton(
-                        onPressed: () {},
-                        elevation: 2.0,
-                        fillColor: Colors.grey,
-                        child: Icon(
-                          Icons.add,
-                          size: 20.0,
-                        ),
-                        shape: CircleBorder(),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0)),
-            Row(
-              children: [
-                AddSetWidget(ctn: 1),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.04, 0, 0, 0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.08,
-                    height: MediaQuery.of(context).size.height * 0.02,
-
-
-                    child: RawMaterialButton(
-                      onPressed: () {},
-                      elevation: 2.0,
-                      fillColor: Colors.grey,
-                      child: Icon(
-                        Icons.remove,
-                        size: 10.0,
-                      ),
-                      shape: BeveledRectangleBorder()
-                    ),
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width,
+              child: ListView(
+                  children: [
+                    ...widgetKeys.map((key) => AddSetWidget(customKey: key, setnr: key.stats.setnr!)).toList(),
+                  ]
+              ),
             ),
             Expanded(
                 child: Align(
@@ -239,8 +273,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                   child: ElevatedButton(
                       onPressed: () {
                         counter ++;
-                        setState(() {
-                        });
+                        _handleNext();
                       },
                       child: const Text('Next Exercise')),
                 )

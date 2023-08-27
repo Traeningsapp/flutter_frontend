@@ -4,15 +4,21 @@ import 'dart:collection';
 import 'package:projekt_frontend/src/models/exercise.dart';
 
 class Workout {
-  final int id;
-  final String name;
-  final List<Exercise> exercises;
+  late int? id;
+  late String? userId;
+  late String? name;
+  late DateTime? createdDate;
+  late List<Exercise>? exercises;
+  late bool? visibleToUser;
 
   // constructor
   Workout({
-    required this.id,
-    required this.name,
-    required this.exercises,
+    this.id,
+    this.userId,
+    this.name,
+    this.createdDate,
+    this.exercises,
+    this.visibleToUser,
   });
 
   factory Workout.fromJson(Map<String, dynamic>map) {
@@ -24,28 +30,39 @@ class Workout {
 
     return Workout(
       id: map['id'],
+      userId: map['userId'],
       name: map['name'],
+      createdDate: map['createdDate'],
       exercises: exerciseList,
+      visibleToUser: map['visibleToUser']
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       "id": id,
+      "userId": userId,
       "name": name,
+      "createdDate": createdDate,
       "exercises": exercises == null ? [] : List<dynamic>.from(exercises!.map((x) => x)),
+      "visibleToUser": visibleToUser
     };
   }
 
   @override
   String toString() {
-    return 'Workout {id: $id, name: $name, exercises: $exercises}';
+    return 'Workout {id: $id, userId: $userId, name: $name, createdDate: $createdDate, exercises: $exercises, visibleToUser: $visibleToUser}';
   }
 }
 
 Workout workoutFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return Workout.fromJson(data);
+}
+
+List<Workout> workoutsFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<Workout>.from(data.map((item) => Workout.fromJson(item)));
 }
 
 String workoutToJson(Workout data) {
