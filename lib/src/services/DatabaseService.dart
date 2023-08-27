@@ -129,6 +129,25 @@ class DatabaseService {
     }
   }
   */
+
+  Future<List<Workout>?> getSavedWorkouts(int userId) async {
+    try {
+      final url = Uri.parse("$baseUrl/Workout/get/workoutfromhistory/user/$userId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if (response.statusCode == 200) {
+        return workoutsFromJson(response.body);
+      }
+    }
+    catch (e) {
+      log(e.toString());
+    }
+  }
+
 }
 
 
