@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
-import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/interfaces/AddSetWidgetInterface.dart';
-import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class AddSetWidget extends StatefulWidget {
   final ExerciseStatKey customKey;
@@ -50,15 +48,21 @@ class _AddSetWidgetState extends State<AddSetWidget> implements IAddSetWidget {
             width: MediaQuery.of(context).size.width * 0.1,
             height: MediaQuery.of(context).size.height * 0.03,
             child: TextFormField(
+              style: const TextStyle(
+                fontSize: 11,
+              ),
+              textAlign: TextAlign.center,
               controller: kiloController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(3)
               ],
               onChanged: (value) {
                 widget.customKey.stats.kilo = int.tryParse(value) ?? 0;
               },
               decoration: const InputDecoration(
+                contentPadding: EdgeInsets.zero,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -70,15 +74,21 @@ class _AddSetWidgetState extends State<AddSetWidget> implements IAddSetWidget {
             width: MediaQuery.of(context).size.width * 0.1,
             height: MediaQuery.of(context).size.height * 0.03,
             child: TextFormField(
+              style: const TextStyle(
+                fontSize: 11,
+              ),
+              textAlign: TextAlign.center,
               controller: repsController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(3)
               ],
               onChanged: (value) {
                 widget.customKey.stats.reps = int.tryParse(value) ?? 0;
               },
               decoration: const InputDecoration(
+                contentPadding: EdgeInsets.zero,
                 border: OutlineInputBorder(),
               ),
             ),

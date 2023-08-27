@@ -44,8 +44,8 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
     Workout? generatedWorkout = await getWorkout(split_id, Global_userid);
 
     if (generatedWorkout != null) {
-      List<Exercise> queue = generatedWorkout.exercises;
-      exerciseList = queue.toList();
+      List<Exercise>? queue = generatedWorkout.exercises;
+      exerciseList = queue!.toList();
     }
 
     if (exerciseList != null) {
@@ -60,178 +60,178 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.center,
-                child: const Text(
-                  'Before a workout can be generated for you, you will need to select some values',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.center,
+              child: const Text(
+                'Before a workout can be generated for you, you will need to select some values',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
               ),
-              const Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+            ),
+            const Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    'Please choose split type :'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  alignment: Alignment.center,
+                  child: DropdownButton(
+                      alignment: Alignment.center,
+                      value: splitdropdownValue,
+                      iconSize: 16,
+                      isExpanded: true,
+                      iconEnabledColor: Colors.blue,
+                      style: const TextStyle(
+                        color: Colors.black,
                       ),
-                      'Please choose split type :'),
-                ],
-              ),
-              Row(
+                      items: splitList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          // This is called when the user selects an item.
+                          splitdropdownValue = value!;
+                        });
+                      }),
+                ),
+              ],
+            ),
+            //const Padding(padding: EdgeInsets.fromLTRB(0, 25, 0, 0)),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    'Add Abs exercises:'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  alignment: Alignment.center,
+                  child: DropdownButton(
+                      value: absdropdownValue,
+                      iconSize: 16,
+                      iconEnabledColor: Colors.blue,
+                      isExpanded: true,
+                      style: const TextStyle(color: Colors.black),
+                      items: absList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          // This is called when the user selects an item.
+                          absdropdownValue = value!;
+                          if (absdropdownValue == 'Yes') {
+                            abs = true;
+                          }
+                        });
+                      }),
+                ),
+              ],
+            ),
+            //const Padding(padding: EdgeInsets.fromLTRB(0, 25, 0, 0)),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    'Apply additional focus : '),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  alignment: Alignment.center,
+                  child: DropdownButton(
+                      alignment: Alignment.center,
+                      value: additionalfocusdropdownValue,
+                      iconSize: 16,
+                      iconEnabledColor: Colors.blue,
+                      isExpanded: true,
+                      style: const TextStyle(color: Colors.black),
+                      items: additionalFocusList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          // This is called when the user selects an item.
+                          additionalfocusdropdownValue = value!;
+                        });
+                      }),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 150,
-                    alignment: Alignment.center,
-                    child: DropdownButton(
-                        alignment: Alignment.center,
-                        value: splitdropdownValue,
-                        iconSize: 16,
-                        isExpanded: true,
-                        iconEnabledColor: Colors.blue,
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        items: splitList
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            // This is called when the user selects an item.
-                            splitdropdownValue = value!;
-                          });
-                        }),
-                  ),
-                ],
-              ),
-              //const Padding(padding: EdgeInsets.fromLTRB(0, 25, 0, 0)),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      'Add Abs exercises:'),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 150,
-                    alignment: Alignment.center,
-                    child: DropdownButton(
-                        value: absdropdownValue,
-                        iconSize: 16,
-                        iconEnabledColor: Colors.blue,
-                        isExpanded: true,
-                        style: const TextStyle(color: Colors.black),
-                        items: absList
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            // This is called when the user selects an item.
-                            absdropdownValue = value!;
-                            if (absdropdownValue == 'Yes') {
-                              abs = true;
-                            }
-                          });
-                        }),
-                  ),
-                ],
-              ),
-              //const Padding(padding: EdgeInsets.fromLTRB(0, 25, 0, 0)),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      'Apply additional focus : '),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 150,
-                    alignment: Alignment.center,
-                    child: DropdownButton(
-                        alignment: Alignment.center,
-                        value: additionalfocusdropdownValue,
-                        iconSize: 16,
-                        iconEnabledColor: Colors.blue,
-                        isExpanded: true,
-                        style: const TextStyle(color: Colors.black),
-                        items: additionalFocusList
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            // This is called when the user selects an item.
-                            additionalfocusdropdownValue = value!;
-                          });
-                        }),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: FittedBox(
-                        child: ElevatedButton(
-                          child: const Text(
-                              textScaleFactor: 0.7,
-                              textAlign: TextAlign.center,
-                              'Start Worktout'),
-                          onPressed: () => GenerateWorkout(),
-                        ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: FittedBox(
+                      child: ElevatedButton(
+                        child: const Text(
+                            textScaleFactor: 0.7,
+                            textAlign: TextAlign.center,
+                            'Start Worktout'),
+                        onPressed: () => GenerateWorkout(),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ); // Scaffold
+      ),
+    ); // Scaffold
   }
 }

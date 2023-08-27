@@ -60,6 +60,7 @@ class DatabaseService {
       print(Global_userid);
       print(response.statusCode);
       if(response.statusCode == 200) {
+        //print(response.body);
         return workoutFromJson(response.body);
       }
     }
@@ -68,18 +69,25 @@ class DatabaseService {
     }
   }
 
-  Future<String> postEndOfWorkoutStats(List<ExerciseStats> exerciseStats) async {
+  Future<String?> postWorkout(Workout workout, List<ExerciseStats> stats, String userid) async {
     try{
-      final url = Uri.parse("$baseUrl/Workout/post/WorkoutStats/$exerciseStats");
+      final url = Uri.parse("$baseUrl/Workout/post/workout/user/$userid");
 
-      final List<Map<String, dynamic>> exerciseStatsJson = exerciseStats.map((stats) => stats.toJson()).toList();
-      
+      List<Map<String, dynamic>> jsonExerciseStatList = exerciseStatsListToJson(stats);
+      String JsonWorkout = workoutToJson(workout);
+
+      final bodyData = {
+        JsonWorkout,
+        jsonExerciseStatList
+      };
+
+      //print(bodyData);
       final response = await http.post(
         url,
         headers: {
           'Authorization': 'Bearer $accessToken'
         },
-        body: exerciseStatsJson
+        body: bodyData
       );
 
       if (response.statusCode == 200) {

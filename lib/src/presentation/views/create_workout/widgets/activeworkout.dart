@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedworkout.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
@@ -29,18 +28,18 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
 
   var statsList = [];
 
-  late ExerciseStats exerciseStat;
-  late List<ExerciseStats> exerciseStatsList;
-
   @override
   void initState() {
     super.initState();
+    workoutlength = widget.activeWorkout!.length;
   }
 
   Future<List<Exercise>?> setList() async {
     currentWorkout = widget.activeWorkout;
     return currentWorkout;
   }
+
+
 
   List<Widget> generateExerciseWidgets(List<Exercise> workout) {
     List<Widget> list = <Widget>[];
@@ -53,8 +52,6 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
       }
       firstWidgetCall = false;
     }
-
-    workoutlength = workout.length;
 
     for (var i = 0; i < workout.length; i++) {
       _buildwidget = buildWorkoutWidget(workout[i]);
@@ -74,14 +71,14 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
       firstWidgetCall = true;
       setnr = 1;
     });
-    print(statsList);
+    //print(statsList);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: const CustomAppBarWidget(title: 'Active Workout', themecolor: Colors.blue),
+        resizeToAvoidBottomInset: false,
+        appBar: const CustomAppBarWidget(title: 'Active Workout', themecolor: Colors.blue),
         body: FutureBuilder<List<Exercise>?>(
             future: setList(),
             builder: (context, AsyncSnapshot<List<Exercise>?> snapshot) {
@@ -89,11 +86,11 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                 return Text('something went wrong! ${snapshot.error}');
               } else if (snapshot.hasData) {
                 final specificWorkout = snapshot.data!;
-                exerciseId = specificWorkout[counter].id;
-                widgetExerciseList = generateExerciseWidgets(specificWorkout);
-                if(counter >= workoutlength) {
-                  return FinishedWorkoutWidget(generatedWorkout : currentWorkout, workoutType: widget.workoutType /*, sentExerciseStats: exerciseStatsList */);
+                if (counter >= specificWorkout.length) {
+                  return FinishedWorkoutWidget(generatedWorkout: currentWorkout, workoutType: widget.workoutType, sentExerciseStats: statsList);
                 } else {
+                  exerciseId = specificWorkout[counter].id;
+                  widgetExerciseList = generateExerciseWidgets(specificWorkout);
                   return widgetExerciseList[counter];
                 }
               } else {
@@ -102,6 +99,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
             })
     );
   } // Scaffold
+
 
   Widget buildWorkoutWidget(Exercise generatedWorkout) => Column(
     children: [
@@ -119,10 +117,10 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     ),
                     generatedWorkout.name),
                 IconButton(
-                    alignment: Alignment.centerRight,
-                    icon: const Icon(Icons.info_outline),
-                    onPressed: () => (),          // Åben info vindue.   {Navigator.push(context, MaterialPageRoute(builder: (context) => const ExerciseHowToWidget()));
-                  ),
+                  alignment: Alignment.centerRight,
+                  icon: const Icon(Icons.info_outline),
+                  onPressed: () => (),          // Åben info vindue.   {Navigator.push(context, MaterialPageRoute(builder: (context) => const ExerciseHowToWidget()));
+                ),
               ],
             ),
             Row(
@@ -132,13 +130,13 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                   width: 10,
                 ),
                 const SizedBox(
-                    width: 90,
-                    child: Text('Benefits :',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  width: 90,
+                  child: Text('Benefits :',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
                 ),
                 Expanded(
                   child: Text(generatedWorkout.benefits,
@@ -180,11 +178,11 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
             Container(
                 alignment: Alignment.center, padding: const EdgeInsets.all(20)),
             const Text('Primary Activation : ',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text('${generatedWorkout.muscleActivation!}'),
             SizedBox(
@@ -286,4 +284,3 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     ],
   );
 }
-

@@ -61,3 +61,10 @@ String exerciseStatsToJson(ExerciseStats data) {
   return json.encode(jsonData);
 }
 
+List<Map<String, dynamic>> exerciseStatsListToJson(List<ExerciseStats> exerciseStatsList) {
+  List<Map<String, dynamic>> jsonList = [];
+  for (var stats in exerciseStatsList) {
+    jsonList.add(stats.toJson());
+  }
+  return jsonList;
+}
