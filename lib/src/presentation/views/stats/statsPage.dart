@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/presentation/views/settings/settings_page.dart';
+import 'package:projekt_frontend/src/presentation/views/settings/settingsPage.dart';
 
 class StatsPage extends StatelessWidget {
   const StatsPage({Key? key}) : super(key: key);

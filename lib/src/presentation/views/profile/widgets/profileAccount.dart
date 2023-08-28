@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/profile_page.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/profilePage.dart';
 
 const List<String> accountList = ['My account settings','Initial questions','Delete account?'];
 const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.question_mark), Icon(Icons.delete_forever)];

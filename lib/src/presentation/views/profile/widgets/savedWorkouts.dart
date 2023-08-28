@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/presentation/views/profile/widgets/specificWorkout.dart';
-import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
+import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';

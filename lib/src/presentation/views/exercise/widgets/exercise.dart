@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
+import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/utils/extensions.dart';
 
 class ExerciseWidget extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/favorite_exercises.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/profile_account_page.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/saved_workouts.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/favoriteExercises.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/profileAccountPage.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/savedWorkoutsPage.dart';
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:auth0_flutter/auth0_flutter_web.dart';
 

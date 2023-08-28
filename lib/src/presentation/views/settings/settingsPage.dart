@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/presentation/views/settings/components_widgets/settings_widget.dart';
-import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
+import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);

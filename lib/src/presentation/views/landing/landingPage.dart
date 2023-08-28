@@ -1,16 +1,16 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/models/menu_content.dart';
-import 'package:projekt_frontend/src/presentation/views/exercise/exercise_page.dart';
-import 'package:projekt_frontend/src/presentation/views/help/help_page.dart';
-import 'package:projekt_frontend/src/presentation/views/home/home_page.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/profile_page.dart';
-import 'package:projekt_frontend/src/presentation/views/landing/widgets/InfoCard.dart';
+import 'package:projekt_frontend/src/models/menuContent.dart';
+import 'package:projekt_frontend/src/presentation/views/exercise/exercisePage.dart';
+import 'package:projekt_frontend/src/presentation/views/help/helpPage.dart';
+import 'package:projekt_frontend/src/presentation/views/home/homePage.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/profilePage.dart';
+import 'package:projekt_frontend/src/presentation/views/landing/widgets/infoCard.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/menubtn.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/topSideMenuTile.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/bottomSideMenuTile.dart';
-import 'package:projekt_frontend/src/presentation/views/settings/settings_page.dart';
-import 'package:projekt_frontend/src/presentation/views/stats/stats_page.dart';
+import 'package:projekt_frontend/src/presentation/views/settings/settingsPage.dart';
+import 'package:projekt_frontend/src/presentation/views/stats/statsPage.dart';
 import 'package:projekt_frontend/src/utils/rive_utils.dart';
 import 'package:rive/rive.dart';
 

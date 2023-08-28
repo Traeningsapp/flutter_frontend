@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:projekt_frontend/src/presentation/views/hero.dart';
-import 'package:projekt_frontend/src/presentation/views/landing/landing_page.dart';
+import 'package:projekt_frontend/src/presentation/views/landing/landingPage.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 import '../../utils/constants.dart';

@@ -1,6 +1,6 @@
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/presentation/views/create_workout/create_workout.dart';
+import 'package:projekt_frontend/src/presentation/views/create_workout/createWorkout.dart';
 
 class HomeWidget extends StatelessWidget {
 

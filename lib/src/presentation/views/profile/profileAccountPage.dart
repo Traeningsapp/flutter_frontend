@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/widgets/profile_account.dart';
-import 'package:projekt_frontend/src/presentation/views/settings/settings_page.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/widgets/profileAccount.dart';
+import 'package:projekt_frontend/src/presentation/views/settings/settingsPage.dart';
 
 class ProfileAccountPage extends StatefulWidget {
   const ProfileAccountPage({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class _ProfileAccountPageState extends State<ProfileAccountPage> {
         shadowColor: Colors.orangeAccent,
         centerTitle: true,
         title: const Text('Profile'),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.orange,
         shape: const Border(
             bottom: BorderSide(
               color: Colors.orangeAccent,

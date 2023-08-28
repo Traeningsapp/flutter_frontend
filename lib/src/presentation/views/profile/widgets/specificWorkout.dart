@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
-import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
+import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 

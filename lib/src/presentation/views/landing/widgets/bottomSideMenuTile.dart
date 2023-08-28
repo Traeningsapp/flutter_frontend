@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/models/menu_content.dart';
+import 'package:projekt_frontend/src/models/menuContent.dart';
 import 'package:rive/rive.dart';
 
 

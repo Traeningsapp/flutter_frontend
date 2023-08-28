@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
-import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedworkout.dart';
-import 'package:projekt_frontend/src/presentation/views/universal/customappbar_widget.dart';
+import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedWorkout.dart';
+import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 
 class ActiveWorkoutWidget extends StatefulWidget {
   final List<Exercise>? activeWorkout;
