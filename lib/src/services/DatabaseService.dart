@@ -70,16 +70,14 @@ class DatabaseService {
     }
   }
 
-  Future<int?> postWorkout(Workout workout, List<ExerciseStats> stats, String userid) async {
+  Future<int?> postWorkout(Workout workout, String userid) async {
     try {
       final url = Uri.parse("$baseUrl/Workout/post/workout/user/$userid");
 
       String jsonWorkout = workoutToJson(workout);
-      String jsonExerciseStatList = json.encode(exerciseStatsListToJson(stats));
 
       var bodyData = {
-        "WorkoutAsJson": jsonWorkout,
-        "ExerciseStatsAsJson": jsonExerciseStatList
+        "WorkoutAsJson": jsonWorkout
       };
 
       final response = await http.post(

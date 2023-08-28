@@ -26,6 +26,19 @@ class Exercise {
     this.exerciseStats,
   });
 
+  Exercise copyWith({
+    List<ExerciseStats>? stats,
+  }) {
+    return Exercise(
+      id: id,
+      name: name,
+      description: description,
+      benefits: benefits,
+      startingCompound: startingCompound,
+      exerciseStats: stats ?? exerciseStats,
+    );
+  }
+
   factory Exercise.fromJson(Map<String, dynamic>map){
     List<ExerciseStats> exerciseStatsList = [];
     if (map['exerciseStats'] != null) {
