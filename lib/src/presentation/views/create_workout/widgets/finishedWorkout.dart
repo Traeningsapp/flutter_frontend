@@ -51,11 +51,11 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
     workout = Workout(
         userId: Global_userid,
         createdDate: DateTime.now(),
-        exercises: recievedGeneratedWorkout,
+        exercises: recievedGeneratedWorkout?.map((exercise) {
+          List<ExerciseStats> stats = exerciseStatsList.where((stats) => stats.exerciseId == exercise.id).toList();
+          return exercise.copyWith(stats: stats);
+        }).toList(),
         visibleToUser: visibleToUser);
-
-    //print(workout);
-
   }
 
   void SaveWorkout() {
@@ -64,11 +64,10 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
   }
 
   Future<String?> StoreWorkoutData() async {
-    confirmation = await _dbService.postWorkout(workout, exerciseStatsList, Global_userid);
+    confirmation = await _dbService.postWorkout(workout, Global_userid);
 
     if(confirmation == 200)
     {
-      //Får vi et korrekt svar tilbage?
       print('Workout and Stats Saved.');
     }
   }
