@@ -132,7 +132,7 @@ class DatabaseService {
 
   Future<List<Workout>?> getSavedWorkouts(String userId) async {
     try {
-      final url = Uri.parse("$baseUrl/Workout/get/workoutfromhistory/user/$userId");
+      final url = Uri.parse("$baseUrl/Workout/get/workouthistory/user/$userId");
       final response = await http.get(
         url,
         headers: {
@@ -141,6 +141,8 @@ class DatabaseService {
       );
       if (response.statusCode == 200) {
         return workoutsFromJson(response.body);
+      } else {
+        print(response.statusCode);
       }
     }
     catch (e) {
@@ -159,6 +161,8 @@ class DatabaseService {
       );
       if (response.statusCode == 200) {
         return workoutFromJson(response.body);
+      } else {
+        print(response.statusCode);
       }
     }
     catch (e) {
