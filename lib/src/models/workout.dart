@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
-import 'dart:collection';
 import 'package:projekt_frontend/src/models/exercise.dart';
 
 class Workout {
@@ -21,7 +19,7 @@ class Workout {
     this.visibleToUser,
   });
 
-  factory Workout.fromJson(Map<String, dynamic>map) {
+  factory Workout.fromJson(Map<String, dynamic> map) {
     List<Exercise> exerciseList = [];
     if (map['exercises'] != null) {
       var exercisesData = map['exercises'] as List<dynamic>;
@@ -29,12 +27,12 @@ class Workout {
     }
 
     return Workout(
-      id: map['id'],
-      userId: map['userId'],
-      name: map['name'],
-      createdDate: map['createdDate'],
-      exercises: exerciseList,
-      visibleToUser: map['visibleToUser']
+        id: map['id'],
+        userId: map['userId'],
+        name: map['name'],
+        createdDate: map['createdDate'] != null ? DateTime.parse(map['createdDate']) : null,
+        exercises: exerciseList,
+        visibleToUser: map['visibleToUser']
     );
   }
 
@@ -43,8 +41,8 @@ class Workout {
       "id": id,
       "userId": userId,
       "name": name,
-      "createdDate": createdDate,
-      "exercises": exercises == null ? [] : List<dynamic>.from(exercises!.map((x) => x)),
+      "createdDate": createdDate?.toIso8601String(),
+      "exercises": exercises == null ? [] : List<dynamic>.from(exercises!.map((x) => x.toJson())).toList(),
       "visibleToUser": visibleToUser
     };
   }
@@ -67,5 +65,6 @@ List<Workout> workoutsFromJson(String jsonData) {
 
 String workoutToJson(Workout data) {
   final jsonData = data.toJson();
-  return json.encode(jsonData);
+  print(jsonData);
+  return jsonEncode(jsonData);
 }

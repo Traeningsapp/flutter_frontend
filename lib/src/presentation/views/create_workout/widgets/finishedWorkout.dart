@@ -26,13 +26,14 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
   late Workout workout;
   late bool visibleToUser = false;
 
-  late Future<String?> confirmation;
+  late int? confirmation;
 
   @override
   void initState() {
     super.initState();
     setList();
     setupWorkout();
+    StoreWorkoutData();
   }
 
   Future<void> setList() async {
@@ -53,9 +54,8 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
         exercises: recievedGeneratedWorkout,
         visibleToUser: visibleToUser);
 
-    print(workout);
+    //print(workout);
 
-    StoreWorkoutData();
   }
 
   void SaveWorkout() {
@@ -64,9 +64,9 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
   }
 
   Future<String?> StoreWorkoutData() async {
-    confirmation = _dbService.postWorkout(workout, exerciseStatsList, Global_userid);
+    confirmation = await _dbService.postWorkout(workout, exerciseStatsList, Global_userid);
 
-    if(confirmation == "Success!");
+    if(confirmation == 200)
     {
       //Får vi et korrekt svar tilbage?
       print('Workout and Stats Saved.');

@@ -8,7 +8,7 @@ class Exercise {
   final String name;
   final String description;
   final String benefits;
-  final Image? asset;
+  final String? asset;
   final List<String?>? muscleActivation;
   final List<String?>? includedIn;
   final bool? startingCompound;
@@ -53,10 +53,10 @@ class Exercise {
       "description": description,
       "benefits": benefits,
       "asset": asset,
-      "muscleActivation": muscleActivation == null ? [] : List<dynamic>.from(muscleActivation!.map((x) => x)),
-      "included_in": includedIn == null ? [] : List<dynamic>.from(includedIn!.map((x) => x)),
+      "muscleActivation": muscleActivation == null ? [] : List<dynamic>.from(muscleActivation!.map((x) => x.toString())).toList(),
+      "included_in": includedIn == null ? [] : List<dynamic>.from(includedIn!.map((x) => x.toString())).toList(),
       "starting_compound": startingCompound,
-      "exerciseStats": exerciseStats == null ? [] : List<dynamic>.from(exerciseStats!.map((x) => x)),
+      "exerciseStats": exerciseStats == null ? [] : List<dynamic>.from(exerciseStats!.map((x) => x.toJson())).toList(),
     };
   }
 
@@ -72,6 +72,5 @@ List<Exercise> exercisesFromJson(String jsonData) {
 }
 
 String exerciseToJson(Exercise data) {
-  final jsonData = data.toJson();
-  return json.encode(jsonData);
+  return jsonEncode(data);
 }
