@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
-import 'dart:collection';
 import 'package:projekt_frontend/src/models/exercise.dart';
 
 class Workout {
@@ -44,7 +42,7 @@ class Workout {
       "userId": userId,
       "name": name,
       "createdDate": createdDate,
-      "exercises": exercises == null ? [] : List<dynamic>.from(exercises!.map((x) => x)),
+      "exercises": exercises == null ? [] : List<dynamic>.from(exercises!.map((x) => x.toJson())).toList(),
       "visibleToUser": visibleToUser
     };
   }
@@ -67,5 +65,6 @@ List<Workout> workoutsFromJson(String jsonData) {
 
 String workoutToJson(Workout data) {
   final jsonData = data.toJson();
-  return json.encode(jsonData);
+  print(jsonData);
+  return jsonEncode(jsonData);
 }

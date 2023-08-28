@@ -69,19 +69,23 @@ class DatabaseService {
     }
   }
 
-  Future<String?> postWorkout(Workout workout, List<ExerciseStats> stats, String userid) async {
+  Future<int?> postWorkout(Workout workout, List<ExerciseStats> stats, String userid) async {
     try{
       final url = Uri.parse("$baseUrl/Workout/post/workout/user/$userid");
 
+      print('1');
       List<Map<String, dynamic>> jsonExerciseStatList = exerciseStatsListToJson(stats);
-      String JsonWorkout = workoutToJson(workout);
+      print('2');
+      String jsonWorkout = workoutToJson(workout);
+      print('3');
 
-      final bodyData = {
-        JsonWorkout,
+
+      var bodyData = {
+        jsonWorkout,
         jsonExerciseStatList
       };
+      print(bodyData.toString());
 
-      //print(bodyData);
       final response = await http.post(
         url,
         headers: {
@@ -89,16 +93,12 @@ class DatabaseService {
         },
         body: bodyData
       );
-
-      if (response.statusCode == 200) {
-        return "Success!";
-      } else {
-        return "Failed with status code: ${response.statusCode}";
-      }
+      print(response.statusCode);
+      return response.statusCode;
     }
     catch(e) {
       log(e.toString());
-      return "An error occurred";
+      return 500;
     }
   }
 
