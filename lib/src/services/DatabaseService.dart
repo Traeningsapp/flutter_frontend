@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
@@ -70,65 +71,32 @@ class DatabaseService {
   }
 
   Future<int?> postWorkout(Workout workout, List<ExerciseStats> stats, String userid) async {
-    try{
+    try {
       final url = Uri.parse("$baseUrl/Workout/post/workout/user/$userid");
 
-      print('1');
-      List<Map<String, dynamic>> jsonExerciseStatList = exerciseStatsListToJson(stats);
-      print('2');
       String jsonWorkout = workoutToJson(workout);
-      print('3');
-
+      String jsonExerciseStatList = json.encode(exerciseStatsListToJson(stats));
 
       var bodyData = {
-        jsonWorkout,
-        jsonExerciseStatList
+        "WorkoutAsJson": jsonWorkout,
+        "ExerciseStatsAsJson": jsonExerciseStatList
       };
-      print(bodyData.toString());
-
-      final response = await http.post(
-        url,
-        headers: {
-          'Authorization': 'Bearer $accessToken'
-        },
-        body: bodyData
-      );
-      print(response.statusCode);
-      return response.statusCode;
-    }
-    catch(e) {
-      log(e.toString());
-      return 500;
-    }
-  }
-
-  /*
-  Future<String> postSavedWorkout(Workout savedWorkout) async {
-    try{
-      final url = Uri.parse("$baseUrl/Workout/post/WorkoutStats/$exerciseStats");
-
-      final List<Map<String, dynamic>> exerciseStatsJson = exerciseStats.map((stats) => stats.toJson()).toList();
 
       final response = await http.post(
           url,
           headers: {
-            'Authorization': 'Bearer $accessToken'
+            'Authorization': 'Bearer $accessToken',
+            'Content-Type': 'application/json'
           },
-          body: exerciseStatsJson
+          body: json.encode(bodyData)
       );
 
-      if (response.statusCode == 200) {
-        return "Success!";
-      } else {
-        return "Failed with status code: ${response.statusCode}";
-      }
-    }
-    catch(e) {
+      return response.statusCode;
+    } catch(e) {
       log(e.toString());
-      return "An error occurred";
+      return 500;
     }
   }
-  */
 
   Future<List<Workout>?> getSavedWorkouts(String userId) async {
     try {
