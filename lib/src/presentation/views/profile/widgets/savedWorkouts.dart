@@ -18,17 +18,10 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
 
   late Future<List<Workout>?> workoutList;
 
-  late String name;
-  late String splitType;
-  late int workoutId;
-
-
-
   @override
   void initState() {
     _initRetrieval();
   }
-
 
   Future<void> _initRetrieval() async {
     workoutList = _dbService.getSavedWorkouts(Global_userid);
@@ -44,11 +37,11 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
           if (snapshot.hasError) {
             return Text('something went wrong! ${snapshot.error}');
           } else if (snapshot.hasData) {
-            final specificWorkout = snapshot.data!;
+            final retrievedWorkoutData = snapshot.data!;
             return ListView.builder(
-                itemCount: specificWorkout.length,
+                itemCount: retrievedWorkoutData.length,
                 itemBuilder: (context, index) {
-                  return buildWorkoutCard(specificWorkout[index]);
+                  return buildWorkoutCard(retrievedWorkoutData[index]);
                 }
             );
           } else {
@@ -68,13 +61,13 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
         tileColor: Colors.white,
         contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
         trailing: const Icon(Icons.arrow_right,),
-        title: Text(name,
+        title: Text(workout.name!,
           style: const TextStyle(
               fontSize: fontsizeForTitles
           ),
         ),
-        subtitle: Text(workout.createdDate as String,
-          style: const TextStyle(
+        subtitle: const Text('add split type',
+          style: TextStyle(
               fontSize: fontsizeForSubTitles
           ),
         ),
