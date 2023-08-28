@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/widgets/profile_account_widget.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/widgets/profile_account.dart';
 import 'package:projekt_frontend/src/presentation/views/settings/settings_page.dart';
 
 class ProfileAccountPage extends StatefulWidget {
