@@ -8,7 +8,8 @@ import 'package:projekt_frontend/src/presentation/views/universal/customappbar.d
 class ActiveWorkoutWidget extends StatefulWidget {
   final List<Exercise>? activeWorkout;
   final String workoutType;
-  const ActiveWorkoutWidget({Key? key, required this.activeWorkout, required this.workoutType})
+  final Color themecolor;
+  const ActiveWorkoutWidget({Key? key, required this.activeWorkout, required this.workoutType, required this.themecolor})
       : super(key: key);
 
   @override
@@ -78,7 +79,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: const CustomAppBarWidget(title: 'Active Workout', themecolor: Colors.blue),
+        appBar: CustomAppBarWidget(title: 'Active Workout', themecolor: widget.themecolor),
         body: FutureBuilder<List<Exercise>?>(
             future: setList(),
             builder: (context, AsyncSnapshot<List<Exercise>?> snapshot) {

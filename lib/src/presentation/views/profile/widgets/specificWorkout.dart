@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
+import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/activeWorkout.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
@@ -18,15 +19,24 @@ class SpecificWorkoutWidget extends StatefulWidget {
 class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
   final DatabaseService _dbService = DatabaseService();
   late Future<Workout?> savedWorkout;
+  late List<Exercise>? exercisesToStartWorkout;
 
   @override
   void initState() {
     super.initState();
     _initRetrieval();
+    createWorkoutList();
   }
 
   Future<void> _initRetrieval() async {
     savedWorkout = _dbService.getSpecificWorkout(widget.workoutId!, Global_userid);
+  }
+
+  void createWorkoutList() async {
+    if(savedWorkout != null) {
+      Workout? workout = await savedWorkout;
+      exercisesToStartWorkout = workout!.exercises;
+    }
   }
 
   @override
@@ -40,11 +50,42 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
             return Text('something went wrong! ${snapshot.error}');
           } else if (snapshot.hasData) {
             final specificWorkout = snapshot.data!;
-            return ListView.builder(
-                itemCount: specificWorkout.exercises!.length,
-                itemBuilder: (context, index) {
-                  return buildWorkoutExercise(specificWorkout.exercises![index]);
-                }
+            return Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.83,
+                  child: ListView.builder(
+                  itemCount: specificWorkout.exercises!.length,
+                      itemBuilder: (context, index) {
+                        return buildWorkoutExercise(specificWorkout.exercises![index]);
+                      }
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.04),
+                      child: ElevatedButton(
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ActiveWorkoutWidget(
+                                activeWorkout: exercisesToStartWorkout,
+                                workoutType: 'Push',
+                                themecolor: Colors.orange,
+                              ))),
+                          child: const Text('Start workout')
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04),
+                      child: ElevatedButton(
+                          onPressed: () => (),
+                          child: const Text('Edit workout')
+                      ),
+                    )
+                  ],
+                )
+              ],
             );
           } else {
             return const Center(child: CircularProgressIndicator());
