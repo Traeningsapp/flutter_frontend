@@ -38,7 +38,7 @@ class Workout {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
+      "id": id ?? 0,
       "userId": userId,
       "name": name,
       "createdDate": createdDate?.toIso8601String(),
