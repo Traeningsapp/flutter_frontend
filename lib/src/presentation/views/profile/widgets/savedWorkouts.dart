@@ -30,7 +30,7 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Saved Workouts', themecolor: Colors.green),
+      appBar: const CustomAppBarWidget(title: 'Saved Workouts', themecolor: Colors.orange),
       body: FutureBuilder(
         future: workoutList,
         builder: (context, snapshot) {

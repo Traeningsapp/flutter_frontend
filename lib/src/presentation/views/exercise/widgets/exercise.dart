@@ -5,7 +5,8 @@ import 'package:projekt_frontend/src/utils/extensions.dart';
 
 class ExerciseWidget extends StatefulWidget {
   final Exercise exercise;
-  const ExerciseWidget({Key? key, required this.exercise}) : super(key: key);
+  final Color themecolor;
+  const ExerciseWidget({Key? key, required this.exercise, required this.themecolor}) : super(key: key);
 
   @override
   State<ExerciseWidget> createState() => _ExerciseWidgetState();
@@ -29,7 +30,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
     return Scaffold(
       appBar: CustomAppBarWidget(
           title: widget.exercise.name!,
-          themecolor: Colors.green),
+          themecolor: widget.themecolor),
       body: Container(
           child: Center(
             child: Container(

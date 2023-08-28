@@ -32,7 +32,7 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Exercises in Workout', themecolor: Colors.green),
+      appBar: const CustomAppBarWidget(title: 'Exercises in Workout', themecolor: Colors.orange),
       body: FutureBuilder(
         future: savedWorkout,
         builder: (context, snapshot) {
@@ -72,7 +72,7 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
       );
     },
     openBuilder: (BuildContext _, VoidCallback __) {
-      return ExerciseWidget(exercise: specificWorkoutExercise);
+      return ExerciseWidget(exercise: specificWorkoutExercise, themecolor: Colors.orange);
     },
   );
 

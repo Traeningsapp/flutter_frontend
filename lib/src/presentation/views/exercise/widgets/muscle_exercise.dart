@@ -70,7 +70,7 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
       );
     },
     openBuilder: (BuildContext _, VoidCallback __) {
-      return ExerciseWidget(exercise: specificMuscleExercise);
+      return ExerciseWidget(exercise: specificMuscleExercise, themecolor: Colors.green);
     },
   );
 
