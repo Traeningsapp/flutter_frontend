@@ -89,7 +89,13 @@ class DatabaseService {
           body: json.encode(bodyData)
       );
 
-      return response.statusCode;
+      if (response.statusCode == 200) {
+        var responseData = json.decode(response.body);
+        return responseData['result'];
+      } else {
+        log("Error with status code: ${response.statusCode}");
+        return null;
+      }
     } catch(e) {
       log(e.toString());
       return 500;

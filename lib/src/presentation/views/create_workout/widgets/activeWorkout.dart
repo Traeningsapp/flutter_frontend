@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
@@ -63,16 +64,20 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
 
   void _handleNext() {
     for (var key in widgetKeys) {
-      statsList.add(key.stats);
-
+      if(key.stats.reps != null || key.stats.kilo != null) {
+        statsList.add(key.stats);
+      } else {
+        Fluttertoast.showToast(msg: 'Udfyld alle felter eller fjern set', gravity : ToastGravity.CENTER);
+        return;
+      }
       key.reset();
     }
     setState(() {
       widgetKeys.clear();
       firstWidgetCall = true;
       setnr = 1;
+      counter++;
     });
-    //print(statsList);
   }
 
   @override
@@ -120,7 +125,10 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                 IconButton(
                   alignment: Alignment.centerRight,
                   icon: const Icon(Icons.info_outline),
-                  onPressed: () => (),          // Åben info vindue.   {Navigator.push(context, MaterialPageRoute(builder: (context) => const ExerciseHowToWidget()));
+                  onPressed: () => showDialog(
+                    context: context, builder: (BuildContext context) => Dialog(
+
+                )),
                 ),
               ],
             ),
@@ -256,6 +264,14 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 0, MediaQuery.of(context).size.width * 0.05, 0),
                     child: Text("Reps"),
                   ),
+                  IconButton(
+                    alignment: Alignment.centerRight,
+                    icon: const Icon(Icons.list_alt),
+                    onPressed: () => showDialog(
+                        context: context, builder: (BuildContext context) => Dialog(
+                          
+                    )),
+                  ),
                 ],
               ),
             ),
@@ -273,7 +289,6 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
                       onPressed: () {
-                        counter ++;
                         _handleNext();
                       },
                       child: const Text('Next Exercise')),

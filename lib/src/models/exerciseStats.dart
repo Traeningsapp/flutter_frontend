@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:ui';
 
 class ExerciseStats {
-  final int? workoutId;
   final String? userId;
   final int? exerciseId;
   DateTime? createdDate;
@@ -12,7 +11,6 @@ class ExerciseStats {
 
 
   ExerciseStats({
-    this.workoutId,
     this.userId,
     this.exerciseId,
     this.createdDate,
@@ -23,7 +21,6 @@ class ExerciseStats {
 
   factory ExerciseStats.fromJson(Map<String, dynamic>map){
     return ExerciseStats(
-      workoutId: map['workoutId'],
       userId: map['userId'],
       exerciseId: map['exerciseId'],
       createdDate: map['createdDate'] != null ? DateTime.parse(map['createdDate']) : null,
@@ -35,7 +32,6 @@ class ExerciseStats {
 
   Map<String, dynamic> toJson() {
     return {
-      "workoutId": workoutId,
       "userId": userId,
       "exerciseId": exerciseId,
       "timestamp": createdDate?.toIso8601String(),
@@ -47,7 +43,7 @@ class ExerciseStats {
 
   @override
   String toString() {
-    return 'ExerciseStats {workoutId: $workoutId, userId: $userId, exerciseId: $exerciseId, createdDate: $createdDate, setnr: $setnr, reps: $reps, kilo: $kilo}';
+    return 'ExerciseStats {userId: $userId, exerciseId: $exerciseId, createdDate: $createdDate, setnr: $setnr, reps: $reps, kilo: $kilo}';
   }
 }
 

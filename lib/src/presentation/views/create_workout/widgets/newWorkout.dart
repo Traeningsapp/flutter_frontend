@@ -217,10 +217,10 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: MediaQuery.of(context).size.width * 0.4,
-                    child: FittedBox(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         child: const Text(
-                            textScaleFactor: 0.7,
                             textAlign: TextAlign.center,
                             'Start Worktout'),
                         onPressed: () => GenerateWorkout(),
