@@ -4,6 +4,7 @@ import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
 import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedWorkout.dart';
+import 'package:projekt_frontend/src/presentation/views/stats/widgets/specificExerciseStat.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 
 class ActiveWorkoutWidget extends StatefulWidget {
@@ -268,9 +269,9 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     alignment: Alignment.centerRight,
                     icon: const Icon(Icons.list_alt),
                     onPressed: () => showDialog(
-                        context: context, builder: (BuildContext context) => Dialog(
-                          
-                    )),
+                        context: context,
+                        builder: ((BuildContext context) => ExerciseStatsOverlay(stats: generatedWorkout.exerciseStats, exerciseName: generatedWorkout.name))
+                    )
                   ),
                 ],
               ),

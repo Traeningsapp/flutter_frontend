@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:http/http.dart' as http;
 import 'package:projekt_frontend/src/models/muscle.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
