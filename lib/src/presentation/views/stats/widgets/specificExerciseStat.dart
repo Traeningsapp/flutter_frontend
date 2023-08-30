@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:projekt_frontend/src/models/dataPoint.dart';
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ExerciseStatsOverlay extends StatefulWidget {
   final String exerciseName;
@@ -70,6 +72,39 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
     return dateString;
   }
 
+  SfCartesianChart statsChart() {
+    final Map<DateTime, double> averageKiloByDate = {};
+    for (var stat in stats!) {
+      if (stat.createdDate != null) {
+        final date = stat.createdDate!;
+        final kilo = stat.kilo ?? 0;
+        if (averageKiloByDate.containsKey(date)) {
+          averageKiloByDate[date] = (averageKiloByDate[date]! + kilo) / 2;
+        } else {
+          averageKiloByDate[date] = kilo.toDouble();
+        }
+      }
+    }
+
+    // Convert the map to a list of DataPoint objects
+    final data = averageKiloByDate.entries
+        .map((entry) => DataPoint(entry.key, entry.value))
+        .toList();
+
+    return SfCartesianChart(
+      primaryXAxis: DateTimeAxis(
+        dateFormat: DateFormat('d/M/y')
+      ),
+      series: <ChartSeries>[
+        LineSeries<DataPoint, DateTime>(
+          dataSource: data,
+          xValueMapper: (DataPoint point, _) => point.date,
+          yValueMapper: (DataPoint point, _) => point.kilo,
+          name: 'Average Kilo',
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +116,7 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
             child: Container(
               margin: EdgeInsets.all(20.0),
               padding: EdgeInsets.all(15.0),
-              height: MediaQuery.of(context).size.height * 0.65,
+              height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width * 0.8,
               decoration: ShapeDecoration(
                 color: Colors.blueGrey,
@@ -115,8 +150,9 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
                    ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    child: Container() //SfCartesianChart(),
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: statsChart(),
                   )
                 ],
               ),
@@ -126,4 +162,3 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
     );
   }
 }
-
