@@ -7,8 +7,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ExerciseStatsOverlay extends StatefulWidget {
   final String userId;
+  final String exerciseName;
   final int exerciseId;
-  const ExerciseStatsOverlay({required this.exerciseId, required this.userId, super.key});
+  const ExerciseStatsOverlay({required this.exerciseId, required this.exerciseName, required this.userId, super.key});
 
   @override
   State<ExerciseStatsOverlay> createState() => _ExerciseStatsOverlayState();
@@ -19,7 +20,11 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
 
   DatabaseService _dbService = DatabaseService();
 
-  late List<ExerciseStats>? stats;
+  late Future<List<ExerciseStats>?> stats;
+  late List<ExerciseStats>? statsList = [];
+
+  late String userId;
+  late int exerciseId;
   late String exerciseName;
 
   late AnimationController controller;
@@ -29,8 +34,12 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
   void initState() {
     super.initState();
 
-    stats = _dbService.getExerciseStats();
-    //exerciseName = widget.exerciseName;
+    userId = widget.userId;
+    exerciseId = widget.exerciseId;
+    exerciseName = widget.exerciseName;
+
+    stats = _dbService.getExerciseStats(userId, exerciseId);
+    createExerciseStatsList();
 
     controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
     scaleAnimation = CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
@@ -44,6 +53,9 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
     controller.forward();
   }
 
+  void createExerciseStatsList() async {
+    statsList = await stats;
+  }
 
   Table StatsTable() {
     return Table(
@@ -57,13 +69,13 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
               Text('Date')
             ]
         ),
-        for(int i = 0; i < stats!.length; i++)
+        for(int i = 0; i < statsList!.length; i++)
           TableRow(
             children: [
-              Text('${(stats![i].setnr)}'),
-              Text('${(stats![i].kilo)}'),
-              Text('${(stats![i].reps)}'),
-              Text(convertDate(stats![i].createdDate))
+              Text('${(statsList![i].setnr)}'),
+              Text('${(statsList![i].kilo)}'),
+              Text('${(statsList![i].reps)}'),
+              Text(convertDate(statsList![i].createdDate))
             ]
           ),
       ],
@@ -77,7 +89,7 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
 
   SfCartesianChart statsChart() {
     final Map<DateTime, double> averageKiloByDate = {};
-    for (var stat in stats!) {
+    for (var stat in statsList!) {
       if (stat.createdDate != null) {
         final date = stat.createdDate!;
         final kilo = stat.kilo ?? 0;
