@@ -20,6 +20,7 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
   final DatabaseService _dbService = DatabaseService();
   late Future<Workout?> savedWorkout;
   late List<Exercise>? exercisesToStartWorkout;
+  late Workout? workout;
 
   @override
   void initState() {
@@ -30,12 +31,14 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
 
   Future<void> _initRetrieval() async {
     savedWorkout = _dbService.getSpecificWorkout(widget.workoutId!, Global_userid);
+    print(widget.workoutId);
   }
 
   void createWorkoutList() async {
     if(savedWorkout != null) {
-      Workout? workout = await savedWorkout;
+      workout = await savedWorkout;
       exercisesToStartWorkout = workout!.exercises;
+      print(widget.workoutId);
     }
   }
 
@@ -72,6 +75,7 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
                                 activeWorkout: exercisesToStartWorkout,
                                 workoutType: 'Push',
                                 themecolor: Colors.orange,
+                                workoutId: widget.workoutId,
                               ))),
                           child: const Text('Start workout')
                       ),

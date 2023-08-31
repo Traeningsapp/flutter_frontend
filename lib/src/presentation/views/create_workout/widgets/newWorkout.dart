@@ -54,6 +54,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
             activeWorkout: exerciseList,
             workoutType: splitdropdownValue,
             themecolor: Colors.blue,
+            workoutId: 0,
           )));
     }
   }

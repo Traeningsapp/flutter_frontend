@@ -34,7 +34,7 @@ class ExerciseStats {
     return {
       "userId": userId,
       "exerciseId": exerciseId,
-      "timestamp": createdDate?.toIso8601String(),
+      "createdDate": createdDate?.toIso8601String(),
       "setnr": setnr,
       "reps": reps,
       "kilo": kilo,
