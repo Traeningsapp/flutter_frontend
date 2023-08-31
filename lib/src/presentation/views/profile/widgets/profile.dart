@@ -67,7 +67,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           children: [
             Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 45)),
+                padding: const EdgeInsets.only(top: 80)),
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -81,7 +81,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 10),
-                Text(Global_userid,
+                Text(Global_user_mail!,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -104,8 +104,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: <Widget>[
                 Expanded(
                   child: SizedBox(
-                    height: (MediaQuery.of(context).size.height) * (0.6),
-                    width: (MediaQuery.of(context).size.width) * (0.9),
+                    height: (MediaQuery.of(context).size.height) * 0.6,
+                    width: (MediaQuery.of(context).size.width) * 0.9,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemCount: profileList.length,

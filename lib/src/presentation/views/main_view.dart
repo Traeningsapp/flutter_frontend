@@ -55,6 +55,7 @@ class _MainViewState extends State<MainView> {
         _user = credentials.user;
         Global_userid = credentials.user.sub;
         Global_Access_token = credentials.accessToken;
+        Global_user_mail = credentials.user.email;
       });
     } catch (e) {
       print(e);
