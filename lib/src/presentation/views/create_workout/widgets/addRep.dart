@@ -5,8 +5,10 @@ import 'package:projekt_frontend/src/presentation/views/create_workout/interface
 
 class AddSetWidget extends StatefulWidget {
   final ExerciseStatKey customKey;
-  final int setnr;
-  AddSetWidget({required this.customKey, required this.setnr}) : super(key: customKey.key);
+  final int? setnr;
+  final int? initialKilo;
+  final int? initialReps;
+  AddSetWidget({required this.customKey, required this.setnr, this.initialKilo, this.initialReps}) : super(key: customKey.key);
 
   @override
   State<AddSetWidget> createState() => _AddSetWidgetState();
@@ -15,7 +17,7 @@ class AddSetWidget extends StatefulWidget {
 class _AddSetWidgetState extends State<AddSetWidget> implements IAddSetWidget {
   final kiloController = TextEditingController();
   final repsController = TextEditingController();
-  late int setnr;
+  late int? setnr;
 
   void resetFields() {
     kiloController.clear();
@@ -25,6 +27,8 @@ class _AddSetWidgetState extends State<AddSetWidget> implements IAddSetWidget {
   @override void initState() {
     super.initState();
     setnr = widget.setnr;
+    if(widget.initialKilo != null) kiloController.text = widget.initialKilo.toString();
+    if(widget.initialReps != null) repsController.text = widget.initialReps.toString();
   }
 
   @override

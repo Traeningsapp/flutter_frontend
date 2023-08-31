@@ -11,7 +11,8 @@ class ActiveWorkoutWidget extends StatefulWidget {
   final List<Exercise>? activeWorkout;
   final String workoutType;
   final Color themecolor;
-  const ActiveWorkoutWidget({Key? key, required this.activeWorkout, required this.workoutType, required this.themecolor})
+  final int? workoutId;
+  const ActiveWorkoutWidget({Key? key, required this.activeWorkout, required this.workoutType, required this.themecolor, required this.workoutId})
       : super(key: key);
 
   @override
@@ -28,6 +29,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
   int setnr = 1;
   late int exerciseId;
   bool firstWidgetCall = true;
+  bool shouldClearWidgetKeys = true;
 
   var statsList = [];
 
@@ -45,21 +47,42 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
 
 
   List<Widget> generateExerciseWidgets(List<Exercise> workout) {
+    if(shouldClearWidgetKeys) {
+      widgetKeys.clear();
+      if(widget.workoutId != 0) {
+        workout.forEach((exercise) {
+          if(exercise.exerciseStats != null || exercise.exerciseStats!.isNotEmpty) {
+            exercise.exerciseStats!.forEach((stats) {
+              if(stats.exerciseId == exerciseId) {
+                widgetKeys.add(ExerciseStatKey.withRepsAndKilo(
+                    DateTime.now(), exercise.id, stats.reps, stats.kilo,
+                    stats.setnr!));
+                setnr = stats.setnr! + 1;
+                print('setnr ++ fra clearwidgetkeysloop');
+              }
+            });
+          }
+        });
+        firstWidgetCall = false;
+      }
+    }
     List<Widget> list = <Widget>[];
     Widget _buildwidget;
-
     if(firstWidgetCall) {
       for(int i = 1; i <= setantal; i++){
         widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, i));
         setnr++;
+        print('setnr ++ fra firstwidgetcall');
       }
       firstWidgetCall = false;
+      shouldClearWidgetKeys = false;
     }
 
     for (var i = 0; i < workout.length; i++) {
       _buildwidget = buildWorkoutWidget(workout[i]);
       list.add(_buildwidget);
     }
+    print(setnr);
     return list;
   }
 
@@ -78,6 +101,8 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
       firstWidgetCall = true;
       setnr = 1;
       counter++;
+      print('setnr sat = 1');
+      shouldClearWidgetKeys = true;
     });
   }
 
@@ -220,7 +245,8 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                             setState(() {
                               widgetKeys.add(ExerciseStatKey(DateTime.now(), exerciseId, setnr));
                               setnr++;
-                              print("added row");
+                              shouldClearWidgetKeys = false;
+                              print(setnr);
                             });
                           },
                           elevation: 2.0,
@@ -244,6 +270,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                               setState(() {
                                 widgetKeys.removeLast();
                                 setnr--;
+                                shouldClearWidgetKeys = false;
                               });
                             }
                           },
@@ -279,11 +306,17 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.2,
               width: MediaQuery.of(context).size.width,
-              child: ListView(
-                  children: [
-                    ...widgetKeys.map((key) => AddSetWidget(customKey: key, setnr: key.stats.setnr!)).toList(),
-                  ]
-              ),
+              child: ListView.builder(
+                  itemCount: widgetKeys.length,
+                  itemBuilder: (context, index) {
+                    return AddSetWidget(
+                      customKey: widgetKeys[index],
+                      setnr: widgetKeys[index].stats.setnr,
+                      initialKilo: widget.workoutId != 0 ? widgetKeys[index].stats.kilo : null,
+                      initialReps: widget.workoutId != 0 ? widgetKeys[index].stats.reps : null,
+                    );
+                  }
+              )
             ),
             Expanded(
                 child: Align(
