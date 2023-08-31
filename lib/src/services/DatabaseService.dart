@@ -159,7 +159,7 @@ class DatabaseService {
     }
   }
 
-  Future<String?> setFavoriteExercise(String userId, int exerciseId) async {
+  Future<void> setFavoriteExercise(String userId, int exerciseId) async {
     try{
       final url = Uri.parse("$baseUrl/Exercise/post/favorites/user/$userId/exercise/$exerciseId");
       final response = await http.get(
@@ -169,7 +169,25 @@ class DatabaseService {
         },
       );
       if (response.statusCode == 200) {
-        return 'Success';
+        return;
+      }
+    }
+    catch(e) {
+      log(e.toString());
+    }
+  }
+
+  Future<void> deleteFavoriteExercise(String userId, int exerciseId) async {
+    try{
+      final url = Uri.parse("$baseUrl/Exercise/delete/favorites/user/$userId/exercise/$exerciseId");
+      final response = await http.delete(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if(response.statusCode == 200) {
+        return;
       }
     }
     catch(e) {
