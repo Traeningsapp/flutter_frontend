@@ -54,7 +54,7 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
               Text('Date')
             ]
         ),
-        for(int i = 0; i < stats!.length; i ++)
+        for(int i = 0; i < stats!.length; i++)
           TableRow(
             children: [
               Text('${(stats![i].setnr)}'),
