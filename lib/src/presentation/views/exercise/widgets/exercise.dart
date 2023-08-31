@@ -57,7 +57,8 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                       fontWeight: FontWeight.w500),
                 ),
                 IconButton(
-                    onPressed: () => (), icon: const Icon(Icons.favorite))
+                    onPressed: () => (),
+                    icon: const Icon(Icons.favorite))
               ],
             ),
             Text('name: ${snapshotData.name}'),
