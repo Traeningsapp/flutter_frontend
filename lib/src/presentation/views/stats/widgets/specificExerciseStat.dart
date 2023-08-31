@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:projekt_frontend/src/models/dataPoint.dart';
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
+import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ExerciseStatsOverlay extends StatefulWidget {
-  final String exerciseName;
-  final List<ExerciseStats>? stats;
-  const ExerciseStatsOverlay({required this.stats, required this.exerciseName, super.key});
+  final String userId;
+  final int exerciseId;
+  const ExerciseStatsOverlay({required this.exerciseId, required this.userId, super.key});
 
   @override
   State<ExerciseStatsOverlay> createState() => _ExerciseStatsOverlayState();
@@ -15,6 +16,8 @@ class ExerciseStatsOverlay extends StatefulWidget {
 
 class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
       with SingleTickerProviderStateMixin {
+
+  DatabaseService _dbService = DatabaseService();
 
   late List<ExerciseStats>? stats;
   late String exerciseName;
@@ -26,10 +29,10 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
   void initState() {
     super.initState();
 
-    stats = widget.stats;
-    exerciseName = widget.exerciseName;
+    stats = _dbService.getExerciseStats();
+    //exerciseName = widget.exerciseName;
 
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
     scaleAnimation = CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
     controller.addListener(() {
@@ -114,8 +117,8 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
         child: ScaleTransition(
           scale: scaleAnimation,
             child: Container(
-              margin: EdgeInsets.all(20.0),
-              padding: EdgeInsets.all(15.0),
+              margin: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(15.0),
               height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width * 0.8,
               decoration: ShapeDecoration(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/muscleGroup.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/muscle.dart';
-import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:projekt_frontend/src/utils/constants.dart';
 
@@ -43,7 +42,7 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
       elevation: 4,
       child: ListTile(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.green, width: 1),
+          side: const BorderSide(color: Colors.green, width: 1),
               borderRadius: BorderRadius.circular(5)
         ),
         onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },

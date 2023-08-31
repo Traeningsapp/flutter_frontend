@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:http/http.dart' as http;
+import 'package:projekt_frontend/src/models/exerciseStats.dart';
+import 'package:projekt_frontend/src/models/howTo.dart';
 import 'package:projekt_frontend/src/models/muscle.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
@@ -13,7 +15,8 @@ class DatabaseService {
   final String? accessToken = Global_Access_token;
 
   Future<List<Muscle>?> getMuscles(int muscleGroupId) async {
-    try {
+    try
+    {
       final url = Uri.parse("$baseUrl/Exercise/get/muscle/$muscleGroupId");
       final response = await http.get(
         url,
@@ -31,7 +34,8 @@ class DatabaseService {
   }
 
   Future<List<Exercise>?> getMuscleExercises(int muscleId) async {
-    try {
+    try
+    {
       final url = Uri.parse("$baseUrl/Exercise/get/exerciselist/$muscleId");
       final response = await http.get(
         url,
@@ -49,7 +53,8 @@ class DatabaseService {
   }
 
   Future<Workout?> getNewWorkout(int splitType, String userid) async {
-    try{
+    try
+    {
       final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid");
       final response = await http.get(
         url,
@@ -70,7 +75,8 @@ class DatabaseService {
   }
 
   Future<int?> postWorkout(Workout workout, String userid) async {
-    try {
+    try
+    {
       final url = Uri.parse("$baseUrl/Workout/post/workout/user/$userid");
 
       String jsonWorkout = workoutToJson(workout);
@@ -103,7 +109,8 @@ class DatabaseService {
   }
 
   Future<List<Workout>?> getSavedWorkouts(String userId) async {
-    try {
+    try
+    {
       final url = Uri.parse("$baseUrl/Workout/get/workouthistory/user/$userId");
       final response = await http.get(
         url,
@@ -123,7 +130,8 @@ class DatabaseService {
   }
 
   Future<Workout?> getSpecificWorkout(int workoutId, String userId) async {
-    try {
+    try
+    {
       final url = Uri.parse("$baseUrl/Workout/get/workoutfromhistory/user/$userId/workout/$workoutId");
       final response = await http.get(
         url,
@@ -140,9 +148,30 @@ class DatabaseService {
       log(e.toString());
     }
   }
-  
+
+  Future<List<ExerciseStats>?> getStatsForExercise(String userId, int exerciseId) async {
+    try
+    {
+      final url = Uri.parse("$baseUrl/Exercise/get/exerciseStats/$exerciseId/user/$userId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if (response.statusCode == 200) {
+        return exerciseStatsFromJson(response.body);
+      }
+    } 
+    catch(e) {
+      log(e.toString());
+    }
+  }
+
+
   Future<List<Exercise>?> getFavoriteExercises(String userId) async {
-    try{
+    try
+    {
       final url = Uri.parse("$baseUrl/Exercise/get/favorites/user/$userId");
       final response = await http.get(
         url,
@@ -160,7 +189,8 @@ class DatabaseService {
   }
 
   Future<void> setFavoriteExercise(String userId, int exerciseId) async {
-    try{
+    try
+    {
       final url = Uri.parse("$baseUrl/Exercise/post/favorites/user/$userId/exercise/$exerciseId");
       final response = await http.get(
         url,
@@ -178,7 +208,8 @@ class DatabaseService {
   }
 
   Future<void> deleteFavoriteExercise(String userId, int exerciseId) async {
-    try{
+    try
+    {
       final url = Uri.parse("$baseUrl/Exercise/delete/favorites/user/$userId/exercise/$exerciseId");
       final response = await http.delete(
         url,
@@ -195,6 +226,45 @@ class DatabaseService {
     }
   }
 
+  Future<List<ExerciseHowTo>?> getExerciseHowTo(int exerciseId) async {
+    try
+    {
+      final url = Uri.parse("$baseUrl/Exercise/get/HowTo/exercise/$exerciseId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if(response.statusCode == 200) {
+        return exerciseHowToFromJson(response.body);
+      }
+    }
+    catch(e)
+    {
+      log(e.toString());
+    }
+  }
+
+  Future<List<ExerciseStats>?> getExerciseStats(String userId, int exerciseId) async {
+    try
+    {
+      final url = Uri.parse("$baseUrl/Exercise/get/exerciseStats/$exerciseId/user/$userId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if(response.statusCode == 200) {
+        return exerciseStatsFromJson(response.body);
+      }
+    }
+    catch(e)
+    {
+      log(e.toString());
+    }
+  }
 }
 
 

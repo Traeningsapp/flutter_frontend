@@ -14,6 +14,7 @@ class ExerciseWidget extends StatefulWidget {
 
 class _ExerciseWidgetState extends State<ExerciseWidget> {
 
+  bool isFavorite = false;
 
   @override
   void initState() {
