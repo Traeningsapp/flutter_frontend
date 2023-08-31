@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:http/http.dart' as http;
 import 'package:projekt_frontend/src/models/muscle.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
@@ -138,6 +137,42 @@ class DatabaseService {
       return null;
     }
     catch (e) {
+      log(e.toString());
+    }
+  }
+  
+  Future<List<Exercise>?> getFavoriteExercises(String userId) async {
+    try{
+      final url = Uri.parse("$baseUrl/Exercise/get/favorites/user/$userId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if (response.statusCode == 200) {
+        return exercisesFromJson(response.body);
+      }
+    } 
+    catch(e) {
+      log(e.toString());
+    }
+  }
+
+  Future<String?> setFavoriteExercise(String userId, int exerciseId) async {
+    try{
+      final url = Uri.parse("$baseUrl/Exercise/post/favorites/user/$userId/exercise/$exerciseId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if (response.statusCode == 200) {
+        return 'Success';
+      }
+    }
+    catch(e) {
       log(e.toString());
     }
   }

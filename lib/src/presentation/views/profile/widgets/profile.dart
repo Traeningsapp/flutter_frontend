@@ -6,6 +6,7 @@ import 'package:projekt_frontend/src/presentation/views/profile/profileAccountPa
 import 'package:projekt_frontend/src/presentation/views/profile/savedWorkoutsPage.dart';
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:auth0_flutter/auth0_flutter_web.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 const List<String> profileList = ['Account','Saved workouts','Favorite Exercises'];
 const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.fitness_center), Icon(Icons.fitness_center)];
@@ -66,10 +67,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           children: [
             Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 45)),
-            Row(
+                padding: const EdgeInsets.only(top: 80)),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
                   'Signed in as:',
                   style: TextStyle(fontSize: 16),
@@ -80,16 +81,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 10),
-                Text(
-                  'user email here',
+                Text('Email here',
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             Container(
                 alignment: Alignment.center, padding: const EdgeInsets.all(10)),
-            Row(
-              children: const [
+            const Row(
+              children: [
                 Expanded(
                     child: Divider(
                   color: Colors.orange,
@@ -104,8 +104,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: <Widget>[
                 Expanded(
                   child: SizedBox(
-                    height: (MediaQuery.of(context).size.height) * (0.6),
-                    width: (MediaQuery.of(context).size.width) * (0.9),
+                    height: (MediaQuery.of(context).size.height) * 0.6,
+                    width: (MediaQuery.of(context).size.width) * 0.9,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemCount: profileList.length,
