@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:http/http.dart' as http;
+import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:projekt_frontend/src/models/muscle.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
@@ -140,7 +141,26 @@ class DatabaseService {
       log(e.toString());
     }
   }
-  
+
+  Future<List<ExerciseStats>?> getStatsForExercise(String userId, int exerciseId) async {
+    try {
+      final url = Uri.parse("$baseUrl/Exercise/get/exerciseStats/$exerciseId/user/$userId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if (response.statusCode == 200) {
+        return exerciseStatsFromJson(response.body);
+      }
+    } 
+    catch(e) {
+      log(e.toString());
+    }
+  }
+
+
   Future<List<Exercise>?> getFavoriteExercises(String userId) async {
     try{
       final url = Uri.parse("$baseUrl/Exercise/get/favorites/user/$userId");
@@ -194,7 +214,6 @@ class DatabaseService {
       log(e.toString());
     }
   }
-
 }
 
 
