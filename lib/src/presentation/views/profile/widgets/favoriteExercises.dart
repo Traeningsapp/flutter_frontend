@@ -4,6 +4,7 @@ import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class FavoriteExercisesWidget extends StatefulWidget {
   const FavoriteExercisesWidget({super.key});
@@ -14,7 +15,7 @@ class FavoriteExercisesWidget extends StatefulWidget {
 
 class _FavoriteExercisesWidgetState extends State<FavoriteExercisesWidget> {
   DatabaseService _dbService = DatabaseService();
-  late Future<List<Exercise>> favoriteExerciseList;
+  late Future<List<Exercise>?> favoriteExerciseList;
 
 
   @override
@@ -23,7 +24,7 @@ class _FavoriteExercisesWidgetState extends State<FavoriteExercisesWidget> {
   }
 
   Future<void> _initRetrieval() async {
-    //favoriteExerciseList = _dbService.getFavoriteExercises(userId);
+    favoriteExerciseList = _dbService.getFavoriteExercises(Global_userid);
   }
 
 
