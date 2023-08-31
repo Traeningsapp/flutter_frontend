@@ -29,10 +29,10 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
   void initState() {
     super.initState();
 
-    //stats = _dbService.getExerciseStats();
+    stats = _dbService.getExerciseStats();
     //exerciseName = widget.exerciseName;
 
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
     scaleAnimation = CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
     controller.addListener(() {
@@ -117,8 +117,8 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
         child: ScaleTransition(
           scale: scaleAnimation,
             child: Container(
-              margin: EdgeInsets.all(20.0),
-              padding: EdgeInsets.all(15.0),
+              margin: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(15.0),
               height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width * 0.8,
               decoration: ShapeDecoration(

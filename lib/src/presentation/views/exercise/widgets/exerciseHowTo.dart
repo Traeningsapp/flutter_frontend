@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/howTo.dart';
+import 'package:projekt_frontend/src/services/DatabaseService.dart';
 
 class ExerciseHowToOverlay extends StatefulWidget {
-  final List<ExerciseHowTo> exerciseHowTo;
+  final int exerciseId;
   final String exerciseName;
   const ExerciseHowToOverlay(
-      {required this.exerciseHowTo, required this.exerciseName, super.key});
+      {required this.exerciseId, required this.exerciseName, super.key});
 
   @override
   State<ExerciseHowToOverlay> createState() => _ExerciseHowToOverlayState();
@@ -13,8 +14,12 @@ class ExerciseHowToOverlay extends StatefulWidget {
 
 class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
     with SingleTickerProviderStateMixin {
-  late List<ExerciseHowTo> exerciseHowTo;
+  DatabaseService _dbService = DatabaseService();
+
+  late int exerciseId;
   late String exerciseName;
+  late Future<List<ExerciseHowTo>?> howToList;
+  late List<ExerciseHowTo>? howTo = [];
 
   late AnimationController controller;
   late Animation<double> scaleAnimation;
@@ -23,8 +28,12 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
   void initState() {
     super.initState();
 
-    exerciseHowTo = widget.exerciseHowTo;
+    exerciseId = widget.exerciseId;
     exerciseName = widget.exerciseName;
+
+    howToList = _dbService.getExerciseHowTo(exerciseId);
+
+    createHowToList();
 
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
@@ -38,18 +47,8 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
     controller.forward();
   }
 
-  // Initial setup. Fix this. Return rows with how to steps.
-  void createHowToList() {
-    if (exerciseHowTo != null) {
-      for (int i = 0; i < exerciseHowTo!.length; i++) {
-        Row(children: [
-            Text('Step ${(exerciseHowTo![i].step)} :'),
-            Text(exerciseHowTo![i].step_text)
-        ]);
-      }
-    } else {
-      throw Exception('No how to for exercise');
-    }
+  void createHowToList() async {
+    howTo = await howToList;
   }
 
   @override
@@ -60,8 +59,8 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
         child: ScaleTransition(
           scale: scaleAnimation,
           child: Container(
-            margin: EdgeInsets.all(20.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(15.0),
             height: MediaQuery.of(context).size.height * 0.8,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: ShapeDecoration(
@@ -85,11 +84,29 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
                   thickness: 2,
                   color: Colors.black,
                 ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  child: ListView.builder(
+                      itemCount: howTo!.length,
+                      itemBuilder: (context, index) {
+                        return createHowToRoW(howTo![index]);
+                      }),
+                )
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Row createHowToRoW(ExerciseHowTo howTo) {
+    if (howTo != null) {
+      return Row(
+          children: [Text('Step ${(howTo!.step)} :'), Text(howTo!.step_text)]);
+    } else {
+      throw Exception('No how to for exercise');
+    }
   }
 }
