@@ -18,6 +18,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   final DatabaseService _dbService = DatabaseService();
   late Future<bool?> isFavorite;
   late bool favorite = false;
+
   late Exercise exercise;
 
   @override
