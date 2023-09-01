@@ -88,22 +88,30 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
   }
 
   SfCartesianChart statsChart() {
-    final Map<DateTime, double> averageKiloByDate = {};
+    final Map<String, double> sumKilosByDate = {};
+    final Map<String, int> countByDate = {};
+    final dateFormat = DateFormat('yyyy-MM-dd');
+
     for (var stat in statsList!) {
       if (stat.createdDate != null) {
-        final date = stat.createdDate!;
+        final date = dateFormat.format(stat.createdDate!);
         final kilo = stat.kilo ?? 0;
-        if (averageKiloByDate.containsKey(date)) {
-          averageKiloByDate[date] = (averageKiloByDate[date]! + kilo) / 2;
-        } else {
-          averageKiloByDate[date] = kilo.toDouble();
-        }
+
+        // Update sum and count maps
+        sumKilosByDate[date] = (sumKilosByDate[date] ?? 0) + kilo;
+        countByDate[date] = (countByDate[date] ?? 0) + 1;
       }
     }
 
+    // Compute the average for each date
+    final Map<String, double> averageKiloByDate = {};
+    sumKilosByDate.forEach((date, totalKilo) {
+      averageKiloByDate[date] = totalKilo / (countByDate[date] ?? 1);
+    });
+
     // Convert the map to a list of DataPoint objects
     final data = averageKiloByDate.entries
-        .map((entry) => DataPoint(entry.key, entry.value))
+        .map((entry) => DataPoint(DateTime.parse(entry.key), entry.value))
         .toList();
 
     return SfCartesianChart(
