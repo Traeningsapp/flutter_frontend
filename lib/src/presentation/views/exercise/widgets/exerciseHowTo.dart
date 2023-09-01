@@ -19,7 +19,7 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
   late int exerciseId;
   late String exerciseName;
   late Future<List<ExerciseHowTo>?> howToList;
-  late List<ExerciseHowTo>? howTo = [];
+  List<ExerciseHowTo>? howTo = [];
 
   late AnimationController controller;
   late Animation<double> scaleAnimation;
@@ -36,7 +36,7 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
     createHowToList();
 
     controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
     scaleAnimation =
         CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
@@ -61,7 +61,7 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
           child: Container(
             margin: const EdgeInsets.all(20.0),
             padding: const EdgeInsets.all(15.0),
-            height: MediaQuery.of(context).size.height * 0.8,
+            height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: ShapeDecoration(
                 color: Colors.blueGrey,
@@ -85,7 +85,7 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
                   color: Colors.black,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: ListView.builder(
                       itemCount: howTo!.length,
