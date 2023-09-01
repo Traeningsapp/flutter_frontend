@@ -188,6 +188,29 @@ class DatabaseService {
     }
   }
 
+  Future<bool?> getFavoriteExercise(String userId, int exerciseId) async {
+    try
+    {
+      final url = Uri.parse("$baseUrl/Exercise/get/favorite/exercise/$exerciseId/user/$userId");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if (response.statusCode == 200) {
+        if(response.body == true) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    catch(e) {
+      log(e.toString());
+    }
+  }
+
   Future<void> setFavoriteExercise(String userId, int exerciseId) async {
     try
     {

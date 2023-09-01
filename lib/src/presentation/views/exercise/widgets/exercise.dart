@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
+import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:projekt_frontend/src/utils/extensions.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class ExerciseWidget extends StatefulWidget {
   final Exercise exercise;
@@ -13,17 +15,39 @@ class ExerciseWidget extends StatefulWidget {
 }
 
 class _ExerciseWidgetState extends State<ExerciseWidget> {
-
-  bool isFavorite = false;
+  final DatabaseService _dbService = DatabaseService();
+  late Future<bool?> isFavorite;
+  late bool favorite;
+  late Exercise exercise;
 
   @override
   void initState() {
     super.initState();
+
+    exercise = widget.exercise;
+    isFavorite = _dbService.getFavoriteExercise(Global_userid, exercise.id);
+
+
   }
 
   @override
   dispose() {
     super.dispose();
+  }
+  
+  void changeBool() async {
+    favorite = (await isFavorite)!;
+  }
+
+  void SetOrDeleteFavorite() {
+    setState(() {
+      favorite = !favorite;
+      if(favorite) {
+        _dbService.setFavoriteExercise(Global_userid, exercise.id);
+      } else {
+        _dbService.deleteFavoriteExercise(Global_userid, exercise.id);
+      }
+    });
   }
 
   @override
@@ -58,8 +82,10 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                       fontWeight: FontWeight.w500),
                 ),
                 IconButton(
-                    onPressed: () => (),
-                    icon: const Icon(Icons.favorite, color: Colors.red))
+                    onPressed: () {
+                      SetOrDeleteFavorite();
+                    },
+                    icon: favorite ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite_border, color: Colors.red,))
               ],
             ),
             Text('name: ${snapshotData.name}'),
