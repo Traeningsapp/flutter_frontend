@@ -199,7 +199,7 @@ class DatabaseService {
         },
       );
       if (response.statusCode == 200) {
-        if(response.body == true) {
+        if(response.body == "true") {
           return true;
         } else {
           return false;
@@ -215,7 +215,7 @@ class DatabaseService {
     try
     {
       final url = Uri.parse("$baseUrl/Exercise/post/favorites/user/$userId/exercise/$exerciseId");
-      final response = await http.get(
+      final response = await http.post(
         url,
         headers: {
           'Authorization': 'Bearer $accessToken'

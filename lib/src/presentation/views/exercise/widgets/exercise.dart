@@ -17,7 +17,7 @@ class ExerciseWidget extends StatefulWidget {
 class _ExerciseWidgetState extends State<ExerciseWidget> {
   final DatabaseService _dbService = DatabaseService();
   late Future<bool?> isFavorite;
-  late bool favorite = false;
+  late bool? favorite = false;
   late Exercise exercise;
 
   @override
@@ -33,18 +33,19 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   dispose() {
     super.dispose();
   }
-  
+
   void changeBool() async {
-    favorite = (await isFavorite)!;
+    favorite = await isFavorite!;
   }
 
-  void SetOrDeleteFavorite() {
+  void SetOrDeleteFavorite() async {
     setState(() {
-      favorite = !favorite;
-      if(favorite) {
+      if(favorite == false) {
         _dbService.setFavoriteExercise(Global_userid, exercise.id);
+        favorite = true;
       } else {
         _dbService.deleteFavoriteExercise(Global_userid, exercise.id);
+        favorite = false;
       }
     });
   }
@@ -84,7 +85,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     onPressed: () {
                       SetOrDeleteFavorite();
                     },
-                    icon: favorite ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite_border, color: Colors.red,))
+                    icon: favorite == true ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite_border, color: Colors.red,))
               ],
             ),
             Text('name: ${snapshotData.name}'),
