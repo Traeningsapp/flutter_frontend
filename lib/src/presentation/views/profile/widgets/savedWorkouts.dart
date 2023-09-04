@@ -20,16 +20,18 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
 
   @override
   void initState() {
-    _initRetrieval();
+    loadWorkoutList();
   }
 
-  Future<void> _initRetrieval() async {
-    workoutList = _dbService.getSavedWorkouts(Global_userid);
+  Future<void> loadWorkoutList() async {
+    setState(() {
+      workoutList = _dbService.getSavedWorkouts(Global_userid);
+    });
   }
 
   void deleteWorkout(int workoutId) async {
     _dbService.deleteWorkoutFromHistory(workoutId);
-    setState(() {});
+    loadWorkoutList();
   }
 
   @override
@@ -46,7 +48,9 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
             return ListView.builder(
                 itemCount: retrievedWorkoutData.length,
                 itemBuilder: (context, index) {
-                  return buildWorkoutCard(retrievedWorkoutData[index]);
+                  return buildWorkoutCard(
+                      retrievedWorkoutData[index]
+                  );
                 }
             );
           } else {
@@ -73,6 +77,9 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
                         onPressed: () async {
                           deleteWorkout(workout.id!);
                           Navigator.pop(context);
+                          setState(() {
+
+                          });
                         },
                         child: const Text('delete Workout')),
                     TextButton(

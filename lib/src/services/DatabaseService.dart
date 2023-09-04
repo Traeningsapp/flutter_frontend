@@ -96,10 +96,10 @@ class DatabaseService {
     }
   }
 
-  Future<int?> postWorkout(Workout workout, String userid) async {
+  Future<int?> postWorkout(Workout workout, String userid, String splitType) async {
     try
     {
-      final url = Uri.parse("$baseUrl/Workout/post/workout/user/$userid");
+      final url = Uri.parse("$baseUrl/Workout/post/workout/user/$userid/split/$splitType");
 
       String jsonWorkout = workoutToJson(workout);
 
