@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
-import 'package:projekt_frontend/src/presentation/views/create_workout/interfaces/AddSetWidgetInterface.dart';
+import 'package:projekt_frontend/src/presentation/views/workout/interfaces/AddSetWidgetInterface.dart';
 
 class AddSetWidget extends StatefulWidget {
   final ExerciseStatKey customKey;

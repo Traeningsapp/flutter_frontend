@@ -25,13 +25,11 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
       body: ListView(
           padding: const EdgeInsets.fromLTRB(5, 110, 5, 0),
           children: <Widget>[
-            //BuildGroupCard(title: muscleGroupList., subtitle: subtitle, assetLocal: assetLocal, onTapRoute: onTapRoute)
-            buildCardWidget('Shoulders', 'Front-, middle- & back deltoids', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/shoulders.png', 2),
-            buildCardWidget('Back', 'Traps, laterals, teres major and lower back', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/back.png', 3),
-            buildCardWidget('Chest', 'Inner-, middle-, lower- & upper chest', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/chest.png', 1),
-            buildCardWidget('Arms', 'Biceps, triceps and forearm', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/triceps.png', 4),
-            buildCardWidget('Legs', 'Quads, glutes, hamstrings and calves', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/quads.png', 6),
-            buildCardWidget('Abs', 'Internal- & external core', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/abs.png', 5),
+            buildCardWidget('Arms & Shoulders', 'Front-, middle- & back deltoids. Biceps, triceps and forearm', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/2.png', 2),
+            buildCardWidget('Back', 'Traps, laterals, teres major and lower back', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/3.png', 3),
+            buildCardWidget('Chest', 'Inner-, middle-, lower- & upper chest', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/1.png', 1),
+            buildCardWidget('Legs', 'Quads, glutes, hamstrings and calves', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/5.png', 5),
+            buildCardWidget('Abs', 'Internal- & external core', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/4.png', 4),
           ]
       ),
     );
@@ -42,8 +40,8 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
       elevation: 4,
       child: ListTile(
         shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Colors.green, width: 1),
-              borderRadius: BorderRadius.circular(5)
+            side: const BorderSide(color: Colors.lightBlue, width: 1),
+            borderRadius: BorderRadius.circular(5)
         ),
         onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },
         tileColor: Colors.white,
@@ -68,42 +66,3 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
     );
   }
 }
-
-/*
-class BuildGroupCard extends StatelessWidget {
-  const BuildGroupCard({Key? key, required this.title, required this.subtitle, required this.assetLocal, required this.onTapRoute}) : super(key: key);
-
-  final String title;
-  final String subtitle;
-  final String assetLocal;
-  final int onTapRoute;
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      child: ListTile(
-        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },
-        tileColor: Colors.white,
-        contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-        leading: ConstrainedBox(
-          constraints: const BoxConstraints(
-          ),
-          child: Image.asset(assetLocal, fit: BoxFit.cover),
-        ),
-        trailing: const Icon(Icons.arrow_right,),
-        title: Text(title,
-          style: const TextStyle(
-              fontSize: fontsizeForTitles
-          ),
-        ),
-        subtitle: Text(subtitle,
-          style: const TextStyle(
-              fontSize: fontsizeForSubTitles
-          ),
-        ),
-      ),
-    );
-  }
- */

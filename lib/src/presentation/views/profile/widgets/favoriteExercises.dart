@@ -31,7 +31,7 @@ class _FavoriteExercisesWidgetState extends State<FavoriteExercisesWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Favorite Exercises', themecolor: Colors.orange),
+      appBar: const CustomAppBarWidget(title: 'Favorite Exercises'),
       body: FutureBuilder(
         future: favoriteExerciseList,
         builder: (context, snapshot) {

@@ -27,10 +27,15 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
     workoutList = _dbService.getSavedWorkouts(Global_userid);
   }
 
+  void deleteWorkout(int workoutId) async {
+    _dbService.deleteWorkoutFromHistory(workoutId);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Saved Workouts', themecolor: Colors.orange),
+      appBar: const CustomAppBarWidget(title: 'Saved Workouts'),
       body: FutureBuilder(
         future: workoutList,
         builder: (context, snapshot) {
@@ -56,6 +61,34 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
     return Card(
       elevation: 4,
       child: ListTile(
+        leading: GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Are you sure you want to delete workout?'),
+                  actions: [
+                    TextButton(
+                        onPressed: () async {
+                          deleteWorkout(workout.id!);
+                          Navigator.pop(context);
+                        },
+                        child: const Text('delete Workout')),
+                    TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancel'))
+                  ],
+                );
+              },
+            );// Image tapped
+          },
+          child: Image.asset(
+            'assets/images/deleteImage.png',
+            height: MediaQuery.of(context).size.height * 0.05,
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+        ),
         onTap: () { Navigator.push(context, MaterialPageRoute(
             builder: (context) => SpecificWorkoutWidget(workoutId: workout.id))); },
         tileColor: Colors.white,

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomAppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final String title;
-  final Color themecolor;
-  const CustomAppBarWidget({Key? key, required this.title, required this.themecolor})
+  const CustomAppBarWidget({Key? key, required this.title})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -22,7 +21,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          backgroundColor: widget.themecolor,
+          backgroundColor: Colors.lightBlue,
           centerTitle: true,
         )
     );

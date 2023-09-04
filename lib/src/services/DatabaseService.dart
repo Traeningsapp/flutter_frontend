@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:projekt_frontend/src/models/howTo.dart';
 import 'package:projekt_frontend/src/models/muscle.dart';
+import 'package:projekt_frontend/src/models/muscleGroup.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
@@ -13,6 +14,27 @@ class DatabaseService {
   final String baseUrl = "https://10.0.2.2:7130/api";
 
   final String? accessToken = Global_Access_token;
+
+  Future<List<MuscleGroup>?> getMuscleGroups() async {
+    try
+    {
+      final url = Uri.parse("$baseUrl/Exercise/get/musclegroups");
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print(response.body);
+        return muscleGroupFromJson(response.body);
+      }
+    }
+    catch (e) {
+      log(e.toString());
+    }
+  }
 
   Future<List<Muscle>?> getMuscles(int muscleGroupId) async {
     try
@@ -288,6 +310,27 @@ class DatabaseService {
       log(e.toString());
     }
   }
+
+  void deleteWorkoutFromHistory(int workoutId) async {
+    try
+    {
+      final url = Uri.parse("$baseUrl/Workout/patch/workout/$workoutId");
+      final response = await http.patch(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if(response.statusCode == 200) {
+        print('updated');
+      }
+    }
+    catch(e)
+    {
+      log(e.toString());
+    }
+  }
+
 }
 
 

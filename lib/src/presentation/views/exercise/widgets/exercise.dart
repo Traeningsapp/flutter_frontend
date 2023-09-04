@@ -55,8 +55,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-          title: widget.exercise.name!,
-          themecolor: widget.themecolor),
+          title: widget.exercise.name!),
       body: Container(
           child: Center(
             child: Container(

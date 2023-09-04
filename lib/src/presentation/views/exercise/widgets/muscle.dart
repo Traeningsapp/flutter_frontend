@@ -31,7 +31,7 @@ class _MusclePageState extends State<MusclePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Muscles', themecolor: Colors.green),
+      appBar: const CustomAppBarWidget(title: 'Muscles'),
       body: FutureBuilder(
         future: musclesList,
         builder: (context, snapshot) {

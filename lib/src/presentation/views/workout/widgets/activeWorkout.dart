@@ -2,25 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:projekt_frontend/src/models/ExerciseStatKey.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
-import 'package:projekt_frontend/src/models/howTo.dart';
-import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/addRep.dart';
-import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/finishedWorkout.dart';
+import 'package:projekt_frontend/src/presentation/views/workout/widgets/addRep.dart';
+import 'package:projekt_frontend/src/presentation/views/workout/widgets/finishedWorkout.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exerciseHowTo.dart';
 import 'package:projekt_frontend/src/presentation/views/stats/widgets/specificExerciseStat.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
-import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class ActiveWorkoutWidget extends StatefulWidget {
   final List<Exercise>? activeWorkout;
   final String workoutType;
-  final Color themecolor;
   final int? workoutId;
   const ActiveWorkoutWidget(
       {Key? key,
       required this.activeWorkout,
       required this.workoutType,
-      required this.themecolor,
       required this.workoutId})
       : super(key: key);
 
@@ -120,8 +116,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomAppBarWidget(
-            title: 'Active Workout', themecolor: widget.themecolor),
+        appBar: const CustomAppBarWidget(title: 'Active Workout'),
         body: FutureBuilder<List<Exercise>?>(
             future: setList(),
             builder: (context, AsyncSnapshot<List<Exercise>?> snapshot) {
@@ -240,11 +235,15 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                 ),
                 Text('${generatedWorkout.muscleActivation!}'),
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.24,
+                    height: MediaQuery.of(context).size.height * 0.26,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: Column(
                       children: <Widget>[
-                        Image.asset('assets/images/nocontent.gif')
+                        Image.asset(
+                          'assets/exerciseGifs/${generatedWorkout.id}.gif',
+                          fit: BoxFit.cover,
+                          height: MediaQuery.of(context).size.height * 0.26,
+                          width: MediaQuery.of(context).size.width * 0.6)
                       ],
                     )),
                 const Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),

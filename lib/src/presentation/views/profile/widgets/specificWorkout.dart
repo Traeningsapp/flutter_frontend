@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
-import 'package:projekt_frontend/src/presentation/views/create_workout/widgets/activeWorkout.dart';
+import 'package:projekt_frontend/src/presentation/views/workout/widgets/activeWorkout.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
@@ -45,7 +45,7 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Exercises in Workout', themecolor: Colors.orange),
+      appBar: const CustomAppBarWidget(title: 'Exercises in Workout'),
       body: FutureBuilder(
         future: savedWorkout,
         builder: (context, snapshot) {
@@ -74,7 +74,6 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
                               builder: (context) => ActiveWorkoutWidget(
                                 activeWorkout: exercisesToStartWorkout,
                                 workoutType: 'Push',
-                                themecolor: Colors.orange,
                                 workoutId: widget.workoutId,
                               ))),
                           child: const Text('Start workout')
