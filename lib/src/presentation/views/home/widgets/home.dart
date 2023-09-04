@@ -1,6 +1,5 @@
-import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/presentation/views/create_workout/createWorkout.dart';
+import 'package:projekt_frontend/src/presentation/views/workout/createWorkout.dart';
 
 class HomeWidget extends StatelessWidget {
 
@@ -20,7 +19,7 @@ class HomeWidget extends StatelessWidget {
                   textScaleFactor: 2),
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,

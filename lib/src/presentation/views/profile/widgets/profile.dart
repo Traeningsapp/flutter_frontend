@@ -77,12 +77,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 )
               ],
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Text('Email here',
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -92,7 +92,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: [
                 Expanded(
                     child: Divider(
-                  color: Colors.orange,
+                  color: Colors.lightBlue,
                   height: 2,
                   indent: 1,
                   thickness: 1,
@@ -136,14 +136,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 IconButton(
                   onPressed: logout,
                   icon: const Icon(Icons.logout_rounded, size: 25),
-                  color: Colors.orangeAccent,
+                  color: Colors.deepOrange,
                 ),
-                const Padding(padding: EdgeInsets.fromLTRB(10, 0, 0, 0)),
                 const Text(
                   'Logout',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.red,
+                    color: Colors.black,
                   ),
                 )
               ],

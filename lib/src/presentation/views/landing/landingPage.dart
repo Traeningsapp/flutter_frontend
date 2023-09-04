@@ -65,7 +65,17 @@ class _LandingPageState extends State<LandingPage>
   }
 
   void closeDrawer() {
-    isSideDrawerOpen = !isSideDrawerOpen;
+    isMenuOpenInput.value = !isMenuOpenInput.value;
+    if (_animationController.value == 0) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse();
+    }
+    setState(
+          () {
+        isSideDrawerOpen = !isSideDrawerOpen;
+      },
+    );
   }
 
   @override
@@ -115,13 +125,11 @@ class _LandingPageState extends State<LandingPage>
               child: MenuBtn(
                 press: () {
                   isMenuOpenInput.value = !isMenuOpenInput.value;
-
                   if (_animationController.value == 0) {
                     _animationController.forward();
                   } else {
                     _animationController.reverse();
                   }
-
                     setState(
                       () {
                         isSideDrawerOpen = !isSideDrawerOpen;
@@ -159,9 +167,8 @@ class _LandingPageState extends State<LandingPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const InfoCard(name: "indsæt email"),
               Padding(
-                padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
+                padding: const EdgeInsets.only(left: 24, top: 44, bottom: 16),
                 child: Text(
                   "Browse".toUpperCase(),
                   style: Theme.of(context)
@@ -180,15 +187,16 @@ class _LandingPageState extends State<LandingPage>
                     selectedMenuItem = menu;
                     if(menu.title == 'Home') {
                       currentIndex = 0;
+                      closeDrawer();
                     } else if (menu.title == 'Explore exercises') {
                       currentIndex = 1;
-
+                      closeDrawer();
                     } else if (menu.title == 'Profile') {
                       currentIndex = 2;
-
+                      closeDrawer();
                     } else if (menu.title == 'Stats') {
                       currentIndex = 3;
-
+                      closeDrawer();
                     }
                   });
                 },

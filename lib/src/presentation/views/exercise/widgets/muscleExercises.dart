@@ -30,7 +30,7 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(title: 'Exercises', themecolor: Colors.green),
+      appBar: const CustomAppBarWidget(title: 'Exercises'),
       body: FutureBuilder(
         future: muscleExerciseList,
         builder: (context, snapshot) {
