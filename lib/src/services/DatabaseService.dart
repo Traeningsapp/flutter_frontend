@@ -331,6 +331,26 @@ class DatabaseService {
     }
   }
 
+  void setActiveValue(String userId, int exerciseId, bool? active) async {
+    try
+    {
+      final url = Uri.parse("$baseUrl/Admin/patch/exercise/$exerciseId/activevalue/$active/user/$userId");
+      final response = await http.patch(
+        url,
+        headers: {
+          'Authorization': 'Bearer $accessToken'
+        },
+      );
+      if(response.statusCode == 200) {
+        // måske reeturn statuscode, så vi kan vise en toast i frontend
+      }
+    }
+    catch(e)
+    {
+      log(e.toString());
+    }
+  }
+
 }
 
 

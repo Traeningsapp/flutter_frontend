@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:projekt_frontend/src/presentation/views/hero.dart';
 import 'package:projekt_frontend/src/presentation/views/profile/favoriteExercises.dart';
 import 'package:projekt_frontend/src/presentation/views/profile/profileAccountPage.dart';
 import 'package:projekt_frontend/src/presentation/views/profile/savedWorkoutsPage.dart';
@@ -134,7 +135,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: logout,
+                  onPressed: () async {
+                    logout();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) =>
+                            const HeroWidget()),
+                            (route) => false);
+                  },
                   icon: const Icon(Icons.logout_rounded, size: 25),
                   color: Colors.deepOrange,
                 ),
