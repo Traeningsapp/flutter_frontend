@@ -8,6 +8,7 @@ class Workout {
   late DateTime? createdDate;
   late List<Exercise>? exercises;
   late bool? visibleToUser;
+  late String? splitType;
 
   // constructor
   Workout({
@@ -17,6 +18,7 @@ class Workout {
     this.createdDate,
     this.exercises,
     this.visibleToUser,
+    this.splitType,
   });
 
   factory Workout.fromJson(Map<String, dynamic> map) {
@@ -32,7 +34,8 @@ class Workout {
         name: map['name'],
         createdDate: map['createdDate'] != null ? DateTime.parse(map['createdDate']) : null,
         exercises: exerciseList,
-        visibleToUser: map['visibleToUser']
+        visibleToUser: map['visibleToUser'],
+        splitType: map['splitType']
     );
   }
 
@@ -43,13 +46,14 @@ class Workout {
       "name": name,
       "createdDate": createdDate?.toIso8601String(),
       "exercises": exercises == null ? [] : List<dynamic>.from(exercises!.map((x) => x.toJson())).toList(),
-      "visibleToUser": visibleToUser
+      "visibleToUser": visibleToUser,
+      "splitType": splitType
     };
   }
 
   @override
   String toString() {
-    return 'Workout {id: $id, userId: $userId, name: $name, createdDate: $createdDate, exercises: $exercises, visibleToUser: $visibleToUser}';
+    return 'Workout {id: $id, userId: $userId, name: $name, createdDate: $createdDate, exercises: $exercises, visibleToUser: $visibleToUser, splitType: $splitType}';
   }
 }
 
