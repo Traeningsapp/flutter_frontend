@@ -18,16 +18,14 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   final DatabaseService _dbService = DatabaseService();
   late Future<bool?> isFavorite;
   late bool? favorite = false;
+  late bool? isActive;
 
   late Exercise exercise;
 
   @override
   void initState() {
     super.initState();
-
-    exercise = widget.exercise;
-    isFavorite = _dbService.getFavoriteExercise(Global_userid, exercise.id);
-    changeBool();
+    setupInitialValues();
   }
 
   @override
@@ -35,8 +33,11 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
     super.dispose();
   }
 
-  void changeBool() async {
-    favorite = await isFavorite!;
+  void setupInitialValues() async {
+    exercise = widget.exercise;
+    isActive = exercise.active;
+    favorite = await _dbService.getFavoriteExercise(Global_userid, exercise!.id);
+
   }
 
   void SetOrDeleteFavorite() async {
@@ -48,6 +49,14 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
         _dbService.deleteFavoriteExercise(Global_userid, exercise.id);
         favorite = false;
       }
+    });
+  }
+
+  void deleteOrRestoreExercise() async {
+    setState(() {
+      print('noget');
+      exercise.active = !exercise.active;
+      _dbService.setActiveValue(Global_userid, exercise.id, exercise.active);
     });
   }
 
@@ -85,7 +94,15 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     onPressed: () {
                       SetOrDeleteFavorite();
                     },
-                    icon: favorite == true ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite_border, color: Colors.red,))
+                    icon: favorite == true ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite_border, color: Colors.red,)
+                ),
+                if(Global_user_role == "Admin")
+                  IconButton(
+                      onPressed: () {
+                        deleteOrRestoreExercise();
+                      },
+                      icon: exercise.active == true ? Icon(Icons.delete, color: Colors.red.shade300) : Icon(Icons.restore_from_trash, color: Colors.green.shade300,)
+                  ),
               ],
             ),
             Text('name: ${snapshotData.name}'),

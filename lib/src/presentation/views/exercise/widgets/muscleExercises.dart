@@ -4,6 +4,7 @@ import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class MuscleExercisesWidget extends StatefulWidget {
   final int muscle_id;
@@ -37,13 +38,23 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
           if (snapshot.hasError) {
             return Text('something went wrong! ${snapshot.error}');
           } else if (snapshot.hasData) {
-            final specificMuscleExercise = snapshot.data!;
-            return ListView.builder(
-                itemCount: specificMuscleExercise.length,
+            final specificMuscleExercise = snapshot.data!.where((element) => element.active == true).toList();
+            final specificMuscleExerciseAdmin = snapshot.data!;
+            if(Global_user_role == "Admin") {
+              return ListView.builder(
+                itemCount: specificMuscleExerciseAdmin.length,
                 itemBuilder: (context, index) {
-                  return buildMuscleExercise(specificMuscleExercise[index]);
+                  return buildMuscleExercise(specificMuscleExerciseAdmin[index]);
                 }
             );
+            } else {
+              return ListView.builder(
+                  itemCount: specificMuscleExercise.length,
+                  itemBuilder: (context, index) {
+                    return buildMuscleExercise(specificMuscleExercise[index]);
+                  }
+              );
+            }
           } else {
             return const Center(child: CircularProgressIndicator());
           }
