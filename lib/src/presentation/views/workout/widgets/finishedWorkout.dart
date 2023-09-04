@@ -73,7 +73,8 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
   }
 
   Future<int?> StoreWorkoutData() async {
-    workout.id = await _dbService.postWorkout(workout, Global_userid);
+    print(widget.workoutType);
+    workout.id = await _dbService.postWorkout(workout, Global_userid, widget.workoutType);
   }
 
   @override
@@ -114,7 +115,10 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
                         ),
                         actions: [
                           TextButton(
-                              onPressed: () => SaveWorkout(),
+                              onPressed: () async {
+                                SaveWorkout();
+                                Navigator.pop(context);
+                              },
                               child: const Text('Save Workout'))
                         ],
                       );
