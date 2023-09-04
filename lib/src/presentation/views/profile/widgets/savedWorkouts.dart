@@ -20,6 +20,7 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
 
   @override
   void initState() {
+    super.initState();
     loadWorkoutList();
   }
 
@@ -31,6 +32,7 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
 
   void deleteWorkout(int workoutId) async {
     _dbService.deleteWorkoutFromHistory(workoutId);
+    await Future.delayed(const Duration(milliseconds: 400));
     loadWorkoutList();
   }
 
@@ -38,20 +40,19 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBarWidget(title: 'Saved Workouts'),
-      body: FutureBuilder(
+      body: FutureBuilder<List<Workout>?>(
         future: workoutList,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('something went wrong! ${snapshot.error}');
+            return Text('Something went wrong! ${snapshot.error}');
           } else if (snapshot.hasData) {
             final retrievedWorkoutData = snapshot.data!;
+            print(retrievedWorkoutData);
             return ListView.builder(
-                itemCount: retrievedWorkoutData.length,
-                itemBuilder: (context, index) {
-                  return buildWorkoutCard(
-                      retrievedWorkoutData[index]
-                  );
-                }
+              itemCount: retrievedWorkoutData.length,
+              itemBuilder: (context, index) {
+                return buildWorkoutCard(retrievedWorkoutData[index]);
+              },
             );
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -106,8 +107,8 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
               fontSize: fontsizeForTitles
           ),
         ),
-        subtitle: const Text('add split type',
-          style: TextStyle(
+        subtitle: Text(workout.splitType!,
+          style: const TextStyle(
               fontSize: fontsizeForSubTitles
           ),
         ),
