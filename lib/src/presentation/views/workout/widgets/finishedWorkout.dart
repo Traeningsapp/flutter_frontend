@@ -38,7 +38,7 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
     super.initState();
     setList();
     setupWorkout();
-    StoreWorkoutData();
+    storeWorkoutData();
   }
 
   Future<void> setList() async {
@@ -65,15 +65,14 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
         visibleToUser: visibleToUser);
   }
 
-  void SaveWorkout() {
+  void saveWorkout() {
     workout.visibleToUser = true;
     workout.name = _workoutNameController.text;
 
-    StoreWorkoutData();
+    storeWorkoutData();
   }
 
-  Future<int?> StoreWorkoutData() async {
-    print(widget.workoutType);
+  Future<void> storeWorkoutData() async {
     workout.id = await _dbService.postWorkout(workout, Global_userid, widget.workoutType);
   }
 
@@ -116,7 +115,7 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
                         actions: [
                           TextButton(
                               onPressed: () async {
-                                SaveWorkout();
+                                saveWorkout();
                                 Navigator.pop(context);
                               },
                               child: const Text('Save Workout'))

@@ -33,14 +33,19 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
   @override
   void initState() {
     super.initState();
+    _initRetrieval();
+    _setupControllerAndAnimation();
+  }
 
+  Future<void> _initRetrieval() async {
     userId = widget.userId;
     exerciseId = widget.exerciseId;
     exerciseName = widget.exerciseName;
 
-    stats = _dbService.getExerciseStats(userId, exerciseId);
-    createExerciseStatsList();
+    statsList = await _dbService.getExerciseStats(userId, exerciseId);
+  }
 
+  void _setupControllerAndAnimation() {
     controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
     scaleAnimation = CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
@@ -53,11 +58,7 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
     controller.forward();
   }
 
-  void createExerciseStatsList() async {
-    statsList = await stats;
-  }
-
-  Table StatsTable() {
+  Table statsTable() {
     return Table(
       border: const TableBorder(horizontalInside: BorderSide(width: 1, color: Colors.black, style: BorderStyle.solid)),
       children: [
@@ -169,7 +170,7 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
                   SizedBox(
                    height: MediaQuery.of(context).size.height * 0.4,
                    child: SingleChildScrollView(
-                       child: StatsTable()
+                       child: statsTable()
                    ),
                   ),
                   SizedBox(

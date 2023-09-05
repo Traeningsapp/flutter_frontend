@@ -6,8 +6,8 @@ class ExercisePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const MuscleGroupPage(),
+    return const Scaffold(
+      body: MuscleGroupPage(),
     );
   }
 }

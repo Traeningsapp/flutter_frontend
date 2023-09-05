@@ -14,7 +14,7 @@ class FavoriteExercisesWidget extends StatefulWidget {
 }
 
 class _FavoriteExercisesWidgetState extends State<FavoriteExercisesWidget> {
-  DatabaseService _dbService = DatabaseService();
+  final DatabaseService _dbService = DatabaseService();
   late Future<List<Exercise>?> favoriteExerciseList;
 
 

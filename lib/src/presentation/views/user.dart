@@ -18,18 +18,21 @@ class UserWidget extends StatelessWidget {
               radius: 56,
               child: ClipOval(child: Image.network(pictureUrl.toString())),
             )),
-      Card(
-          child: Column(children: [
-        UserEntryWidget(propertyName: 'Id', propertyValue: user?.sub),
-        UserEntryWidget(propertyName: 'Name', propertyValue: user?.name),
-        UserEntryWidget(propertyName: 'Email', propertyValue: user?.email),
-        UserEntryWidget(
-            propertyName: 'Email Verified?',
-            propertyValue: user?.isEmailVerified.toString()),
-        UserEntryWidget(
-            propertyName: 'Updated at',
-            propertyValue: user?.updatedAt?.toIso8601String()),
-      ]))
+        Card(
+            child: Column(
+              children: [
+                UserEntryWidget(propertyName: 'Id', propertyValue: user?.sub),
+                UserEntryWidget(propertyName: 'Name', propertyValue: user?.name),
+                UserEntryWidget(propertyName: 'Email', propertyValue: user?.email),
+                UserEntryWidget(
+                    propertyName: 'Email Verified?',
+                    propertyValue: user?.isEmailVerified.toString()),
+                UserEntryWidget(
+                    propertyName: 'Updated at',
+                    propertyValue: user?.updatedAt?.toIso8601String()),
+                ],
+            ),
+        ),
     ]);
   }
 }

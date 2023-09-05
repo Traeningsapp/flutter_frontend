@@ -21,6 +21,10 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
   @override
   void initState() {
     super.initState();
+    _initRetrieval();
+  }
+
+  Future<void> _initRetrieval() async {
     loadWorkoutList();
   }
 

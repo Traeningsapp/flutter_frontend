@@ -117,15 +117,12 @@ class DatabaseService {
       );
 
       if (response.statusCode == 200) {
-        print('her rammer vi statusCode == 200 og printer responseData');
-
         return int.parse(response.body);
       } else {
         log("Error with status code: ${response.statusCode}");
         return null;
       }
     } catch(e) {
-      print('returner 500 fra catch(e)');
       return 500;
     }
   }
@@ -143,7 +140,6 @@ class DatabaseService {
       if (response.statusCode == 200) {
         return workoutsFromJson(response.body);
       } else {
-        print(response.statusCode);
       }
     }
     catch (e) {
@@ -322,7 +318,6 @@ class DatabaseService {
         },
       );
       if(response.statusCode == 200) {
-        print('updated');
       }
     }
     catch(e)
