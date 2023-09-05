@@ -23,7 +23,6 @@ class _MusclePageState extends State<MusclePage> {
   }
 
   Future<void> _initRetrieval() async {
-    print(widget.musclegroupId);
     musclesList = _dbService.getMuscles(widget.musclegroupId);
   }
 

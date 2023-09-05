@@ -14,11 +14,10 @@ class ExerciseHowToOverlay extends StatefulWidget {
 
 class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
     with SingleTickerProviderStateMixin {
-  DatabaseService _dbService = DatabaseService();
+  final DatabaseService _dbService = DatabaseService();
 
   late int exerciseId;
   late String exerciseName;
-  late Future<List<ExerciseHowTo>?> howToList;
   List<ExerciseHowTo>? howTo = [];
 
   late AnimationController controller;
@@ -27,28 +26,26 @@ class _ExerciseHowToOverlayState extends State<ExerciseHowToOverlay>
   @override
   void initState() {
     super.initState();
+    _initRetrieval();
+    _setupControllerAndAnimation();
+  }
 
+  Future<void> _initRetrieval() async {
     exerciseId = widget.exerciseId;
     exerciseName = widget.exerciseName;
 
-    howToList = _dbService.getExerciseHowTo(exerciseId);
+    howTo = await _dbService.getExerciseHowTo(exerciseId);
+  }
 
-    createHowToList();
-
-    controller =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
-    scaleAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+  void _setupControllerAndAnimation() {
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    scaleAnimation = CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
     controller.addListener(() {
       setState(() {});
     });
 
     controller.forward();
-  }
-
-  void createHowToList() async {
-    howTo = await howToList;
   }
 
   @override

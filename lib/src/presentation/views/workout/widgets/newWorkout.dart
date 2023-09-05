@@ -31,7 +31,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
     return _dbService.getNewWorkout(split_id, userid);
   }
 
-  Future<void> GenerateWorkout() async {
+  Future<void> generateWorkout() async {
     if(splitdropdownValue == 'Push') {
       split_id = 1;
     } else if (splitdropdownValue == 'Pull') {
@@ -223,7 +223,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                         child: const Text(
                             textAlign: TextAlign.center,
                             'Start Worktout'),
-                        onPressed: () => GenerateWorkout(),
+                        onPressed: () => generateWorkout(),
                       ),
                     ),
                   ),

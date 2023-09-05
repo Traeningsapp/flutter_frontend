@@ -25,7 +25,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   @override
   void initState() {
     super.initState();
-    setupInitialValues();
+    _initRetrieval();
   }
 
   @override
@@ -33,14 +33,14 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
     super.dispose();
   }
 
-  void setupInitialValues() async {
+  Future<void> _initRetrieval() async {
     exercise = widget.exercise;
     isActive = exercise.active;
     favorite = await _dbService.getFavoriteExercise(Global_userid, exercise!.id);
-
   }
 
-  void SetOrDeleteFavorite() async {
+
+  void setOrDeleteFavorite() async {
     setState(() {
       if(favorite == false) {
         _dbService.setFavoriteExercise(Global_userid, exercise.id);
@@ -54,7 +54,6 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
 
   void deleteOrRestoreExercise() async {
     setState(() {
-      print('noget');
       exercise.active = !exercise.active;
       _dbService.setActiveValue(Global_userid, exercise.id, exercise.active);
     });
@@ -92,7 +91,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                 ),
                 IconButton(
                     onPressed: () {
-                      SetOrDeleteFavorite();
+                      setOrDeleteFavorite();
                     },
                     icon: favorite == true ? const Icon(Icons.favorite, color: Colors.red) : const Icon(Icons.favorite_border, color: Colors.red,)
                 ),

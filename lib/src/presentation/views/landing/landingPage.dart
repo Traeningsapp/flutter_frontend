@@ -45,17 +45,21 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   void initState() {
+    _setupAnimationController();
+    super.initState();
+  }
+
+  void _setupAnimationController() {
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200))
       ..addListener(
-        () {
+            () {
           setState(() {});
         },
       );
 
     scaleAnimation = Tween<double>(begin: 1, end: 0.8).animate(CurvedAnimation(parent: _animationController, curve: Curves.fastOutSlowIn));
     animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.fastOutSlowIn));
-    super.initState();
   }
 
   @override

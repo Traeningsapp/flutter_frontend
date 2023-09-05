@@ -27,6 +27,10 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
+    _setupAuth0();
+  }
+
+  void _setupAuth0() {
     auth0 = widget.auth0 ??
         Auth0(dotenv.env['AUTH0_DOMAIN']!, dotenv.env['AUTH0_CLIENT_ID']!);
     auth0Web =
@@ -34,8 +38,8 @@ class _MainViewState extends State<MainView> {
 
     if (kIsWeb) {
       auth0Web.onLoad().then((final credentials) => setState(() {
-            _user = credentials?.user;
-          }));
+        _user = credentials?.user;
+      }));
     }
   }
 

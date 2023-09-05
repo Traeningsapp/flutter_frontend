@@ -26,19 +26,17 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
   void initState() {
     super.initState();
     _initRetrieval();
-    createWorkoutList();
   }
 
   Future<void> _initRetrieval() async {
     savedWorkout = _dbService.getSpecificWorkout(widget.workoutId!, Global_userid);
-    print(widget.workoutId);
+    createWorkoutList();
   }
 
   void createWorkoutList() async {
     if(savedWorkout != null) {
       workout = await savedWorkout;
       exercisesToStartWorkout = workout!.exercises;
-      print(widget.workoutId);
     }
   }
 
