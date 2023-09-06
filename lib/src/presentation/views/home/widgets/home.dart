@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/presentation/views/workout/createWorkout.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 
 class HomeWidget extends StatelessWidget {
 
@@ -8,6 +9,7 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MainColor,
       body: Column(
         children: [
           const Expanded(
@@ -50,10 +52,16 @@ class HomeWidget extends StatelessWidget {
             child: SizedBox(
               child: FittedBox(
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(SecondaryColor)
+                  ),
                   child: const Text(
                       textScaleFactor: 0.7,
                       textAlign: TextAlign.center,
-                      'Create workout'
+                      'Create workout',
+                      style: TextStyle(
+                        color: HeadlineColor
+                      ),
                   ),
                   onPressed: () => Navigator.push(
                     context,

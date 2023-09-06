@@ -74,7 +74,7 @@ class DatabaseService {
     }
   }
 
-  Future<Workout?> getNewWorkout(int splitType, String userid) async {
+  Future<Workout?> getNewWorkout(int splitType, String userid, bool abs, bool favorite) async {
     try
     {
       final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid");
@@ -87,7 +87,6 @@ class DatabaseService {
       print(Global_userid);
       print(response.statusCode);
       if(response.statusCode == 200) {
-        //print(response.body);
         return workoutFromJson(response.body);
       }
     }

@@ -2,12 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:projekt_frontend/src/presentation/views/hero.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/favoriteExercises.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/profileAccountPage.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/savedWorkoutsPage.dart';
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:auth0_flutter/auth0_flutter_web.dart';
-import 'package:projekt_frontend/src/utils/globalVariables.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
+import 'favoriteExercises.dart';
+import 'profileAccount.dart';
+import 'savedWorkouts.dart';
 
 const List<String> profileList = ['Account','Saved workouts','Favorite Exercises'];
 const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.fitness_center), Icon(Icons.fitness_center)];
@@ -76,7 +76,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: [
                 Text(
                   'Signed in as:',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      color: HeadlineColor,
+                      fontSize: 16),
                 )
               ],
             ),
@@ -85,7 +87,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: [
                 SizedBox(height: 10),
                 Text('Email here',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: TextColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -95,7 +100,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: [
                 Expanded(
                     child: Divider(
-                  color: Colors.lightBlue,
+                  color: SecondaryColor,
                   height: 2,
                   indent: 1,
                   thickness: 1,
@@ -115,15 +120,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       itemBuilder: (BuildContext ctxt, int index) {
                         return ListTile(
                           leading: iconList[index],
-                          title: Text(profileList[index]),
+                          title: Text(
+                              profileList[index],
+                              style: const TextStyle(
+                                color: TextColor,
+                              ),
+                          ),
                           trailing: const Icon(Icons.navigate_next),
                             onTap: () => {
                               if(index == 0) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileAccountPage()))
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileAccountWidget()))
                               } else if(index == 1) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const SavedWorkoutsPage()))
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const SavedWorkoutWidget()))
                               } else if(index == 2) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoriteExercisesPage()))
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoriteExercisesWidget()))
                               }
                             },
                         );
@@ -152,7 +162,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   'Logout',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: TextColor,
                   ),
                 )
               ],

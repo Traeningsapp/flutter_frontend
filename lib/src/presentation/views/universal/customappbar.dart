@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 
 
 class CustomAppBarWidget extends StatefulWidget implements PreferredSizeWidget {
@@ -21,7 +22,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: SecondaryColor,
           centerTitle: true,
         )
     );

@@ -3,6 +3,7 @@ import 'package:projekt_frontend/src/models/muscle.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/muscleExercises.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 
 class MusclePage extends StatefulWidget {
   final int musclegroupId;
@@ -31,6 +32,7 @@ class _MusclePageState extends State<MusclePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBarWidget(title: 'Muscles'),
+      backgroundColor: MainColor,
       body: FutureBuilder(
         future: musclesList,
         builder: (context, snapshot) {
@@ -56,9 +58,13 @@ class _MusclePageState extends State<MusclePage> {
     elevation: 4,
     child: ListTile(
         contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-        tileColor: Colors.white,
+        tileColor: SecondaryColor,
         title: Text(muscle.name),
         trailing: const Icon(Icons.arrow_right,),
+        shape: RoundedRectangleBorder(
+            side: const BorderSide(color: TertiaryColor, width: 2),
+            borderRadius: BorderRadius.circular(5)
+        ),
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MuscleExercisesWidget(muscle_id: muscle.id)))
     ),
   );

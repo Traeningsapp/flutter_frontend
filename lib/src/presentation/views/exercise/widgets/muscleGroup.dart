@@ -16,6 +16,7 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MainColor,
       body: ListView(
           padding: const EdgeInsets.fromLTRB(5, 110, 5, 0),
           children: <Widget>[
@@ -34,11 +35,11 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
       elevation: 4,
       child: ListTile(
         shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.lightBlue, width: 1),
+            side: const BorderSide(color: TertiaryColor, width: 2),
             borderRadius: BorderRadius.circular(5)
         ),
         onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },
-        tileColor: Colors.white,
+        tileColor: SecondaryColor,
         contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
         leading: ConstrainedBox(
           constraints: const BoxConstraints(

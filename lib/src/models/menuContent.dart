@@ -1,5 +1,3 @@
-
-
 import 'package:projekt_frontend/src/models/rive_model.dart';
 
 class Menu {

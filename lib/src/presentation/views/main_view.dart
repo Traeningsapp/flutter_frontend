@@ -38,8 +38,8 @@ class _MainViewState extends State<MainView> {
 
     if (kIsWeb) {
       auth0Web.onLoad().then((final credentials) => setState(() {
-        _user = credentials?.user;
-      }));
+            _user = credentials?.user;
+          }));
     }
   }
 
@@ -52,14 +52,15 @@ class _MainViewState extends State<MainView> {
       var credentials = await auth0
           .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
           .login(
-        audience: 'https://traenings-app-backend.com',
-      );
+            audience: 'https://traenings-app-backend.com',
+          );
 
       setState(() {
         _user = credentials.user;
         Global_userid = credentials.user.sub;
         Global_Access_token = credentials.accessToken;
-        Global_user_role = credentials.user.customClaims!['traenings-app.eu.auth0.com/roles'][0];
+        Global_user_role = credentials
+            .user.customClaims!['traenings-app.eu.auth0.com/roles'][0];
       });
     } catch (e) {
       print(e);
@@ -70,31 +71,34 @@ class _MainViewState extends State<MainView> {
   Widget build(final BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+          backgroundColor: MainColor,
           body: Padding(
-          padding: const EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: padding,
               bottom: padding,
               left: padding / 2,
               right: padding / 2,
             ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Row(children: [
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                      child: Row(children: [
                     _user != null
-                      ? const Expanded(child: LandingPage())
-                      : const Expanded(child: HeroWidget())
-              ])),
-              _user != null
-              ? Container() : ElevatedButton(
-                  onPressed: login,
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
-                  ),
-                  child: const Text('Login'),
-                )
-        ]),
+                        ? const Expanded(child: LandingPage())
+                        : const Expanded(child: HeroWidget())
+                  ])),
+                  _user != null
+                  ? Container()
+                  : ElevatedButton(
+                      onPressed: login,
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                      ),
+                      child: const Text('Login'),
+                    )
+            ]),
       )),
     );
   }

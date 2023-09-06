@@ -6,6 +6,7 @@ import 'package:projekt_frontend/src/presentation/views/workout/widgets/activeWo
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class SpecificWorkoutWidget extends StatefulWidget {
@@ -43,6 +44,7 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MainColor,
       appBar: const CustomAppBarWidget(title: 'Exercises in Workout'),
       body: FutureBuilder(
         future: savedWorkout,
@@ -106,8 +108,13 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
         elevation: 3,
         child: ListTile(
             contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-            tileColor: Colors.white,
-            title: Text(specificWorkoutExercise.name!),
+            tileColor: SecondaryColor,
+            title: Text(
+                specificWorkoutExercise.name!,
+                style: const TextStyle(
+                  color: TextColor,
+                ),
+            ),
             trailing: const Icon(Icons.arrow_drop_down),
             onTap: openContainer
         ),

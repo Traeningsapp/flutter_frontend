@@ -4,11 +4,12 @@ import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class MuscleExercisesWidget extends StatefulWidget {
   final int muscle_id;
-  const MuscleExercisesWidget({required this.muscle_id ,super.key});
+  const MuscleExercisesWidget({required this.muscle_id, super.key});
 
   @override
   State<MuscleExercisesWidget> createState() => _MuscleExercisesWidgetState();
@@ -32,28 +33,30 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBarWidget(title: 'Exercises'),
+      backgroundColor: MainColor,
       body: FutureBuilder(
         future: muscleExerciseList,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('something went wrong! ${snapshot.error}');
           } else if (snapshot.hasData) {
-            final specificMuscleExercise = snapshot.data!.where((element) => element.active == true).toList();
+            final specificMuscleExercise = snapshot.data!
+                .where((element) => element.active == true)
+                .toList();
             final specificMuscleExerciseAdmin = snapshot.data!;
-            if(Global_user_role == "Admin") {
+            if (Global_user_role == "Admin") {
               return ListView.builder(
-                itemCount: specificMuscleExerciseAdmin.length,
-                itemBuilder: (context, index) {
-                  return buildMuscleExercise(specificMuscleExerciseAdmin[index]);
-                }
-            );
+                  itemCount: specificMuscleExerciseAdmin.length,
+                  itemBuilder: (context, index) {
+                    return buildMuscleExercise(
+                        specificMuscleExerciseAdmin[index]);
+                  });
             } else {
               return ListView.builder(
                   itemCount: specificMuscleExercise.length,
                   itemBuilder: (context, index) {
                     return buildMuscleExercise(specificMuscleExercise[index]);
-                  }
-              );
+                  });
             }
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -64,26 +67,29 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
   }
 
   Widget buildMuscleExercise(Exercise specificMuscleExercise) => OpenContainer(
-    transitionDuration: const Duration(milliseconds: 700),
-    closedColor: Colors.transparent,
-    closedElevation: 0,
-    transitionType: ContainerTransitionType.fadeThrough,
-    closedBuilder: (BuildContext _, VoidCallback openContainer) {
-      return Card(
-        elevation: 3,
-        child: ListTile(
-            contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-            tileColor: Colors.white,
-            title: Text(specificMuscleExercise.name!),
-            trailing: const Icon(Icons.arrow_drop_down),
-            onTap: openContainer
-        ),
+        transitionDuration: const Duration(milliseconds: 700),
+        closedColor: Colors.transparent,
+        closedElevation: 0,
+        transitionType: ContainerTransitionType.fadeThrough,
+        closedBuilder: (BuildContext _, VoidCallback openContainer) {
+          return Card(
+              elevation: 3,
+              child: ListTile(
+                contentPadding:
+                    const EdgeInsets.only(left: 15, top: 3, bottom: 3),
+                tileColor: SecondaryColor,
+                shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: TertiaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(5)
+                ),
+                title: Text(specificMuscleExercise.name!),
+                trailing: const Icon(Icons.arrow_drop_down),
+                onTap: openContainer,
+              ));
+        },
+        openBuilder: (BuildContext _, VoidCallback __) {
+          return ExerciseWidget(
+              exercise: specificMuscleExercise, themecolor: Colors.green);
+        },
       );
-    },
-    openBuilder: (BuildContext _, VoidCallback __) {
-      return ExerciseWidget(exercise: specificMuscleExercise, themecolor: Colors.green);
-    },
-  );
-
 }
-

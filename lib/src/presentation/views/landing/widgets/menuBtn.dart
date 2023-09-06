@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:rive/rive.dart';
 
 class MenuBtn extends StatelessWidget {
@@ -17,8 +18,8 @@ class MenuBtn extends StatelessWidget {
           height: 50,
           width: 50,
           decoration: const BoxDecoration(
-              color: Colors.white,
               shape: BoxShape.circle,
+              color: SecondaryColor,
           ),
           child: RiveAnimation.asset(
             'assets/RiveAssets/menu_button.riv',

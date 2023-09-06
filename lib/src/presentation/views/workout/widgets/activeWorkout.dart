@@ -7,6 +7,7 @@ import 'package:projekt_frontend/src/presentation/views/workout/widgets/finished
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exerciseHowTo.dart';
 import 'package:projekt_frontend/src/presentation/views/stats/widgets/specificExerciseStat.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class ActiveWorkoutWidget extends StatefulWidget {
@@ -115,6 +116,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: MainColor,
         resizeToAvoidBottomInset: false,
         appBar: const CustomAppBarWidget(title: 'Active Workout'),
         body: FutureBuilder<List<Exercise>?>(
@@ -167,32 +169,47 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.26,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Column(
+                      children: <Widget>[
+                        Image.asset(
+                            'assets/exerciseGifs/${generatedWorkout.id}.gif',
+                            fit: BoxFit.cover,
+                            height: MediaQuery.of(context).size.height * 0.26,
+                            width: MediaQuery.of(context).size.width * 0.6)
+                      ],
+                )),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                const Row(
                   children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const SizedBox(
+                    SizedBox(
                       width: 90,
                       child: Text(
-                        'Benefits :',
+                        'Benefits',
                         style: TextStyle(
-                          fontSize: 14,
+                          color: HeadlineColor,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Text(
-                        generatedWorkout.benefits,
-                        overflow: TextOverflow.clip,
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      generatedWorkout.benefits,
+                      style: const TextStyle(
+                        color: TextColor,
+                        fontSize: 13,
                       ),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    )
                   ],
+                ),
+                const SizedBox(
+                  width: 20,
                 ),
                 Container(
                     alignment: Alignment.center,
@@ -233,19 +250,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text('${generatedWorkout.muscleActivation!}'),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.26,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/exerciseGifs/${generatedWorkout.id}.gif',
-                          fit: BoxFit.cover,
-                          height: MediaQuery.of(context).size.height * 0.26,
-                          width: MediaQuery.of(context).size.width * 0.6)
-                      ],
-                    )),
+                Text('${generatedWorkout.muscles!}'),
                 const Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0)),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
@@ -353,10 +358,18 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     child: Align(
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(SecondaryColor)
+                      ),
                       onPressed: () {
                         _handleNext();
                       },
-                      child: const Text('Next Exercise')),
+                      child: const Text(
+                          'Next Exercise',
+                          style: TextStyle(
+                            color: HeadlineColor
+                          ),
+                      )),
                 ))
               ],
             ),
