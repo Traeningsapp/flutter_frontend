@@ -43,6 +43,7 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SelectedMainColor,
       appBar: const CustomAppBarWidget(title: 'Saved Workouts'),
       body: FutureBuilder<List<Workout>?>(
         future: workoutList,
@@ -103,16 +104,23 @@ class _SavedWorkoutWidgetState extends State<SavedWorkoutWidget> {
         ),
         onTap: () { Navigator.push(context, MaterialPageRoute(
             builder: (context) => SpecificWorkoutWidget(workoutId: workout.id))); },
-        tileColor: Colors.white,
+        tileColor: SelectedSecondaryColor,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(color: SelectedTertiaryColor, width: 2),
+            borderRadius: BorderRadius.circular(5)
+        ),
         contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
         trailing: const Icon(Icons.arrow_right,),
         title: Text(workout.name!,
-          style: const TextStyle(
-              fontSize: fontsizeForTitles
+          style: TextStyle(
+              color: SelectedHeadlineColor,
+              fontSize: fontsizeForTitles,
+              fontWeight: FontWeight.bold
           ),
         ),
         subtitle: Text(workout.splitType!,
-          style: const TextStyle(
+          style: TextStyle(
+              color: SelectedTextColor,
               fontSize: fontsizeForSubTitles
           ),
         ),

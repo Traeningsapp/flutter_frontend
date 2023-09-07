@@ -4,6 +4,7 @@ import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class FavoriteExercisesWidget extends StatefulWidget {
@@ -31,6 +32,7 @@ class _FavoriteExercisesWidgetState extends State<FavoriteExercisesWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SelectedMainColor,
       appBar: const CustomAppBarWidget(title: 'Favorite Exercises'),
       body: FutureBuilder(
         future: favoriteExerciseList,
@@ -63,8 +65,17 @@ class _FavoriteExercisesWidgetState extends State<FavoriteExercisesWidget> {
         elevation: 3,
         child: ListTile(
             contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-            tileColor: Colors.white,
-            title: Text(favoriteExercise.name!),
+            tileColor: SelectedSecondaryColor,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: SelectedTertiaryColor, width: 2),
+                borderRadius: BorderRadius.circular(5)
+            ),
+            title: Text(
+                favoriteExercise.name!,
+                style: TextStyle(
+                  color: SelectedTextColor,
+                ),
+            ),
             trailing: const Icon(Icons.arrow_drop_down),
             onTap: openContainer
         ),

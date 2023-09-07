@@ -2,15 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:projekt_frontend/src/presentation/views/hero.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/favoriteExercises.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/profileAccountPage.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/savedWorkoutsPage.dart';
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:auth0_flutter/auth0_flutter_web.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/widgets/ThemeColor.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
+import 'favoriteExercises.dart';
+import 'profileAccount.dart';
+import 'savedWorkouts.dart';
 
-const List<String> profileList = ['Account','Saved workouts','Favorite Exercises'];
-const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.fitness_center), Icon(Icons.fitness_center)];
+const List<String> profileList = ['Account','Saved workouts','Favorite Exercises', 'Themes'];
+const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.fitness_center), Icon(Icons.fitness_center), Icon(Icons.color_lens_outlined)];
 
 class ProfileWidget extends StatefulWidget {
   final Auth0? auth0;
@@ -71,31 +72,36 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 80)),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Signed in as:',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      color: SelectedHeadlineColor,
+                      fontSize: 16),
                 )
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text('Email here',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: SelectedTextColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             Container(
                 alignment: Alignment.center, padding: const EdgeInsets.all(10)),
-            const Row(
+            Row(
               children: [
                 Expanded(
                     child: Divider(
-                  color: Colors.lightBlue,
+                  color: SelectedSecondaryColor,
                   height: 2,
                   indent: 1,
                   thickness: 1,
@@ -115,15 +121,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       itemBuilder: (BuildContext ctxt, int index) {
                         return ListTile(
                           leading: iconList[index],
-                          title: Text(profileList[index]),
+                          title: Text(
+                              profileList[index],
+                              style: TextStyle(
+                                color: SelectedTextColor,
+                              ),
+                          ),
                           trailing: const Icon(Icons.navigate_next),
                             onTap: () => {
                               if(index == 0) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileAccountPage()))
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileAccountWidget()))
                               } else if(index == 1) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const SavedWorkoutsPage()))
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const SavedWorkoutWidget()))
                               } else if(index == 2) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoriteExercisesPage()))
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoriteExercisesWidget()))
+                              } else if(index == 3) {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ThemeColorWidget()))
                               }
                             },
                         );
@@ -148,11 +161,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   icon: const Icon(Icons.logout_rounded, size: 25),
                   color: Colors.deepOrange,
                 ),
-                const Text(
+                Text(
                   'Logout',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    color: SelectedTextColor,
                   ),
                 )
               ],

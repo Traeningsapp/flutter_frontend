@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/presentation/views/workout/createWorkout.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class HomeWidget extends StatelessWidget {
 
@@ -8,15 +9,20 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SelectedMainColor,
       body: Column(
         children: [
-          const Expanded(
+          Expanded(
             flex: 2,
             child: Center(
               child: Text(
                   textAlign: TextAlign.center,
                   'Velkommen',
-                  textScaleFactor: 2),
+                  textScaleFactor: 2,
+                  style: TextStyle(
+                    color: SelectedHeadlineColor,
+                  ),
+              ),
             ),
           ),
           const Expanded(
@@ -36,12 +42,15 @@ class HomeWidget extends StatelessWidget {
               ],
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Center(
               child: Text(
                 textAlign: TextAlign.center,
                 'Workout App',
                 textScaleFactor: 2.5,
+                style: TextStyle(
+                  color: SelectedHeadlineColor,
+                ),
               ),
             ),
           ),
@@ -50,10 +59,16 @@ class HomeWidget extends StatelessWidget {
             child: SizedBox(
               child: FittedBox(
                 child: ElevatedButton(
-                  child: const Text(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(SelectedSecondaryColor)
+                  ),
+                  child: Text(
                       textScaleFactor: 0.7,
                       textAlign: TextAlign.center,
-                      'Create workout'
+                      'Create workout',
+                      style: TextStyle(
+                        color: SelectedHeadlineColor
+                      ),
                   ),
                   onPressed: () => Navigator.push(
                     context,

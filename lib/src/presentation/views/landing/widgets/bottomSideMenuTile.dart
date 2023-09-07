@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/menuContent.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 import 'package:rive/rive.dart';
 
 
@@ -31,8 +32,8 @@ class BottomSideMenuTile extends StatelessWidget {
               height: 56,
               left: 0,
               child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.indigoAccent,
+                decoration: BoxDecoration(
+                  color: SelectedTertiaryColor,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
               ),
@@ -50,7 +51,7 @@ class BottomSideMenuTile extends StatelessWidget {
               ),
               title: Text(
                 menu.title,
-                style: const TextStyle(color: Colors.black54),
+                style: TextStyle(color: SelectedTextColor),
               ),
             ),
           ],

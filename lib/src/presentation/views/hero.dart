@@ -14,8 +14,9 @@ class HeroWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      Padding(padding: EdgeInsets.only(top: 30)),
       Container(
-        child: Image.asset('assets/images/BeefcakeLogo.jpg', width: 160),
+        child: Image.asset('assets/images/BeefcakeLogo.png', width: 160),
       ),
       Expanded(
           child: Container(
@@ -31,7 +32,7 @@ class HeroWidget extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                     )),
                 Container(
-                  margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.3, 10, 0, 10),
+                  margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1, 10, 0, 10),
                   child:
                     Text('The',
                         style: GoogleFonts.spaceGrotesk(

@@ -43,6 +43,7 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SelectedMainColor,
       appBar: const CustomAppBarWidget(title: 'Exercises in Workout'),
       body: FutureBuilder(
         future: savedWorkout,
@@ -106,8 +107,17 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
         elevation: 3,
         child: ListTile(
             contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-            tileColor: Colors.white,
-            title: Text(specificWorkoutExercise.name!),
+            tileColor: SelectedSecondaryColor,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: SelectedTertiaryColor, width: 2),
+                borderRadius: BorderRadius.circular(5)
+            ),
+            title: Text(
+                specificWorkoutExercise.name!,
+                style: TextStyle(
+                  color: SelectedTextColor,
+                ),
+            ),
             trailing: const Icon(Icons.arrow_drop_down),
             onTap: openContainer
         ),

@@ -5,12 +5,12 @@ import 'package:projekt_frontend/src/presentation/views/exercise/exercisePage.da
 import 'package:projekt_frontend/src/presentation/views/help/helpPage.dart';
 import 'package:projekt_frontend/src/presentation/views/home/homePage.dart';
 import 'package:projekt_frontend/src/presentation/views/profile/profilePage.dart';
-import 'package:projekt_frontend/src/presentation/views/landing/widgets/infoCard.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/menubtn.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/topSideMenuTile.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/bottomSideMenuTile.dart';
 import 'package:projekt_frontend/src/presentation/views/settings/settingsPage.dart';
 import 'package:projekt_frontend/src/presentation/views/stats/statsPage.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 import 'package:projekt_frontend/src/utils/rive_utils.dart';
 import 'package:rive/rive.dart';
 
@@ -51,7 +51,7 @@ class _LandingPageState extends State<LandingPage>
 
   void _setupAnimationController() {
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 200))
+        vsync: this, duration: const Duration(milliseconds: 400))
       ..addListener(
             () {
           setState(() {});
@@ -84,13 +84,13 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: SelectedMainColor,
         resizeToAvoidBottomInset: false,
         extendBody: true,
         body: Stack(
           children: [
             AnimatedPositioned(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 500),
                 curve: Curves.fastOutSlowIn,
                 width: 288,
                 left: isSideDrawerOpen ? 0 : -288,
@@ -122,10 +122,10 @@ class _LandingPageState extends State<LandingPage>
               ),
             ),
             AnimatedPositioned(
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 500),
               curve: Curves.fastOutSlowIn,
               left: isSideDrawerOpen ? 220 : 0,
-              top: 16,
+              top: 12,
               child: MenuBtn(
                 press: () {
                   isMenuOpenInput.value = !isMenuOpenInput.value;
@@ -154,16 +154,17 @@ class _LandingPageState extends State<LandingPage>
         ),
       );
 
+
   Widget DrawerMenu() {
     return SafeArea(
       child: Container(
         width: 288,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.lightBlue,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            bottomRight: Radius.circular(30)
+        decoration: BoxDecoration(
+          color: SelectedSecondaryColor,
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(0),
+            bottomRight: Radius.circular(0)
           ),
         ),
         child: DefaultTextStyle(
@@ -178,7 +179,7 @@ class _LandingPageState extends State<LandingPage>
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(color: Colors.black),
+                      .copyWith(color: SelectedTextColor),
                 ),
               ),
               ...sideMenuTiles
@@ -216,7 +217,7 @@ class _LandingPageState extends State<LandingPage>
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(color: Colors.black),
+                      .copyWith(color: SelectedTextColor),
                 ),
               ),
               ...bottomSideMenuTiles

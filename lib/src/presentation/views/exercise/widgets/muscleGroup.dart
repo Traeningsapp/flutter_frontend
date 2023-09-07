@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/models/muscleGroup.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/muscle.dart';
-import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:projekt_frontend/src/utils/constants.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class MuscleGroupPage extends StatefulWidget {
   const MuscleGroupPage({super.key});
@@ -16,6 +15,7 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SelectedMainColor,
       body: ListView(
           padding: const EdgeInsets.fromLTRB(5, 110, 5, 0),
           children: <Widget>[
@@ -34,11 +34,11 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
       elevation: 4,
       child: ListTile(
         shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.lightBlue, width: 1),
+            side: BorderSide(color: SelectedTertiaryColor, width: 2),
             borderRadius: BorderRadius.circular(5)
         ),
         onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },
-        tileColor: Colors.white,
+        tileColor: SelectedSecondaryColor,
         contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
         leading: ConstrainedBox(
           constraints: const BoxConstraints(
