@@ -77,7 +77,7 @@ class DatabaseService {
   Future<Workout?> getNewWorkout(int splitType, String userid, bool abs, bool favorite) async {
     try
     {
-      final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid");
+      final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid/$abs/$favorite");
       final response = await http.get(
         url,
         headers: {

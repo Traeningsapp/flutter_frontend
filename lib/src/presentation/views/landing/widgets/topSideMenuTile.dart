@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/menuContent.dart';
-import 'package:projekt_frontend/src/utils/constants.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 import 'package:rive/rive.dart';
 
 
@@ -29,8 +29,8 @@ class SideMenuTile extends StatelessWidget {
               height: 56,
               left: 0,
               child: Container(
-                decoration: const BoxDecoration(
-                  color: TertiaryColor,
+                decoration: BoxDecoration(
+                  color: SelectedTertiaryColor,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
               ),
@@ -48,7 +48,7 @@ class SideMenuTile extends StatelessWidget {
               ),
               title: Text(
                 menu.title,
-                style: const TextStyle(color: TextColor),
+                style: TextStyle(color: SelectedTextColor),
               ),
             ),
           ],

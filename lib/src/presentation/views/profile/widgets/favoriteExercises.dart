@@ -32,7 +32,7 @@ class _FavoriteExercisesWidgetState extends State<FavoriteExercisesWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MainColor,
+      backgroundColor: SelectedMainColor,
       appBar: const CustomAppBarWidget(title: 'Favorite Exercises'),
       body: FutureBuilder(
         future: favoriteExerciseList,
@@ -65,11 +65,15 @@ class _FavoriteExercisesWidgetState extends State<FavoriteExercisesWidget> {
         elevation: 3,
         child: ListTile(
             contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-            tileColor: SecondaryColor,
+            tileColor: SelectedSecondaryColor,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: SelectedTertiaryColor, width: 2),
+                borderRadius: BorderRadius.circular(5)
+            ),
             title: Text(
                 favoriteExercise.name!,
-                style: const TextStyle(
-                  color: TextColor,
+                style: TextStyle(
+                  color: SelectedTextColor,
                 ),
             ),
             trailing: const Icon(Icons.arrow_drop_down),

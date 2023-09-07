@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/presentation/views/profile/profilePage.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
-import 'package:projekt_frontend/src/utils/constants.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 const List<String> accountList = ['My account settings','Initial questions','Delete account?'];
 const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.question_mark), Icon(Icons.delete_forever)];
@@ -19,20 +19,20 @@ class _ProfileAccountWidgetState extends State<ProfileAccountWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(title: 'Profile'),
-      backgroundColor: MainColor,
+      backgroundColor: SelectedMainColor,
       body: Column(
         children: [
           Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.fromLTRB(0,70,0,0)),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 10),
               Text(
                 'Account settings',
                 style: TextStyle(
-                    color: HeadlineColor,
+                    color: SelectedHeadlineColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -41,11 +41,11 @@ class _ProfileAccountWidgetState extends State<ProfileAccountWidget> {
           Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10)),
-          const Row(
+          Row(
             children: [
               Expanded(
                   child: Divider(
-                    color: SecondaryColor,
+                    color: SelectedSecondaryColor,
                     height: 2,
                     indent: 1,
                     thickness: 1,
@@ -67,8 +67,8 @@ class _ProfileAccountWidgetState extends State<ProfileAccountWidget> {
                         leading: iconList[index],
                         title: Text(
                             accountList[index],
-                            style: const TextStyle(
-                              color: TextColor,
+                            style: TextStyle(
+                              color: SelectedTextColor,
                             ),
                         ),
                         trailing: const Icon(Icons.navigate_next),

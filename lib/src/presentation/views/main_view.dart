@@ -71,7 +71,7 @@ class _MainViewState extends State<MainView> {
   Widget build(final BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          backgroundColor: MainColor,
+          backgroundColor: SelectedMainColor,
           body: Padding(
             padding: const EdgeInsets.only(
               top: padding,

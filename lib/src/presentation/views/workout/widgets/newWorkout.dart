@@ -3,7 +3,6 @@ import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/presentation/views/workout/widgets/activeWorkout.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
-import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 const List<String> splitList = <String>['Push', 'Pull', 'Legs'];
@@ -43,6 +42,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
       exerciseList = queue!.toList();
     }
     if (exerciseList != null) {
+      print(exerciseList.length);
       Navigator.push(context, MaterialPageRoute(
           builder: (context) => ActiveWorkoutWidget(
             activeWorkout: exerciseList,
@@ -55,7 +55,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MainColor,
+      backgroundColor: SelectedMainColor,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -66,18 +66,18 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.center,
-                child: const Text(
+                child: Text(
                   'Before a workout can be generated for you, you will need to select some values',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: HeadlineColor,
+                    color: SelectedHeadlineColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
               ),
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -85,7 +85,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
-                      color: HeadlineColor,
+                      color: SelectedHeadlineColor,
                       fontWeight: FontWeight.bold,
                     ),
                 ),
@@ -98,14 +98,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                   width: 150,
                   alignment: Alignment.center,
                   child: DropdownButton(
-                      dropdownColor: SecondaryColor,
+                      dropdownColor: SelectedSecondaryColor,
                       alignment: Alignment.center,
                       value: splitdropdownValue,
                       iconSize: 16,
                       isExpanded: true,
-                      iconEnabledColor: SecondaryColor,
-                      style: const TextStyle(
-                        color: TextColor,
+                      iconEnabledColor: SelectedSecondaryColor,
+                      style: TextStyle(
+                        color: SelectedTextColor,
                       ),
                       items: splitList
                           .map<DropdownMenuItem<String>>((String value) {
@@ -124,14 +124,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
               ],
             ),
             //const Padding(padding: EdgeInsets.fromLTRB(0, 25, 0, 0)),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                     'Add Abs exercises',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: HeadlineColor,
+                      color: SelectedHeadlineColor,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -145,13 +145,13 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                   width: 150,
                   alignment: Alignment.center,
                   child: DropdownButton(
-                      dropdownColor: SecondaryColor,
+                      dropdownColor: SelectedSecondaryColor,
                       value: absdropdownValue,
                       iconSize: 16,
-                      iconEnabledColor: SecondaryColor,
+                      iconEnabledColor: SelectedSecondaryColor,
                       isExpanded: true,
-                      style: const TextStyle(
-                          color: TextColor,
+                      style: TextStyle(
+                          color: SelectedTextColor,
                       ),
                       items: YesNo
                           .map<DropdownMenuItem<String>>((String value) {
@@ -174,14 +174,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                 ),
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                     'Prioritize favorites',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: HeadlineColor,
+                      color: SelectedHeadlineColor,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -195,14 +195,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                   width: 150,
                   alignment: Alignment.center,
                   child: DropdownButton(
-                      dropdownColor: SecondaryColor,
+                      dropdownColor: SelectedSecondaryColor,
                       alignment: Alignment.center,
                       value: favoritedropdownValue,
                       iconSize: 16,
                       isExpanded: true,
-                      iconEnabledColor: SecondaryColor,
-                      style: const TextStyle(
-                        color: TextColor,
+                      iconEnabledColor: SelectedSecondaryColor,
+                      style: TextStyle(
+                        color: SelectedTextColor,
                       ),
                       items: YesNo
                           .map<DropdownMenuItem<String>>((String value) {
@@ -225,14 +225,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                 ),
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                     'Access to equipment',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: HeadlineColor,
+                      color: SelectedHeadlineColor,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -246,14 +246,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                   width: 150,
                   alignment: Alignment.center,
                   child: DropdownButton(
-                      dropdownColor: SecondaryColor,
+                      dropdownColor: SelectedSecondaryColor,
                       alignment: Alignment.center,
                       value: equipmentdropdownValue,
                       iconSize: 16,
                       isExpanded: true,
-                      iconEnabledColor: SecondaryColor,
-                      style: const TextStyle(
-                        color: TextColor,
+                      iconEnabledColor: SelectedSecondaryColor,
+                      style: TextStyle(
+                        color: SelectedTextColor,
                       ),
                       items: YesNo
                           .map<DropdownMenuItem<String>>((String value) {
@@ -271,14 +271,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                 ),
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                     'Apply additional focus',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: HeadlineColor,
+                      color: SelectedHeadlineColor,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -292,14 +292,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                   width: 150,
                   alignment: Alignment.center,
                   child: DropdownButton(
-                      dropdownColor: SecondaryColor,
+                      dropdownColor: SelectedSecondaryColor,
                       alignment: Alignment.center,
                       value: additionalfocusdropdownValue,
                       iconSize: 16,
-                      iconEnabledColor: SecondaryColor,
+                      iconEnabledColor: SelectedSecondaryColor,
                       isExpanded: true,
-                      style: const TextStyle(
-                          color: TextColor,
+                      style: TextStyle(
+                          color: SelectedTextColor,
                       ),
                       items: additionalFocusList
                           .map<DropdownMenuItem<String>>((String value) {
@@ -329,13 +329,13 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(SecondaryColor),
+                          backgroundColor: MaterialStateProperty.all(SelectedSecondaryColor),
                         ),
-                        child: const Text(
+                        child: Text(
                             textAlign: TextAlign.center,
                             'Start Worktout',
                             style: TextStyle(
-                              color: HeadlineColor
+                              color: SelectedHeadlineColor
                             ),
                         ),
                         onPressed: () => generateWorkout(),

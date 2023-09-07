@@ -10,7 +10,7 @@ import 'package:projekt_frontend/src/presentation/views/landing/widgets/topSideM
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/bottomSideMenuTile.dart';
 import 'package:projekt_frontend/src/presentation/views/settings/settingsPage.dart';
 import 'package:projekt_frontend/src/presentation/views/stats/statsPage.dart';
-import 'package:projekt_frontend/src/utils/constants.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 import 'package:projekt_frontend/src/utils/rive_utils.dart';
 import 'package:rive/rive.dart';
 
@@ -84,13 +84,13 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: MainColor,
+        backgroundColor: SelectedMainColor,
         resizeToAvoidBottomInset: false,
         extendBody: true,
         body: Stack(
           children: [
             AnimatedPositioned(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 500),
                 curve: Curves.fastOutSlowIn,
                 width: 288,
                 left: isSideDrawerOpen ? 0 : -288,
@@ -122,12 +122,11 @@ class _LandingPageState extends State<LandingPage>
               ),
             ),
             AnimatedPositioned(
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 500),
               curve: Curves.fastOutSlowIn,
               left: isSideDrawerOpen ? 220 : 0,
               top: 12,
               child: MenuBtn(
-
                 press: () {
                   isMenuOpenInput.value = !isMenuOpenInput.value;
                   if (_animationController.value == 0) {
@@ -161,9 +160,9 @@ class _LandingPageState extends State<LandingPage>
       child: Container(
         width: 288,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          color: SecondaryColor,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: SelectedSecondaryColor,
+          borderRadius: const BorderRadius.only(
             topRight: Radius.circular(0),
             bottomRight: Radius.circular(0)
           ),
@@ -180,7 +179,7 @@ class _LandingPageState extends State<LandingPage>
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(color: TextColor),
+                      .copyWith(color: SelectedTextColor),
                 ),
               ),
               ...sideMenuTiles
@@ -218,7 +217,7 @@ class _LandingPageState extends State<LandingPage>
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(color: TextColor),
+                      .copyWith(color: SelectedTextColor),
                 ),
               ),
               ...bottomSideMenuTiles

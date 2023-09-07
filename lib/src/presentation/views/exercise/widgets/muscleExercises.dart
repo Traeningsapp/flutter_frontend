@@ -4,7 +4,6 @@ import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exercise.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
-import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class MuscleExercisesWidget extends StatefulWidget {
@@ -33,7 +32,7 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBarWidget(title: 'Exercises'),
-      backgroundColor: MainColor,
+      backgroundColor: SelectedMainColor,
       body: FutureBuilder(
         future: muscleExerciseList,
         builder: (context, snapshot) {
@@ -77,9 +76,9 @@ class _MuscleExercisesWidgetState extends State<MuscleExercisesWidget> {
               child: ListTile(
                 contentPadding:
                     const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-                tileColor: SecondaryColor,
+                tileColor: SelectedSecondaryColor,
                 shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: TertiaryColor, width: 2),
+                    side: BorderSide(color: SelectedTertiaryColor, width: 2),
                     borderRadius: BorderRadius.circular(5)
                 ),
                 title: Text(specificMuscleExercise.name!),

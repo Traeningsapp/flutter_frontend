@@ -3,6 +3,7 @@ import 'package:projekt_frontend/src/models/exercise.dart';
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:projekt_frontend/src/models/workout.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class FinishedWorkoutWidget extends StatefulWidget {
@@ -101,6 +102,9 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(SelectedSecondaryColor)
+                ),
                 onPressed: () => showDialog(
                     context: context,
                     builder: (context) {
@@ -133,6 +137,9 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
               alignment: Alignment.bottomCenter,
               child: Center(
                 child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(SelectedSecondaryColor)
+                    ),
                     child: const Text('Go to homepage'),
                     onPressed: () =>
                         Navigator.popUntil(context, (route) => route.isFirst)),
