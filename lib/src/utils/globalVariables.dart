@@ -12,3 +12,4 @@ Color SelectedSecondaryColor = SecondaryColor4;
 Color SelectedTertiaryColor = TertiaryColor4;
 Color SelectedHeadlineColor = HeadlineColor4;
 Color SelectedTextColor = TextColor4;
+Color SelectedactivationColor = activationColor4;
