@@ -197,11 +197,11 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
                       children: [
-                        const Align(
+                        Align(
                             alignment: Alignment.centerLeft,
                             child: Text('Description',
                               style: TextStyle(
-                                color: Colors.black38,
+                                color: SelectedSecondaryColor,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -213,8 +213,8 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 generatedWorkout.description,
-                                style: const TextStyle(
-                                    color: Colors.black38,
+                                style: TextStyle(
+                                    color: SelectedTextColor,
                                     fontSize: 13
                                 ),
                               )
@@ -227,11 +227,11 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
                       children: [
-                        const Align(
+                        Align(
                           alignment: Alignment.centerLeft,
                           child: Text('Benefits',
                             style: TextStyle(
-                              color: Colors.black38,
+                              color: SelectedSecondaryColor,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -243,8 +243,8 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 generatedWorkout.benefits,
-                                style: const TextStyle(
-                                    color: Colors.black38,
+                                style: TextStyle(
+                                    color : SelectedTextColor,
                                     fontSize: 13
                                 ),
                               )
@@ -253,7 +253,6 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                       ],
                     ),
                   ),
-                  Spacer(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: SizedBox(
@@ -359,23 +358,21 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     ),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 10)),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(SelectedSecondaryColor)
-                          ),
-                          onPressed: () {
-                            _handleNext();
-                          },
-                          child: Text(
-                              'Next Exercise',
-                              style: TextStyle(
-                                color: SelectedHeadlineColor
-                              ),
-                          )),
-                    ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(SelectedSecondaryColor)
+                        ),
+                        onPressed: () {
+                          _handleNext();
+                        },
+                        child: Text(
+                            'Next Exercise',
+                            style: TextStyle(
+                              color: SelectedHeadlineColor
+                            ),
+                        )),
                   )
                 ],
               ),

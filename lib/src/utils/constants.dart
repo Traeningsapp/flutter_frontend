@@ -33,3 +33,10 @@ const Color TertiaryColor4 = Color.fromARGB(255,92,75,153);
 const Color HeadlineColor4 = Color.fromARGB(255,70,25,89);
 const Color TextColor4 = Color.fromARGB(255,61,36,108);
 const Color activationColor4 = Color.fromARGB(255,61,36,108);
+
+const Color MainColor5 = Color.fromARGB(255, 224, 203, 155);
+const Color SecondaryColor5 = Color.fromARGB(255,83,113,136);
+const Color TertiaryColor5 = Color.fromARGB(255,225,212,187);
+const Color HeadlineColor5 = Color.fromARGB(255, 0, 0, 0);
+const Color TextColor5 = Color.fromARGB(255, 0, 0, 0);
+const Color activationColor5 = Color.fromARGB(255,61,36,108);

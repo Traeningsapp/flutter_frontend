@@ -230,8 +230,6 @@ class _LandingPageState extends State<LandingPage>
                     selectedMenuItem = menu;
                     if(menu.title == 'Settings') {
                       Navigator.push(context, MaterialPageRoute(builder:(context) => const SettingsPage()));
-                    } else if (menu.title == 'Help') {
-                      Navigator.push(context, MaterialPageRoute(builder:(context) => const HelpPage()));
                     }
                   });
                 },

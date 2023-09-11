@@ -140,7 +140,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xffffffff), SelectedMainColor],
-            stops: [0.4, 0.5],
+            stops: [0.4, 0.6],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           )
@@ -249,6 +249,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     Text('Primary Activation',
                     style: TextStyle(
                       color: SelectedHeadlineColor,
+                      fontWeight: FontWeight.bold,
                       fontSize: 14
                       ),
                     ),
@@ -272,6 +273,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     Text('Secondary Activation',
                     style: TextStyle(
                       color: SelectedHeadlineColor,
+                      fontWeight: FontWeight.bold,
                       fontSize: 14
                       ),
                     ),

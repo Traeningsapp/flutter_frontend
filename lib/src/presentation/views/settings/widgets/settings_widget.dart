@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:projekt_frontend/src/presentation/views/profile/widgets/ThemeColor.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
-const List<String> settingsList = ['Report a Bug', 'Send Feedback', 'About','Get support'];
-const List<Icon> iconList = [Icon(Icons.bug_report), Icon(Icons.mail), Icon(Icons.question_mark), Icon(Icons.contact_support)];
+const List<String> settingsList = ['Theme Selection'];
+const List<Icon> iconList = [Icon(Icons.color_lens_outlined)];
 
 class SettingsWidget extends StatelessWidget {
   const SettingsWidget({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class SettingsWidget extends StatelessWidget {
                       ),
                   ),
                   trailing: const Icon(Icons.navigate_next),
-                  onTap: () => {},
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ThemeColorWidget()))
                 );
               },
             ),

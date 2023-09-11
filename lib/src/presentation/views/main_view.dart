@@ -61,6 +61,7 @@ class _MainViewState extends State<MainView> {
         Global_Access_token = credentials.accessToken;
         Global_user_role = credentials
             .user.customClaims!['traenings-app.eu.auth0.com/roles'][0];
+        Global_user_mail = credentials.user.email;
       });
     } catch (e) {
       print(e);
@@ -84,20 +85,32 @@ class _MainViewState extends State<MainView> {
                 children: [
                   Expanded(
                       child: Row(children: [
-                    _user != null
+                      _user != null
                         ? const Expanded(child: LandingPage())
                         : const Expanded(child: HeroWidget())
                   ])),
                   _user != null
                   ? Container()
-                  : ElevatedButton(
-                      onPressed: login,
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.black),
-                      ),
-                      child: const Text('Login'),
-                    )
+                  : Padding(
+                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.2),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: ElevatedButton(
+                          onPressed: login,
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.black),
+                          ),
+                          child: const Text(
+                              'Login',
+                              style: TextStyle(
+                                fontSize: 16
+                              ),
+                          ),
+                        ),
+                    ),
+                  ),
             ]),
       )),
     );
