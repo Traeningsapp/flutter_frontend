@@ -19,6 +19,7 @@ class _AddSetWidgetState extends State<AddSetWidget> implements IAddSetWidget {
   final repsController = TextEditingController();
   late int? setnr;
 
+  @override
   void resetFields() {
     kiloController.clear();
     repsController.clear();

@@ -16,6 +16,7 @@ class MusclePage extends StatefulWidget {
 class _MusclePageState extends State<MusclePage> {
   final DatabaseService _dbService = DatabaseService();
   late Future<List<Muscle>?> musclesList;
+  late List<Muscle>? muscles;
 
   @override
   void initState() {
@@ -25,6 +26,7 @@ class _MusclePageState extends State<MusclePage> {
 
   Future<void> _initRetrieval() async {
     musclesList = _dbService.getMuscles(widget.musclegroupId);
+    muscles = await musclesList;
   }
 
 

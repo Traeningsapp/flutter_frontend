@@ -3,7 +3,7 @@ import 'package:projekt_frontend/src/presentation/views/universal/customappbar.d
 import 'package:projekt_frontend/src/utils/constants.dart';
 import '../../../../utils/globalVariables.dart';
 
-const List<String> ColorPatterns = <String>['1', '2','3','4'];
+const List<String> ColorPatterns = <String>['2', '3','1','4'];
 
 class ThemeColorWidget extends StatefulWidget {
   const ThemeColorWidget({super.key});

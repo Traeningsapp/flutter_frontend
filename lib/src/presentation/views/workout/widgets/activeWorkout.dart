@@ -7,7 +7,6 @@ import 'package:projekt_frontend/src/presentation/views/workout/widgets/finished
 import 'package:projekt_frontend/src/presentation/views/exercise/widgets/exerciseHowTo.dart';
 import 'package:projekt_frontend/src/presentation/views/stats/widgets/specificExerciseStat.dart';
 import 'package:projekt_frontend/src/presentation/views/universal/customappbar.dart';
-import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 class ActiveWorkoutWidget extends StatefulWidget {
@@ -55,18 +54,18 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
     if (shouldClearWidgetKeys) {
       widgetKeys.clear();
       if (widget.workoutId != 0) {
-        workout.forEach((exercise) {
+        for (var exercise in workout) {
           if (exercise.exerciseStats != null ||
               exercise.exerciseStats!.isNotEmpty) {
-            exercise.exerciseStats!.forEach((stats) {
+            for (var stats in exercise.exerciseStats!) {
               if (stats.exerciseId == exerciseId) {
                 widgetKeys.add(ExerciseStatKey.withRepsAndKilo(DateTime.now(),
                     exercise.id, stats.reps, stats.kilo, stats.setnr!));
                 setnr = stats.setnr! + 1;
               }
-            });
+            }
           }
-        });
+        }
         firstWidgetCall = false;
       }
     }
@@ -113,6 +112,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: SelectedMainColor,
+
         resizeToAvoidBottomInset: false,
         appBar: const CustomAppBarWidget(title: 'Active Workout'),
         body: FutureBuilder<List<Exercise>?>(
@@ -138,251 +138,249 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
             }));
   } // Scaffold
 
-  Widget buildWorkoutWidget(Exercise generatedWorkout) => Column(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Row(
+  Widget buildWorkoutWidget(Exercise generatedWorkout) => Container(
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [const Color(0xffffffff), SelectedMainColor],
+        stops: const [0.3, 0.45],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
+    ),
+    child: Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 3),
+                  ),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.26,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Column(
+                        children: <Widget>[
+                          Image.asset(
+                              'assets/exerciseGifs/${generatedWorkout.id}.gif',
+                              fit: BoxFit.cover,
+                              height: MediaQuery.of(context).size.height * 0.26,
+                              width: MediaQuery.of(context).size.width * 0.6)
+                        ],
+                  )),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                          textAlign: TextAlign.center,
-                          textScaleFactor: 1.5,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          generatedWorkout.name),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.26,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                            'assets/exerciseGifs/${generatedWorkout.id}.gif',
-                            fit: BoxFit.cover,
-                            height: MediaQuery.of(context).size.height * 0.26,
-                            width: MediaQuery.of(context).size.width * 0.6)
-                      ],
-                )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      alignment: Alignment.centerRight,
-                      icon: const Icon(Icons.info_outline),
-                      onPressed: () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              ExerciseHowToOverlay(
-                                  exerciseId: generatedWorkout.id,
-                                  exerciseName: generatedWorkout.name)),
-                    ),
-                    IconButton(
+                      IconButton(
                         alignment: Alignment.centerRight,
-                        icon: const Icon(Icons.list_alt),
+                        icon: const Icon(Icons.info_outline),
                         onPressed: () => showDialog(
                             context: context,
-                            builder: ((BuildContext context) =>
-                                ExerciseStatsOverlay(
-                                  exerciseId: generatedWorkout.id,
-                                  userId: Global_userid,
-                                  exerciseName: generatedWorkout.name,
-                                )))),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Align(
+                            builder: (BuildContext context) =>
+                                ExerciseHowToOverlay(
+                                    exerciseId: generatedWorkout.id,
+                                    exerciseName: generatedWorkout.name)),
+                      ),
+                      IconButton(
+                          alignment: Alignment.centerRight,
+                          icon: const Icon(Icons.list_alt),
+                          onPressed: () => showDialog(
+                              context: context,
+                              builder: ((BuildContext context) =>
+                                  ExerciseStatsOverlay(
+                                    exerciseId: generatedWorkout.id,
+                                    userId: Global_userid,
+                                    exerciseName: generatedWorkout.name,
+                                  )))),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Description',
+                              style: TextStyle(
+                                color: Colors.black38,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                generatedWorkout.description,
+                                style: const TextStyle(
+                                    color: Colors.black38,
+                                    fontSize: 13
+                                ),
+                              )
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        const Align(
                           alignment: Alignment.centerLeft,
-                          child: Text('Description',
+                          child: Text('Benefits',
                             style: TextStyle(
-                              color: SelectedHeadlineColor,
+                              color: Colors.black38,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
-                          )
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              generatedWorkout.description,
-                              style: TextStyle(
-                                  color: SelectedTextColor,
-                                  fontSize: 13
-                              ),
-                            )
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Benefits',
-                          style: TextStyle(
-                            color: SelectedHeadlineColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              generatedWorkout.benefits,
-                              style: TextStyle(
-                                  color: SelectedTextColor,
-                                  fontSize: 13
-                              ),
-                            )
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Spacer(),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.90,
-                    height: MediaQuery.of(context).size.height * 0.225,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: SelectedTertiaryColor, width: 2),
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.04,
-                          width: MediaQuery.of(context).size.width,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    MediaQuery.of(context).size.width * 0.20, 0, 0, 0),
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.05,
-                                  height: MediaQuery.of(context).size.height * 0.02,
-                                  child: RawMaterialButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          widgetKeys.add(ExerciseStatKey(
-                                              DateTime.now(), exerciseId, setnr));
-                                          setnr++;
-                                          shouldClearWidgetKeys = false;
-                                        });
-                                      },
-                                      elevation: 2.0,
-                                      fillColor: Colors.grey,
-                                      shape: const BeveledRectangleBorder(),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 10.0,
-                                      )),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                generatedWorkout.benefits,
+                                style: const TextStyle(
+                                    color: Colors.black38,
+                                    fontSize: 13
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    MediaQuery.of(context).size.width * 0.01, 0, 0, 0),
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.05,
-                                  height: MediaQuery.of(context).size.height * 0.02,
-                                  child: RawMaterialButton(
-                                      onPressed: () {
-                                        if (widgetKeys.isNotEmpty) {
-                                          setState(() {
-                                            widgetKeys.removeLast();
-                                            setnr--;
-                                            shouldClearWidgetKeys = false;
-                                          });
-                                        }
-                                      },
-                                      elevation: 2.0,
-                                      fillColor: Colors.grey,
-                                      shape: const BeveledRectangleBorder(),
-                                      child: const Icon(
-                                        Icons.remove,
-                                        size: 10.0,
-                                      )),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    MediaQuery.of(context).size.width * 0.15,
-                                    0,
-                                    MediaQuery.of(context).size.width * 0.05,
-                                    0),
-                                child: const Text("Kilo"),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    MediaQuery.of(context).size.width * 0.05,
-                                    0,
-                                    MediaQuery.of(context).size.width * 0.05,
-                                    0),
-                                child: const Text("Reps"),
-                              ),
-                            ],
+                              )
                           ),
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.18,
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView.builder(
-                                itemCount: widgetKeys.length,
-                                itemBuilder: (context, index) {
-                                  return AddSetWidget(
-                                    customKey: widgetKeys[index],
-                                    setnr: widgetKeys[index].stats.setnr,
-                                    initialKilo: widget.workoutId != 0
-                                        ? widgetKeys[index].stats.kilo
-                                        : null,
-                                    initialReps: widget.workoutId != 0
-                                        ? widgetKeys[index].stats.reps
-                                        : null,
-                                  );
-                        })),
+                        )
                       ],
                     ),
                   ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Expanded(
-                  child: Align(
+                  Spacer(),
+                  Align(
                     alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(SelectedSecondaryColor)
-                        ),
-                        onPressed: () {
-                          _handleNext();
-                        },
-                        child: Text(
-                            'Next Exercise',
-                            style: TextStyle(
-                              color: SelectedHeadlineColor
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      height: MediaQuery.of(context).size.height * 0.22,
+                      // decoration: BoxDecoration(
+                      //     border: Border.all(color: SelectedTertiaryColor, width: 2),
+                      // ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.04,
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.width * 0.20, 0, 0, 0),
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.05,
+                                    height: MediaQuery.of(context).size.height * 0.02,
+                                    child: RawMaterialButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            widgetKeys.add(ExerciseStatKey(
+                                                DateTime.now(), exerciseId, setnr));
+                                            setnr++;
+                                            shouldClearWidgetKeys = false;
+                                          });
+                                        },
+                                        elevation: 2.0,
+                                        fillColor: Colors.grey,
+                                        shape: const BeveledRectangleBorder(),
+                                        child: const Icon(
+                                          Icons.add,
+                                          size: 10.0,
+                                        )),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.width * 0.01, 0, 0, 0),
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.05,
+                                    height: MediaQuery.of(context).size.height * 0.02,
+                                    child: RawMaterialButton(
+                                        onPressed: () {
+                                          if (widgetKeys.isNotEmpty) {
+                                            setState(() {
+                                              widgetKeys.removeLast();
+                                              setnr--;
+                                              shouldClearWidgetKeys = false;
+                                            });
+                                          }
+                                        },
+                                        elevation: 2.0,
+                                        fillColor: Colors.grey,
+                                        shape: const BeveledRectangleBorder(),
+                                        child: const Icon(
+                                          Icons.remove,
+                                          size: 10.0,
+                                        )),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.width * 0.15,
+                                      0,
+                                      MediaQuery.of(context).size.width * 0.05,
+                                      0),
+                                  child: const Text("Kilo"),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.width * 0.05,
+                                      0,
+                                      MediaQuery.of(context).size.width * 0.05,
+                                      0),
+                                  child: const Text("Reps"),
+                                ),
+                              ],
                             ),
-                        )),
+                          ),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.18,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                  itemCount: widgetKeys.length,
+                                  itemBuilder: (context, index) {
+                                    return AddSetWidget(
+                                      customKey: widgetKeys[index],
+                                      setnr: widgetKeys[index].stats.setnr,
+                                      initialKilo: widget.workoutId != 0
+                                          ? widgetKeys[index].stats.kilo
+                                          : null,
+                                      initialReps: widget.workoutId != 0
+                                          ? widgetKeys[index].stats.reps
+                                          : null,
+                                    );
+                          })),
+                        ],
+                      ),
+                    ),
                   ),
-                )
-              ],
-            ),
-          )
-        ],
-      );
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(SelectedSecondaryColor)
+                          ),
+                          onPressed: () {
+                            _handleNext();
+                          },
+                          child: Text(
+                              'Next Exercise',
+                              style: TextStyle(
+                                color: SelectedHeadlineColor
+                              ),
+                          )),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+  );
 }

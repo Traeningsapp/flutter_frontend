@@ -11,7 +11,7 @@ import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 
 class DatabaseService {
-  final String baseUrl = "https://10.0.2.2:7130/api";
+  final String baseUrl = "http://192.168.0.151:5110/api";
 
   final String? accessToken = Global_Access_token;
 
@@ -74,10 +74,10 @@ class DatabaseService {
     }
   }
 
-  Future<Workout?> getNewWorkout(int splitType, String userid, bool abs, bool favorite) async {
+  Future<Workout?> getNewWorkout(int splitType, String userid, bool includeAbs, bool prioFavorites) async {
     try
     {
-      final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid/$abs/$favorite");
+      final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid/abs/$includeAbs/prioritizeFavs/$prioFavorites");
       final response = await http.get(
         url,
         headers: {
