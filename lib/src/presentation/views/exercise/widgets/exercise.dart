@@ -83,7 +83,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                   child: Text(
                     muscle!.name,
                     style: TextStyle(
-                        color: SelectedactivationColor,
+                        color: SelectedTextColor,
                         fontSize: 12,
                     ),
                   )),
@@ -117,7 +117,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                   child: Text(
                     muscle!.name,
                     style: TextStyle(
-                        color: SelectedactivationColor,
+                        color: SelectedTextColor,
                         fontSize: 12,
                     ),
                   )),
@@ -137,7 +137,14 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
       appBar: CustomAppBarWidget(
           title: exercise.name!),
       body: Container(
-        color: SelectedMainColor,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xffffffff), SelectedMainColor],
+            stops: [0.4, 0.6],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          )
+        ),
           child: Center(
             child: buildExercise(exercise),
           ),
@@ -242,6 +249,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     Text('Primary Activation',
                     style: TextStyle(
                       color: SelectedHeadlineColor,
+                      fontWeight: FontWeight.bold,
                       fontSize: 14
                       ),
                     ),
@@ -265,6 +273,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     Text('Secondary Activation',
                     style: TextStyle(
                       color: SelectedHeadlineColor,
+                      fontWeight: FontWeight.bold,
                       fontSize: 14
                       ),
                     ),

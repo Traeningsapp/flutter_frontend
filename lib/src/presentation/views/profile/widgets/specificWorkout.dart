@@ -66,25 +66,15 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.04),
-                      child: ElevatedButton(
-                          onPressed: () => Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => ActiveWorkoutWidget(
-                                activeWorkout: exercisesToStartWorkout,
-                                workoutType: 'Push',
-                                workoutId: widget.workoutId,
-                              ))),
-                          child: const Text('Start workout')
-                      ),
+                    ElevatedButton(
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => ActiveWorkoutWidget(
+                              activeWorkout: exercisesToStartWorkout,
+                              workoutType: 'Push',
+                              workoutId: widget.workoutId,
+                            ))),
+                        child: const Text('Start workout')
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04),
-                      child: ElevatedButton(
-                          onPressed: () => (),
-                          child: const Text('Edit workout')
-                      ),
-                    )
                   ],
                 )
               ],

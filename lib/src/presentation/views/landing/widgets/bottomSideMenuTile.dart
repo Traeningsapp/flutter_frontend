@@ -34,7 +34,7 @@ class BottomSideMenuTile extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: SelectedTertiaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
               ),
             ),

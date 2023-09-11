@@ -11,6 +11,7 @@ import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 
 class DatabaseService {
+  //final String baseUrl = "http://192.168.0.151:5110/api";
   final String baseUrl = "https://10.0.2.2:7130/api";
 
   final String? accessToken = Global_Access_token;
@@ -34,6 +35,7 @@ class DatabaseService {
     catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Muscle>?> getMuscles(int muscleGroupId) async {
@@ -47,12 +49,14 @@ class DatabaseService {
         },
       );
       if (response.statusCode == 200) {
+        print(response.statusCode);
         return musclesFromJson(response.body);
       }
     }
     catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<Exercise>?> getMuscleExercises(int muscleId) async {
@@ -66,33 +70,35 @@ class DatabaseService {
         },
       );
       if (response.statusCode == 200) {
+        print(response.statusCode);
         return exercisesFromJson(response.body);
       }
     }
     catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
-  Future<Workout?> getNewWorkout(int splitType, String userid, bool abs, bool favorite) async {
+  Future<Workout?> getNewWorkout(int splitType, String userid, bool includeAbs, bool prioFavorites) async {
     try
     {
-      final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid/$abs/$favorite");
+      final url = Uri.parse("$baseUrl/Workout/get/newworkout/split/$splitType/user/$userid/abs/$includeAbs/prioritizeFavs/$prioFavorites");
       final response = await http.get(
         url,
         headers: {
           'Authorization': 'Bearer $accessToken'
         }
       );
-      print(Global_userid);
-      print(response.statusCode);
       if(response.statusCode == 200) {
+        print(response.statusCode);
         return workoutFromJson(response.body);
       }
     }
     catch(e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<int?> postWorkout(Workout workout, String userid, String splitType) async {
@@ -116,6 +122,7 @@ class DatabaseService {
       );
 
       if (response.statusCode == 200) {
+        print(response.statusCode);
         return int.parse(response.body);
       } else {
         log("Error with status code: ${response.statusCode}");
@@ -144,6 +151,7 @@ class DatabaseService {
     catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<Workout?> getSpecificWorkout(int workoutId, String userId) async {
@@ -164,6 +172,7 @@ class DatabaseService {
     catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<ExerciseStats>?> getStatsForExercise(String userId, int exerciseId) async {
@@ -183,6 +192,7 @@ class DatabaseService {
     catch(e) {
       log(e.toString());
     }
+    return null;
   }
 
 
@@ -203,6 +213,7 @@ class DatabaseService {
     catch(e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<bool?> getFavoriteExercise(String userId, int exerciseId) async {
@@ -226,6 +237,7 @@ class DatabaseService {
     catch(e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<void> setFavoriteExercise(String userId, int exerciseId) async {
@@ -284,6 +296,7 @@ class DatabaseService {
     {
       log(e.toString());
     }
+    return null;
   }
 
   Future<List<ExerciseStats>?> getExerciseStats(String userId, int exerciseId) async {
@@ -304,6 +317,7 @@ class DatabaseService {
     {
       log(e.toString());
     }
+    return null;
   }
 
   void deleteWorkoutFromHistory(int workoutId) async {

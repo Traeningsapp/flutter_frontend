@@ -17,7 +17,7 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
     return Scaffold(
       backgroundColor: SelectedMainColor,
       body: ListView(
-          padding: const EdgeInsets.fromLTRB(5, 110, 5, 0),
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
           children: <Widget>[
             buildCardWidget('Arms & Shoulders', 'Front-, middle- & back deltoids. Biceps, triceps and forearm', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/2.png', 2),
             buildCardWidget('Back', 'Traps, laterals, teres major and lower back', fontsizeForTitles, fontsizeForSubTitles, 'assets/musclegroups/3.png', 3),
@@ -30,31 +30,25 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
   }
 
   Widget buildCardWidget(String title, String subtitle, double titleFontsize, double subtitleFontsize, String assetLocation, int onTapRoute) {
-    return Card(
-      elevation: 4,
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-            side: BorderSide(color: SelectedTertiaryColor, width: 2),
-            borderRadius: BorderRadius.circular(5)
+    return ListTile(
+      onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },
+      tileColor: SelectedMainColor,
+      //contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
+      leading: ConstrainedBox(
+        constraints: const BoxConstraints(
         ),
-        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },
-        tileColor: SelectedSecondaryColor,
-        contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
-        leading: ConstrainedBox(
-          constraints: const BoxConstraints(
-          ),
-          child: Image.asset(assetLocation, fit: BoxFit.cover),
+        child: Image.asset(assetLocation, fit: BoxFit.cover),
+      ),
+      trailing: const Icon(Icons.arrow_right,),
+      title: Text(title,
+        style: TextStyle(
+            color: SelectedSecondaryColor,
+            fontSize: titleFontsize
         ),
-        trailing: const Icon(Icons.arrow_right,),
-        title: Text(title,
-          style: TextStyle(
-              fontSize: titleFontsize
-          ),
-        ),
-        subtitle: Text(subtitle,
-          style: TextStyle(
-              fontSize: subtitleFontsize
-          ),
+      ),
+      subtitle: Text(subtitle,
+        style: TextStyle(
+            fontSize: subtitleFontsize
         ),
       ),
     );

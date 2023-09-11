@@ -25,7 +25,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
           title: Text(
               widget.title,
               style: TextStyle(
-                color: SelectedHeadlineColor,
+                color: SelectedTextColor,
                 fontWeight: FontWeight.bold
               ),
           ),

@@ -4,14 +4,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:projekt_frontend/src/presentation/views/hero.dart';
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:auth0_flutter/auth0_flutter_web.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/widgets/ThemeColor.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 import 'favoriteExercises.dart';
-import 'profileAccount.dart';
 import 'savedWorkouts.dart';
 
-const List<String> profileList = ['Account','Saved workouts','Favorite Exercises', 'Themes'];
-const List<Icon> iconList = [Icon(Icons.person), Icon(Icons.fitness_center), Icon(Icons.fitness_center), Icon(Icons.color_lens_outlined)];
+const List<String> profileList = ['Saved workouts','Favorite Exercises'];
+const List<Icon> iconList = [Icon(Icons.fitness_center), Icon(Icons.fitness_center)];
 
 class ProfileWidget extends StatefulWidget {
   final Auth0? auth0;
@@ -87,7 +85,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 10),
-                Text('Email here',
+                Text(Global_user_mail!,
                   style: TextStyle(
                       color: SelectedTextColor,
                       fontSize: 20,
@@ -130,13 +128,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           trailing: const Icon(Icons.navigate_next),
                             onTap: () => {
                               if(index == 0) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileAccountWidget()))
-                              } else if(index == 1) {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => const SavedWorkoutWidget()))
-                              } else if(index == 2) {
+                              } else if(index == 1) {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => const FavoriteExercisesWidget()))
-                              } else if(index == 3) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ThemeColorWidget()))
                               }
                             },
                         );

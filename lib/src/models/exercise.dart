@@ -72,7 +72,7 @@ class Exercise {
       "name": name,
       "description": description,
       "benefits": benefits,
-      "muscles": muscles == null ? [] : List<dynamic>.from(muscles!.map((x) => x.toString())).toList(),
+      "muscles": muscles == null ? [] : List<dynamic>.from(muscles!.map((x) => x!.toJson())).toList(),
       "starting_compound": startingCompound,
       "exerciseStats": exerciseStats == null ? [] : List<dynamic>.from(exerciseStats!.map((x) => x.toJson())).toList(),
       "active": active,

@@ -31,7 +31,7 @@ List<Menu> sideMenuTiles = [
         stateMachineName: "USER_Interactivity"),
   ),
   Menu(
-    title: "Stats - icon change",
+    title: "Stats",
     rive: RiveModel(
         src: "assets/RiveAssets/Updated_icons.riv",
         artboard: "USER",
@@ -47,12 +47,5 @@ List<Menu> bottomSideMenuTiles = [
         src: "assets/RiveAssets/Updated_icons.riv",
         artboard: "SETTINGS",
         stateMachineName: "SETTINGS_Interactivity"),
-  ),
-  Menu(
-    title: "Help",
-    rive: RiveModel(
-        src: "assets/RiveAssets/Updated_icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
   )
 ];

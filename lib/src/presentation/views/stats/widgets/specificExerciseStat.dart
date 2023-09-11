@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:projekt_frontend/src/models/dataPoint.dart';
 import 'package:projekt_frontend/src/models/exerciseStats.dart';
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
+import 'package:projekt_frontend/src/utils/globalVariables.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ExerciseStatsOverlay extends StatefulWidget {
@@ -117,7 +118,18 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
 
     return SfCartesianChart(
       primaryXAxis: DateTimeAxis(
-        dateFormat: DateFormat('d/M/y')
+          labelStyle: TextStyle(
+            color: SelectedTextColor,
+          ),
+        dateFormat: DateFormat('d/M/y'),
+        title: AxisTitle(
+          text: 'Time period'
+        )
+      ),
+      primaryYAxis: NumericAxis(
+        labelStyle: TextStyle(
+          color: SelectedTextColor,
+        ),
       ),
       series: <ChartSeries>[
         LineSeries<DataPoint, DateTime>(
@@ -168,13 +180,13 @@ class _ExerciseStatsOverlayState extends State<ExerciseStatsOverlay>
                     color: Colors.black,
                   ),
                   SizedBox(
-                   height: MediaQuery.of(context).size.height * 0.4,
+                   height: MediaQuery.of(context).size.height * 0.38,
                    child: SingleChildScrollView(
                        child: statsTable()
                    ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.25,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: statsChart(),
                   )
