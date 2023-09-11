@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projekt_frontend/src/presentation/views/profile/widgets/ThemeColor.dart';
+import 'package:projekt_frontend/src/presentation/views/settings/widgets/ThemeColor.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
 const List<String> settingsList = ['Theme Selection'];

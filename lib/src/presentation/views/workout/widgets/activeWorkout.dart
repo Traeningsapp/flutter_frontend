@@ -257,7 +257,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                     alignment: Alignment.bottomCenter,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.90,
-                      height: MediaQuery.of(context).size.height * 0.22,
+                      height: MediaQuery.of(context).size.height * 0.20,
                       // decoration: BoxDecoration(
                       //     border: Border.all(color: SelectedTertiaryColor, width: 2),
                       // ),
@@ -337,7 +337,7 @@ class _ActiveWorkoutWidget extends State<ActiveWorkoutWidget> {
                             ),
                           ),
                           SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.18,
+                              height: MediaQuery.of(context).size.height * 0.15,
                               width: MediaQuery.of(context).size.width,
                               child: ListView.builder(
                                   itemCount: widgetKeys.length,
