@@ -55,7 +55,7 @@ class _SpecificWorkoutWidgetState extends State<SpecificWorkoutWidget> {
             return Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.83,
+                  height: MediaQuery.of(context).size.height * 0.7,
                   child: ListView.builder(
                   itemCount: specificWorkout.exercises!.length,
                       itemBuilder: (context, index) {

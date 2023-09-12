@@ -225,6 +225,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                 ),
               ],
             ),
+            /*
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -317,6 +318,7 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                 ),
               ],
             ),
+            */
             Expanded(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,

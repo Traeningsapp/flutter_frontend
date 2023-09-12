@@ -132,7 +132,7 @@ class _FinishedWorkoutWidgetState extends State<FinishedWorkoutWidget> {
           ),
           Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.6)),
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.4)),
           Align(
               alignment: Alignment.bottomCenter,
               child: Center(

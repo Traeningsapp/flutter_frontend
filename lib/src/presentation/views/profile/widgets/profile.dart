@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:projekt_frontend/src/presentation/views/hero.dart';
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:auth0_flutter/auth0_flutter_web.dart';
+import 'package:projekt_frontend/src/presentation/views/main_view.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 import 'favoriteExercises.dart';
 import 'savedWorkouts.dart';
@@ -149,7 +150,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                             builder: (context) =>
-                            const HeroWidget()),
+                            const MainView()),
                             (route) => false);
                   },
                   icon: const Icon(Icons.logout_rounded, size: 25),
