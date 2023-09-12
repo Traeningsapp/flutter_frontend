@@ -7,7 +7,7 @@ UserProfile? _user = null;
 String Global_userid = '';
 String Global_Access_token = '';
 String? Global_user_mail = '';
-String Global_user_role = '';
+String? Global_user_role = '';
 
 Color SelectedMainColor = MainColor5;
 Color SelectedSecondaryColor = SecondaryColor5;

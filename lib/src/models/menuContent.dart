@@ -30,13 +30,6 @@ List<Menu> sideMenuTiles = [
         artboard: "USER",
         stateMachineName: "USER_Interactivity"),
   ),
-  Menu(
-    title: "Stats",
-    rive: RiveModel(
-        src: "assets/RiveAssets/Updated_icons.riv",
-        artboard: "USER",
-        stateMachineName: "USER_Interactivity"),
-  )
 ];
 
 

@@ -5,15 +5,15 @@ import 'package:projekt_frontend/src/presentation/views/universal/customappbar.d
 import 'package:projekt_frontend/src/services/DatabaseService.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
-class MusclePage extends StatefulWidget {
+class MuscleWidget extends StatefulWidget {
   final int musclegroupId;
-  const MusclePage({required this.musclegroupId, super.key});
+  const MuscleWidget({required this.musclegroupId, super.key});
 
   @override
-  State<MusclePage> createState() => _MusclePageState();
+  State<MuscleWidget> createState() => _MuscleWidgetState();
 }
 
-class _MusclePageState extends State<MusclePage> {
+class _MuscleWidgetState extends State<MuscleWidget> {
   final DatabaseService _dbService = DatabaseService();
   late Future<List<Muscle>?> musclesList;
   late List<Muscle>? muscles;

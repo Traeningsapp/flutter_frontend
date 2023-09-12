@@ -146,7 +146,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: [
                 IconButton(
                   onPressed: () async {
-                    logout();
+                    await logout();
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                             builder: (context) =>

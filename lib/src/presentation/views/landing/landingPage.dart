@@ -2,14 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:projekt_frontend/src/models/menuContent.dart';
 import 'package:projekt_frontend/src/presentation/views/exercise/exercisePage.dart';
-import 'package:projekt_frontend/src/presentation/views/help/helpPage.dart';
 import 'package:projekt_frontend/src/presentation/views/home/homePage.dart';
 import 'package:projekt_frontend/src/presentation/views/profile/profilePage.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/menubtn.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/topSideMenuTile.dart';
 import 'package:projekt_frontend/src/presentation/views/landing/widgets/bottomSideMenuTile.dart';
 import 'package:projekt_frontend/src/presentation/views/settings/settingsPage.dart';
-import 'package:projekt_frontend/src/presentation/views/stats/statsPage.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 import 'package:projekt_frontend/src/utils/rive_utils.dart';
 import 'package:rive/rive.dart';
@@ -29,8 +27,7 @@ class _LandingPageState extends State<LandingPage>
   final screens = [
     const HomePage(),
     const ExercisePage(),
-    const ProfilePage(),
-    const StatsPage()
+    const ProfilePage()
   ];
 
   bool isSideDrawerOpen = false;
@@ -199,15 +196,12 @@ class _LandingPageState extends State<LandingPage>
                     } else if (menu.title == 'Profile') {
                       currentIndex = 2;
                       closeDrawer();
-                    } else if (menu.title == 'Stats') {
-                      currentIndex = 3;
-                      closeDrawer();
                     }
                   });
                 },
                 riveOnInit: (artboard) {
                   menu.rive.status = RiveUtils.getRiveInput(artboard,
-                      stateMachineName: menu.rive.stateMachineName!);
+                      stateMachineName: menu.rive.stateMachineName);
                 },
               )).toList(),
               Padding(
@@ -235,7 +229,7 @@ class _LandingPageState extends State<LandingPage>
                 },
                 riveOnInit: (artboard) {
                   menu.rive.status = RiveUtils.getRiveInput(artboard,
-                      stateMachineName: menu.rive.stateMachineName!);
+                      stateMachineName: menu.rive.stateMachineName);
                 },
               )).toList(),
             ],

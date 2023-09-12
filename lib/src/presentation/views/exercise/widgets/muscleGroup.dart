@@ -3,14 +3,14 @@ import 'package:projekt_frontend/src/presentation/views/exercise/widgets/muscle.
 import 'package:projekt_frontend/src/utils/constants.dart';
 import 'package:projekt_frontend/src/utils/globalVariables.dart';
 
-class MuscleGroupPage extends StatefulWidget {
-  const MuscleGroupPage({super.key});
+class MuscleGroupWidget extends StatefulWidget {
+  const MuscleGroupWidget({super.key});
 
   @override
-  State<MuscleGroupPage> createState() => _MuscleGroupPageState();
+  State<MuscleGroupWidget> createState() => _MuscleGroupWidgetState();
 }
 
-class _MuscleGroupPageState extends State<MuscleGroupPage> {
+class _MuscleGroupWidgetState extends State<MuscleGroupWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _MuscleGroupPageState extends State<MuscleGroupPage> {
 
   Widget buildCardWidget(String title, String subtitle, double titleFontsize, double subtitleFontsize, String assetLocation, int onTapRoute) {
     return ListTile(
-      onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MusclePage(musclegroupId: onTapRoute))); },
+      onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => MuscleWidget(musclegroupId: onTapRoute))); },
       tileColor: SelectedMainColor,
       //contentPadding: const EdgeInsets.only(left: 15, top: 3, bottom: 3),
       leading: ConstrainedBox(
