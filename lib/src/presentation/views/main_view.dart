@@ -63,6 +63,7 @@ class _MainViewState extends State<MainView> {
         var roles = credentials.user?.customClaims?['traenings-app.eu.auth0.com/roles'];
         if (roles != null && roles.isNotEmpty) {
           Global_user_role = credentials.user?.customClaims?['traenings-app.eu.auth0.com/roles']?[0];
+          
         }
       });
     } catch (e) {
